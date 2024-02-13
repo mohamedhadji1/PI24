@@ -4,6 +4,7 @@
 .row {
   display: flex;
   flex-wrap: wrap;
+  justify-content:center;
   margin-right: variables.$grid-gutter * -.5;
   margin-left: variables.$grid-gutter * -.5;
 }
