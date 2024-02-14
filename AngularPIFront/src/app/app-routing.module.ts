@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { BlankComponent } from './layouts/blank/blank.component';
 import { FullComponent } from './layouts/full/full.component';
 import { AppSideLoginComponent } from './pages/authentication/login/login.component';
+import { NotfoundComponent } from './notfound/notfound.component';
 
 const routes: Routes = [
   {
@@ -46,7 +47,8 @@ const routes: Routes = [
       },
     ],
   },
-  {path:'login', component:AppSideLoginComponent}
+  {path:'login', component:AppSideLoginComponent},
+  {path:'**', component:NotfoundComponent}
 ];
 
 @NgModule({

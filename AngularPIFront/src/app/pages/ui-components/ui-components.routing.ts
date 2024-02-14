@@ -1,35 +1,49 @@
 import { Routes } from '@angular/router';
 
 // ui
-import { AppBadgeComponent } from './badge/badge.component';
-import { AppChipsComponent } from './chips/chips.component';
-import { AppListsComponent } from './lists/lists.component';
-import { AppMenuComponent } from './menu/menu.component';
-import { AppTooltipsComponent } from './tooltips/tooltips.component';
+import { CompanyComponent } from './company/company.component';
+import { UserComponent } from './user/user.component';
+import { DefenseComponent } from './defense/defense.component';
+import { TaskComponent } from './task/task.component';
+import { ComplaintComponent } from './complaint/complaint.component';
+import { InternshipComponent } from './internship/internship.component';
+import { EventComponent } from './event/event.component';
 
 export const UiComponentsRoutes: Routes = [
   {
     path: '',
     children: [
       {
-        path: 'badge',
-        component: AppBadgeComponent,
+        path: 'defense',
+        component: DefenseComponent,
       },
       {
-        path: 'chips',
-        component: AppChipsComponent,
+        path: 'company',
+        component: CompanyComponent,
       },
       {
-        path: 'lists',
-        component: AppListsComponent,
+        path: 'task',
+        component: TaskComponent,
       },
       {
-        path: 'menu',
-        component: AppMenuComponent,
+        path: 'complaint',
+        component: ComplaintComponent,
       },
       {
-        path: 'tooltips',
-        component: AppTooltipsComponent,
+        path: 'internship',
+        component: InternshipComponent,
+      },
+      {
+        path: 'event',
+        component: EventComponent,
+      },
+      {
+        path: 'user',
+        component: UserComponent,
+      },
+      {
+        path: 'interview',
+        component: InternshipComponent,
       },
     ],
   },

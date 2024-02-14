@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-badge',
-  templateUrl: './badge.component.html'
+  selector: 'app-interview',
+  templateUrl: './interview.component.html',
+  styleUrls: ['./interview.component.scss']
 })
-export class AppBadgeComponent implements OnInit {
-
+export class InterviewComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
@@ -16,5 +16,4 @@ export class AppBadgeComponent implements OnInit {
   toggleBadgeVisibility() {
     this.hidden = !this.hidden;
   }
-
 }
