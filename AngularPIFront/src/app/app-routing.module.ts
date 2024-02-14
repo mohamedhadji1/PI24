@@ -27,11 +27,6 @@ const routes: Routes = [
             (m) => m.UicomponentsModule
           ),
       },
-      {
-        path: 'extra',
-        loadChildren: () =>
-          import('./pages/extra/extra.module').then((m) => m.ExtraModule),
-      },
     ],
   },
   {
