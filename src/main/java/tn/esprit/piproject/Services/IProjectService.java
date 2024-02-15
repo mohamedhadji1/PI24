@@ -1,5 +1,7 @@
 package tn.esprit.piproject.Services;
 
+import tn.esprit.piproject.Entities.Documents;
+import tn.esprit.piproject.Entities.Internship;
 import tn.esprit.piproject.Entities.User;
 
 import java.util.List;
@@ -11,4 +13,14 @@ public interface IProjectService {
     User createUser(User user);
     User updateUser(User user);
     void deleteUser(int id);
+    List<Internship> getAllinternships();
+    Optional<Internship> getinternshipById(int id);
+    Internship createInternship(Internship internship);
+    Internship updateinternship(Internship internship);
+    void deleteinternship(int id);
+    List<Documents> getAlldocuments();
+    Optional<Documents> getdocumentsById(int id);
+    Documents createdocuments(Documents documents);
+    Documents updatedocuments(Documents documents);
+    void deletedocuments(int id);
 }

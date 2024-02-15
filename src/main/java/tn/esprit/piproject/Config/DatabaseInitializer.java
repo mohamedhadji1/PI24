@@ -5,18 +5,16 @@ import org.springframework.stereotype.Component;
 import tn.esprit.piproject.Entities.*;
 import tn.esprit.piproject.Repositories.*;
 
-import javax.swing.text.Document;
-
 @Component
 public class DatabaseInitializer implements CommandLineRunner {
-
+    private final InternshipRepository internshipRepository;
     private final UserRepository userRepository;
     private final CompanyRepository companyRepository;
     private final ComplaintRepository complaintRepository;
     private final DefenceRepository defenceRepository;
     private final DocumentsRepository documentsRepository;
     private final EvaluationRepository evaluationRepository;
-    private final InternshipRepository internshipRepository;
+
     private final OffreRepository offreRepository;
     private final ResponseRepository responseRepository;
     private final TaskRepository taskRepository;
@@ -25,7 +23,7 @@ public class DatabaseInitializer implements CommandLineRunner {
                                CompanyRepository companyRepository, ComplaintRepository complaintRepository,
                                DefenceRepository defenceRepository,
                                DocumentsRepository documentsRepository,EvaluationRepository evaluationRepository
-    ,InternshipRepository internshipRepository,OffreRepository offreRepository,ResponseRepository responseRepository,TaskRepository taskRepository) {
+            , InternshipRepository internshipRepository,OffreRepository offreRepository,ResponseRepository responseRepository,TaskRepository taskRepository) {
         this.userRepository = userRepository;
         this.companyRepository = companyRepository;
         this.complaintRepository=  complaintRepository;
@@ -40,27 +38,54 @@ public class DatabaseInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        User user = new User();
-        Company company = new Company();
-        Complaint complaint=new Complaint();
-        Defence defence=new Defence();
-       Documents document=new Documents();
-       Evaluation evaluation=new Evaluation();
-       Intership intership=new Intership();
-       Offre offre=new Offre();
-       Response response=new Response();
-       Task task=new Task();
-        userRepository.save(user);
-        companyRepository.save(company);
-        complaintRepository.save(complaint);
-        defenceRepository.save(defence);
-        documentsRepository.save(document);
-        evaluationRepository.save(evaluation);
-        internshipRepository.save(intership);
-        offreRepository.save(offre);
-        responseRepository.save(response);
-        taskRepository.save(task);
+        if (userRepository.count() == 0) {
+            User user = new User();
+            userRepository.save(user);
+        }
 
+        if (companyRepository.count() == 0) {
+            Company company = new Company();
+            companyRepository.save(company);
+        }
 
+        if (complaintRepository.count() == 0) {
+            Complaint complaint = new Complaint();
+            complaintRepository.save(complaint);
+        }
+
+        if (defenceRepository.count() == 0) {
+            Defence defence = new Defence();
+            defenceRepository.save(defence);
+        }
+
+        if (documentsRepository.count() == 0) {
+            Documents document = new Documents();
+            documentsRepository.save(document);
+        }
+
+        if (evaluationRepository.count() == 0) {
+            Evaluation evaluation = new Evaluation();
+            evaluationRepository.save(evaluation);
+        }
+
+        if (internshipRepository.count() == 0) {
+            Internship internship = new Internship();
+            internshipRepository.save(internship);
+        }
+
+        if (offreRepository.count() == 0) {
+            Offre offre = new Offre();
+            offreRepository.save(offre);
+        }
+
+        if (responseRepository.count() == 0) {
+            Response response = new Response();
+            responseRepository.save(response);
+        }
+
+        if (taskRepository.count() == 0) {
+            Task task = new Task();
+            taskRepository.save(task);
+        }
     }
 }
