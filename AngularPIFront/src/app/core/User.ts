@@ -1,5 +1,5 @@
 export interface User {
-  id: number;
+  id?: number;
   name: string;
   lastName: string;
   email: string;
@@ -9,5 +9,7 @@ export interface User {
 
 export enum Role {
   ADMIN = 'ADMIN',
-  USER = 'USER',
+  STUDENT = 'STUDENT',
+  SUPERVISOR = 'SUPERVISOR',
+  TUTOR = 'TUTOR'
 }

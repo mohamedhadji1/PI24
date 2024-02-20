@@ -13,6 +13,7 @@ import { InterviewfrontComponent } from './fronttemplate/interviewfront/intervie
 import { ComplaintfrontComponent } from './fronttemplate/complaintfront/complaintfront.component';
 import { FronttemplateComponent } from './fronttemplate/fronttemplate.component';
 import {ClientModule} from "./pages/client/client.module";
+import { AddTaskComponent } from './pages/ui-components/task/add-task/add-task.component';
 
 const routes: Routes = [
   {path:"",pathMatch:"full",redirectTo:"client"},
@@ -68,6 +69,7 @@ const routes: Routes = [
   {path:'sign up', component:ComplaintfrontComponent},
   {path:'sign in', component:ComplaintfrontComponent},
   {path:'login', component:AppSideLoginComponent},
+  {path: 'add-task',component: AddTaskComponent},
   {path:'**', component:NotfoundComponent}
 ];
 

@@ -9,6 +9,7 @@ import { ComplaintComponent } from './complaint/complaint.component';
 import { InternshipComponent } from './internship/internship.component';
 import { EventComponent } from './event/event.component';
 import { DocumetsComponent } from './documets/documets.component';
+import { AddTaskComponent } from './task/add-task/add-task.component';
 
 export const UiComponentsRoutes: Routes = [
   {
@@ -50,6 +51,11 @@ export const UiComponentsRoutes: Routes = [
         path: 'documents',
         component: DocumetsComponent,
       },
+      {
+      path: 'add-task',
+      component: AddTaskComponent,
+      },
+
     ],
   },
 ];
