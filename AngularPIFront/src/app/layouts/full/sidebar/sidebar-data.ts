@@ -53,6 +53,11 @@ export const navItems: NavItem[] = [
     route: '/ui-components/interview',
   },
   {
+    displayName: 'Documents Managements',
+    iconName: 'file-type-doc',
+    route: '/ui-components/documents',
+  },
+  {
     navCap: 'Auth',
   },
   {
@@ -60,4 +65,5 @@ export const navItems: NavItem[] = [
     iconName: 'lock',
     route: '/authentication/login',
   },
+
 ];

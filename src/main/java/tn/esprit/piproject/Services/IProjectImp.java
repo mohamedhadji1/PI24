@@ -6,9 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tn.esprit.piproject.Entities.Documents;
 import tn.esprit.piproject.Entities.Internship;
+import tn.esprit.piproject.Entities.Task;
 import tn.esprit.piproject.Entities.User;
 import tn.esprit.piproject.Repositories.DocumentsRepository;
 import tn.esprit.piproject.Repositories.InternshipRepository;
+import tn.esprit.piproject.Repositories.TaskRepository;
 import tn.esprit.piproject.Repositories.UserRepository;
 
 import java.util.List;
@@ -22,7 +24,8 @@ public class IProjectImp implements IProjectService {
 
     @Autowired
     private UserRepository userRepository;
-
+    @Autowired
+    private TaskRepository taskRepository;
     @Autowired
     private InternshipRepository internshipRepository;
     @Autowired
@@ -93,8 +96,6 @@ public class IProjectImp implements IProjectService {
         return documentsRepository.save(documents);
     }
 
-
-
     @Override
     public Documents updatedocuments(Documents documents) {
         return documentsRepository.save(documents);
@@ -104,6 +105,27 @@ public class IProjectImp implements IProjectService {
     public void deletedocuments(int id) {
         documentsRepository.deleteById(id);
 
+    }
+
+    @Override
+    public List<Task> getAllTasks() {return taskRepository.findAll();}
+
+    @Override
+    public Optional<Task> getTaskById(int id) {return taskRepository.findById(id);}
+
+    @Override
+    public Task createTask(Task task) {
+        return taskRepository.save(task);
+    }
+
+    @Override
+    public Task updateTask(Task task) {
+        return taskRepository.save(task);
+    }
+
+    @Override
+    public void deleteTask(int id) {
+        taskRepository.deleteById(id);
     }
     /***************************************************/
     /*

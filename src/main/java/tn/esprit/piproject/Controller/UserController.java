@@ -17,6 +17,7 @@ import java.util.Optional;
 @RequestMapping("/api")
 @AllArgsConstructor
 @NoArgsConstructor
+@CrossOrigin(origins = "http://localhost:4200")
 public class UserController {
     @Autowired
     private IProjectService iProjectService;
@@ -41,13 +42,8 @@ public class UserController {
 
     // Create user
     @PostMapping("/users")
-    public ResponseEntity<User> createUser(@RequestBody User user) {
-        try {
-            User newUser = iProjectService.createUser(user);
-            return new ResponseEntity<>(newUser, HttpStatus.CREATED);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    public User addChambre(@RequestBody User user) {
+        return iProjectService.createUser(user);
     }
 
     // Update user

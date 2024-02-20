@@ -2,6 +2,7 @@ package tn.esprit.piproject.Services;
 
 import tn.esprit.piproject.Entities.Documents;
 import tn.esprit.piproject.Entities.Internship;
+import tn.esprit.piproject.Entities.Task;
 import tn.esprit.piproject.Entities.User;
 
 import java.util.List;
@@ -23,4 +24,9 @@ public interface IProjectService {
     Documents createdocuments(Documents documents);
     Documents updatedocuments(Documents documents);
     void deletedocuments(int id);
+    List<Task> getAllTasks();
+    Optional<Task> getTaskById(int id);
+    Task createTask(Task task);
+    Task updateTask(Task task);
+    void deleteTask(int id);
 }

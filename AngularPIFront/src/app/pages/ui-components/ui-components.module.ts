@@ -20,6 +20,7 @@ import { ComplaintComponent } from './complaint/complaint.component';
 import { InternshipComponent } from './internship/internship.component';
 import { EventComponent } from './event/event.component';
 import { InterviewComponent } from './interview/interview.component';
+import { DocumetsComponent } from './documets/documets.component';
 
 @NgModule({
   imports: [
@@ -40,6 +41,7 @@ import { InterviewComponent } from './interview/interview.component';
     InternshipComponent,
     EventComponent,
     InterviewComponent,
+    DocumetsComponent,
   ],
 })
 export class UicomponentsModule {}
