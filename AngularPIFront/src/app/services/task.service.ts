@@ -11,7 +11,7 @@ export class TaskService {
   private baseUrl = 'http://localhost:8081/api/tasks';
 
   constructor(private http: HttpClient) { }
-  
+
   createTask(task: Task): Observable<Task> {
     return this.http.post<Task>(this.baseUrl, task);
   }
@@ -20,5 +20,13 @@ export class TaskService {
   }
   deleteTask(taskId: number): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/${taskId}`);
+  }
+  updateTask(taskId: number, updatedTask: Task): Observable<Task> {
+    const url = `${this.baseUrl}/${taskId}`;
+    return this.http.put<Task>(url, updatedTask);
+  }
+  getTaskById(taskId: number): Observable<Task> {
+    const url = `${this.baseUrl}/${taskId}`;
+    return this.http.get<Task>(url);
   }
 }

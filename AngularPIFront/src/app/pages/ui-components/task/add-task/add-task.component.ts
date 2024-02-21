@@ -41,7 +41,7 @@ export class AddTaskComponent {
     this.taskService.createTask(newTask).subscribe(
       (response) => {
         console.log('Task added successfully:', response);
-        this.router.navigate(['/tasks']);
+        this.router.navigate(['/ui-components/task']);
       },
       (error) => {
         console.error('Error adding task:', error);

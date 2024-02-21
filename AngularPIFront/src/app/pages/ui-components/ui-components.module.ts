@@ -22,6 +22,7 @@ import { EventComponent } from './event/event.component';
 import { InterviewComponent } from './interview/interview.component';
 import { DocumetsComponent } from './documets/documets.component';
 import { AddTaskComponent } from './task/add-task/add-task.component';
+import { UpdateTaskComponent } from './task/update-task/update-task.component';
 
 @NgModule({
   imports: [
@@ -44,6 +45,7 @@ import { AddTaskComponent } from './task/add-task/add-task.component';
     InterviewComponent,
     DocumetsComponent,
     AddTaskComponent,
+    UpdateTaskComponent,
   ],
 })
 export class UicomponentsModule {}

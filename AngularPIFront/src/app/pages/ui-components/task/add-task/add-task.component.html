@@ -1,15 +1,13 @@
 <div class="table-responsive">
   <table class="table table-striped">
     <tbody>
-      <!-- Existing table rows here -->
       <tr>
-        <td colspan="7"> <!-- Colspan to span across all columns -->
-          <!-- Responsive form within table -->
+        <td colspan="7">
           <div class="container">
             <div class="row">
               <div class="col-md-6">
                 <div class="form-group">
-                  <label for="taskId">ID</label>
+                  <label for="taskId">Task Number</label>
                   <input type="number" class="form-control" id="taskId" [(ngModel)]="taskId" name="taskId" required>
                 </div>
               </div>
@@ -37,13 +35,13 @@
             <div class="row">
               <div class="col-md-6">
                 <div class="form-group">
-                  <label for="supervisorId">Supervisor ID</label>
+                  <label for="supervisorId">Supervisor</label>
                   <input type="number" class="form-control" id="supervisorId" [(ngModel)]="supervisorId" name="supervisorId" value="2">
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="form-group">
-                  <label for="studentId">Student ID</label>
+                  <label for="studentId">Student</label>
                   <input type="number" class="form-control" id="studentId" [(ngModel)]="studentId" name="studentId" value="3">
                 </div>
               </div>

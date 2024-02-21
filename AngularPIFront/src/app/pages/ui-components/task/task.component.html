@@ -7,7 +7,7 @@
       <table class="table table-striped">
         <thead>
           <tr>
-            <th>ID</th>
+            <th>Task Number</th>
             <th>Description</th>
             <th>Progress</th>
             <th>Duration</th>
@@ -22,13 +22,14 @@
             <td>{{ task.taskDescription }}</td>
             <td>{{ task.progress }}</td>
             <td>{{ task.duration }}</td>
-            <td>{{ task.supervisor?.name }}</td>
-            <td>{{ task.student?.name }}</td>
+            <td>{{ task.supervisor.name }}</td>
+            <td>{{ task.student.name }}</td>
             <td><button class="btn btn-danger" (click)="deleteTask(task.id)">Delete</button></td>
+            <td><button class="btn btn-primary" (click)="openUpdateDialog(task.id)">update Task</button></td>
           </tr>
         </tbody>
       </table>
     </div>
-    <button class="btn btn-primary" (click)="openDialog()">Add Task</button>
+    <button class="btn btn-primary" (click)="openAddDialog()">Add Task</button>
   </mat-card-content>
 </mat-card>

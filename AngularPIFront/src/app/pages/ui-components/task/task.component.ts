@@ -2,8 +2,9 @@ import { Component } from '@angular/core';
 import { Task } from 'src/app/core/Task';
 import { TaskService } from 'src/app/services/task.service';
 import { Router } from '@angular/router';
-import { MatDialog,MatDialogRef } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { AddTaskComponent } from './add-task/add-task.component';
+import { UpdateTaskComponent } from './update-task/update-task.component';
 @Component({
   selector: 'app-task',
   templateUrl: './task.component.html',
@@ -12,21 +13,29 @@ import { AddTaskComponent } from './add-task/add-task.component';
 export class TaskComponent {
   tasks: Task[];
 
-  constructor(private taskService: TaskService , private router: Router,public dialog: MatDialog ) { }
+  constructor(private taskService: TaskService, private router: Router, public dialog: MatDialog) { }
 
+  openAddDialog(): void {
+    const dialogRef = this.dialog.open(AddTaskComponent, {});
 
-  openDialog(): void {
-    const dialogRef = this.dialog.open(AddTaskComponent, {
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.fetchTasks();
+    });
+  }
 
+  openUpdateDialog(taskId: number): void {
+    const dialogRef = this.dialog.open(UpdateTaskComponent, {
+      data: { taskId: taskId, ...this.tasks.find(task => task.id === taskId) }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
+      this.fetchTasks();
     });
   }
 
   ngOnInit(): void {
-    // Fetch tasks on component initialization
     this.fetchTasks();
   }
 
@@ -53,8 +62,4 @@ export class TaskComponent {
       );
     }
   }
-
 }
-
-
-
