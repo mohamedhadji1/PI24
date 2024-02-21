@@ -4,21 +4,19 @@ import { BlankComponent } from './layouts/blank/blank.component';
 import { FullComponent } from './layouts/full/full.component';
 import { AppSideLoginComponent } from './pages/authentication/login/login.component';
 import { NotfoundComponent } from './notfound/notfound.component';
-import { CompanyfrontComponent } from './fronttemplate/companyfront/companyfront.component';
+import { CompanyfrontComponent } from './pages/client/components/companyfront/companyfront.component';
 import { DefensefrontComponent } from './fronttemplate/defensefront/defensefront.component';
 import { InternshipfrontComponent } from './fronttemplate/internshipfront/internshipfront.component';
 import { TaskfrontComponent } from './fronttemplate/taskfront/taskfront.component';
-import { EventfrontComponent } from './fronttemplate/eventfront/eventfront.component';
+import { EventfrontComponent } from './pages/client/components/eventfront/eventfront.component';
 import { InterviewfrontComponent } from './fronttemplate/interviewfront/interviewfront.component';
-import { ComplaintfrontComponent } from './fronttemplate/complaintfront/complaintfront.component';
-import { FronttemplateComponent } from './fronttemplate/fronttemplate.component';
-import {ClientModule} from "./pages/client/client.module";
+import { ComplaintfrontComponent } from './pages/client/components/complaintfront/complaintfront.component';
 import { AddTaskComponent } from './pages/ui-components/task/add-task/add-task.component';
 
 const routes: Routes = [
-  {path:"",pathMatch:"full",redirectTo:"client"},
+  {path:"",pathMatch:"full",redirectTo:"home"},
   {
-    path: 'client',
+    path: 'home',
     loadChildren: () =>
       import('./pages/client/client.module').then((m) => m.ClientModule)
   },
@@ -58,17 +56,6 @@ const routes: Routes = [
       },
     ],
   },
-  {path:'index', component:FronttemplateComponent},
-  {path:'company', component:CompanyfrontComponent},
-  {path:'internship', component:InternshipfrontComponent},
-  {path:'defense', component:DefensefrontComponent},
-  {path:'task', component:TaskfrontComponent},
-  {path:'event', component:EventfrontComponent},
-  {path:'interview', component:InterviewfrontComponent},
-  {path:'complaint', component:ComplaintfrontComponent},
-  {path:'sign up', component:ComplaintfrontComponent},
-  {path:'sign in', component:ComplaintfrontComponent},
-  {path:'login', component:AppSideLoginComponent},
   {path: 'add-task',component: AddTaskComponent},
   {path:'**', component:NotfoundComponent}
 ];

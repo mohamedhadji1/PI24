@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { Task } from 'src/app/core/Task';
 import { TaskService } from 'src/app/services/task.service';
 import { Router } from '@angular/router';
+import { MatDialog,MatDialogRef } from '@angular/material/dialog';
+import { AddTaskComponent } from './add-task/add-task.component';
 @Component({
   selector: 'app-task',
   templateUrl: './task.component.html',
@@ -9,7 +11,19 @@ import { Router } from '@angular/router';
 })
 export class TaskComponent {
   tasks: Task[];
-  constructor(private taskService: TaskService , private router: Router ) { }
+
+  constructor(private taskService: TaskService , private router: Router,public dialog: MatDialog ) { }
+
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(AddTaskComponent, {
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
 
   ngOnInit(): void {
     // Fetch tasks on component initialization
@@ -39,7 +53,8 @@ export class TaskComponent {
       );
     }
   }
-  showAddTaskForm(): void {
-    this.router.navigate(['/add-task']);
-  }
+
 }
+
+
+

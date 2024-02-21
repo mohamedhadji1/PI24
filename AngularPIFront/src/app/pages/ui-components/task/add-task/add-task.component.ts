@@ -3,11 +3,12 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Task } from 'src/app/core/Task';
 import { User } from 'src/app/core/User';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-add-task',
   templateUrl: './add-task.component.html',
-  styleUrls: ['./add-task.component.scss']
+  styleUrls: ['./add-task.component.scss'],
 })
 export class AddTaskComponent {
   taskId: number;
@@ -17,7 +18,16 @@ export class AddTaskComponent {
   supervisorId: number = 2;
   studentId: number = 3;
 
-  constructor(private router: Router, private taskService: TaskService) {}
+  constructor(
+    private router: Router,
+    private taskService: TaskService,
+    public dialogRef: MatDialogRef<AddTaskComponent>
+
+  ) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
 
   addTask(): void {
     const newTask: Task = {
@@ -26,7 +36,7 @@ export class AddTaskComponent {
       progress: this.progress,
       duration: this.duration,
       supervisor: { id: this.supervisorId } as User,
-      student: { id: this.studentId } as User
+      student: { id: this.studentId } as User,
     };
     this.taskService.createTask(newTask).subscribe(
       (response) => {

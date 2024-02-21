@@ -3,14 +3,20 @@ import { RouterModule, Routes } from '@angular/router';
 import { NavbarComponent } from './navbar/navbar.component';
 import { MainComponent } from './main/main.component';
 import { VideoComponent } from './video/video.component';
+import { ComplaintfrontComponent } from './components/complaintfront/complaintfront.component';
+import { CompanyfrontComponent } from './components/companyfront/companyfront.component';
+import { EventfrontComponent } from './components/eventfront/eventfront.component';
 
 const routes: Routes = [
   {
     path: '',
     component: MainComponent,
     children: [
-      { path: '', pathMatch: 'full', redirectTo: 'home' },
-      { path: 'home', component: VideoComponent },
+      { path: '', component: VideoComponent },
+      { path: 'complaint', component: ComplaintfrontComponent },
+      { path: 'company', component: CompanyfrontComponent },
+      { path: 'events', component: EventfrontComponent },
+      { path: '**', component: VideoComponent },
     ],
   },
 ];
