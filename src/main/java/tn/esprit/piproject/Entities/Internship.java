@@ -1,27 +1,29 @@
 package tn.esprit.piproject.Entities;
 
+import jakarta.persistence.Entity;
+
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
+import org.springframework.data.annotation.Id;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "tasks")
+
+
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
-public class Task {
+@Document(collection = "internships")
 
+public class Internship {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String tasks;
-    private String progress;
+
+    private int idCompany;
     private String duration;
-    private int idSupervisor;
-    private int idStudent;
+    private String subject;
+    private String description;
+    private String degreeStageO;
+    private TypeInternship Type;
 }

@@ -3,8 +3,7 @@ package tn.esprit.piproject.Repositories;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
-import tn.esprit.piproject.Entities.Company;
+import tn.esprit.piproject.Entities.Offer;
 
 @Repository
-public interface CompanyRepository extends MongoRepository<Company, Integer> {}
-
+public interface OfferRepository extends MongoRepository<Offer, Integer> {}
