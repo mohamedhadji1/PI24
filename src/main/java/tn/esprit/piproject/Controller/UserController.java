@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import tn.esprit.piproject.Config.AutoIncrementUtil;
 import tn.esprit.piproject.Entities.Internship;
 import tn.esprit.piproject.Entities.User;
 import tn.esprit.piproject.Services.IProjectService;
@@ -21,7 +22,8 @@ import java.util.Optional;
 public class UserController {
     @Autowired
     private IProjectService iProjectService;
-
+    @Autowired
+    private AutoIncrementUtil autoIncrementUtil;
     // Get all users
     @GetMapping("/users")
     public ResponseEntity<List<User>> getAllUsers() {
@@ -43,6 +45,8 @@ public class UserController {
     // Create user
     @PostMapping("/users")
     public User addChambre(@RequestBody User user) {
+        int id = autoIncrementUtil.getNextSequence("votre_sequence");
+        user.setId(id);
         return iProjectService.createUser(user);
     }
 

@@ -3,6 +3,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import tn.esprit.piproject.Config.AutoIncrementUtil;
 import tn.esprit.piproject.Entities.Task;
 import tn.esprit.piproject.Repositories.TaskRepository;
 
@@ -15,8 +16,12 @@ public class TaskController {
 
     @Autowired
     private TaskRepository taskRepository;
+    @Autowired
+    private AutoIncrementUtil autoIncrementUtil;
     @PostMapping
     public ResponseEntity<Task> createTask(@RequestBody Task task) {
+        int id = autoIncrementUtil.getNextSequence("votre_sequence");
+        task.setId(id);
         Task createdTask = taskRepository.save(task);
         return new ResponseEntity<>(createdTask, HttpStatus.CREATED);
     }
