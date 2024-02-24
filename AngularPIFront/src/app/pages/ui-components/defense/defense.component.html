@@ -1,0 +1,36 @@
+<mat-card class="cardWithShadow theme-card">
+  <mat-card-header>
+    <mat-card-title class="m-b-0">Defense Management</mat-card-title>
+  </mat-card-header>
+  <mat-card-content class="b-t-1">
+    <div class="table-responsive">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Date</th>
+            <th>NumeroDeClasse</th>
+            <th>NomDeJuret</th>
+            <th>NomDeJuret</th>
+            <th>NomDeEncafrent</th>
+
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let def of defences">
+            <td>{{ def.idDef }}</td>
+            <td>{{ def.dateDefence }}</td>
+            <td>{{ def.numeroDeClasse }}</td>
+            <td>{{ def.nomDeJuret }}</td>
+            <td>{{ def.nomDeJuret }}</td>
+            <td>{{ def.nomDeEncafrent }}</td>
+            <td>{{ def.remarque }}</td>
+            <td><button class="btn btn-danger" (click)="deleteDefence(def.numeroDeClasse)">Delete</button></td>
+        
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <button (click)="openCreateDialog()">Create</button>
+  </mat-card-content>
+</mat-card>
