@@ -24,7 +24,7 @@
             <tbody>
               <tr *ngFor="let evaluation of Evaluations">
                 <td>{{ evaluation.id }}</td>
-                <td>{{ evaluation.idDefense }}</td>
+                {{ evaluation.defense?.idDef }}
                 <td>{{ evaluation.tutor  }}</td>
                 <td>{{ evaluation.student  }}</td>
                 <td>{{ evaluation.note }}</td>

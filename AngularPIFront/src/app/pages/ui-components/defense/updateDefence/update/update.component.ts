@@ -17,7 +17,7 @@ export class UpdateComponent {
   updateTask(defense: defense): void {
     this.taskService.updatedefense(this.data.idDef, defense).subscribe(
       (response) => {
-        console.log('Task updated successfully:', response);
+        console.log('Defence updated successfully:', response);
         this.dialogref.close(true);
       },
       (error) => {

@@ -35,4 +35,8 @@ private baseUrl = 'http://localhost:8081/api/Defence';
       const url = `${this.baseUrl}/${taskId}`;
       return this.http.get<defense>(url);
     }
+    getDefenses(): Observable<defense[]> {
+      return this.http.get<defense[]>(`${this.baseUrl}/defenses`);
+    }
+   
 }

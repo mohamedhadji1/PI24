@@ -30,4 +30,8 @@ export class EvaluationService {
     const url = `${this.baseUrl}/${taskId}`;
     return this.http.get<evaluation>(url);
   }
+  getUsedDefenseIds(): Observable<number[]> {
+    // Appel HTTP pour récupérer les IDs des défenses déjà utilisées depuis un service externe
+    return this.http.get<number[]>(`${this.baseUrl}/defenses`);
+  }
 }
