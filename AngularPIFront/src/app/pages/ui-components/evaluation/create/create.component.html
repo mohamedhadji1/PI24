@@ -1,0 +1,54 @@
+<div class="table-responsive">
+    <table class="table table-striped">
+      <tbody>
+        <tr>
+          <td colspan="7">
+            <div class="container">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="idDefense">idDefense</label>
+                    <input type="text" class="form-control" id="idDefense" [(ngModel)]="idDefense" name="idDefense" required>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="description"> Description</label>
+                    <input type="text" class="form-control" id="description" [(ngModel)]="description" name="description" required>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="student">student</label>
+                    <input type="text" class="form-control" id="student" [(ngModel)]="student" name="student" required>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="tutor">tutor</label>
+                    <input type="text" class="form-control" id="duratutortion" [(ngModel)]="tutor" name="tutor" required>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="note">note</label>
+                    <input type="number" class="form-control" id="note" [(ngModel)]="note" name="note" >
+                  </div>
+                </div>
+             
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <button type="submit" class="btn btn-primary btn-block" (click)="addevaluation()">Add Task</button>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>

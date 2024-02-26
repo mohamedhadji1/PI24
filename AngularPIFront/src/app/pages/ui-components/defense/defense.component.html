@@ -2,35 +2,41 @@
   <mat-card-header>
     <mat-card-title class="m-b-0">Defense Management</mat-card-title>
   </mat-card-header>
+
   <mat-card-content class="b-t-1">
+    <button class="btn btn-primary btn-block"  (click)="openCreateDialog()">Create</button>
+<br>
+<br>
     <div class="table-responsive">
       <table class="table table-bordered">
         <thead>
           <tr>
             <th>ID</th>
             <th>Date</th>
+            <th>Time</th>
+            <th> numeroDeBloc </th>
             <th>NumeroDeClasse</th>
             <th>NomDeJuret</th>
-            <th>NomDeJuret</th>
-            <th>NomDeEncafrent</th>
+            <th>NomDeEncadrent</th>
+            <th>Remarque</th>
 
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let def of defences">
             <td>{{ def.idDef }}</td>
-            <td>{{ def.dateDefence }}</td>
+            <td>{{ def.dateDefense| date: 'shortDate' }}</td>            
+            <td>{{ def.timeDefense  }}</td>
+             <td>{{def.numeroDeBloc}}</td>
             <td>{{ def.numeroDeClasse }}</td>
             <td>{{ def.nomDeJuret }}</td>
-            <td>{{ def.nomDeJuret }}</td>
-            <td>{{ def.nomDeEncafrent }}</td>
+            <td>{{ def.nomDeEncadrent }}</td>
             <td>{{ def.remarque }}</td>
-            <td><button class="btn btn-danger" (click)="deleteDefence(def.numeroDeClasse)">Delete</button></td>
-        
+           <!-- --><td><button class="btn btn-danger" (click)="deleteDefence(def.idDef)">Delete</button></td>
+            <td><button class="btn btn-primary" (click)="openUpdateDialog(def.idDef)">update </button></td>
           </tr>
         </tbody>
       </table>
     </div>
-    <button (click)="openCreateDialog()">Create</button>
   </mat-card-content>
 </mat-card>

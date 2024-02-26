@@ -1,10 +1,11 @@
+import { Time } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Route, Router } from '@angular/router';
-import { Number } from 'mongoose';
 import { defense } from 'src/app/core/Defense';
+import { User } from 'src/app/core/User';
 import { DefenceService } from 'src/app/services/defence.service';
 
 @Component({
@@ -13,43 +14,47 @@ import { DefenceService } from 'src/app/services/defence.service';
   styleUrls: ['./create.component.scss']
 })
 export class CreateComponent {
-  //id: Number ; 
+  id: number  ; 
 
-  dateDefence :Date;
-
+  dateDefence: Date;
+  timeDefense: string ; 
   numeroDeClasse: number;
+  numeroDeBloc :string ; 
+  nomDeJuret:User;
 
-  nomDeJuret:String;
+  nomDeEncadrent:string ;
 
-  nomDeEncafrent:String;
-
-  remarque :String;
+  remarque :string = '';
+  
   constructor(private router: Router,private http: HttpClient,private  defenceService: DefenceService,private fb:FormBuilder,private dialog: MatDialog)
 {
 
+ 
 }
 addDefense(): void {
   const newDefense: defense = {
-    dateDefence: this.dateDefence,
+    idDef : this.id ,
+    dateDefense: this.dateDefence,
+    timeDefense:this.timeDefense,
+    numeroDeBloc :this.numeroDeBloc , 
     numeroDeClasse: this.numeroDeClasse,
-    nomDeJuret: this.nomDeJuret,
-    nomDeEncafrent: this.nomDeEncafrent,
-    remarque: this.remarque,
+    nomDeJuret: this.nomDeJuret ,
+    nomDeEncadrent:this.nomDeEncadrent ,
+remarque:this.remarque
   };
-
-  this.defenceService.createDefence(newDefense).subscribe({
-    next: (response) => {
-      console.log('Defense added successfully:', response);
-      this.router.navigateByUrl('/ui-components/defense', { skipLocationChange: true }).then(() => {
-        this.router.navigate(['/ui-components/defense']);
-      });
+  this.defenceService.createDefence(newDefense).subscribe(
+    (response) => {
+      console.log('Task added successfully:', response);
+      this.router.navigate(['/ui-components/defense']);
     },
-    error: (error) => {
+    (error) => {
       console.error('Error adding defense:', error);
     }
-  });
+  );
+}
+
 }
 
 
 
-}
+

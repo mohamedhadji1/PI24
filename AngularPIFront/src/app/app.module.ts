@@ -47,6 +47,7 @@ import { FooterComponent } from './pages/client/footer/footer.component';
     MaterialModule,
     TablerIconsModule.pick(TablerIcons),
     NgbModule,
+    
   ],
   exports: [TablerIconsModule],
   bootstrap: [AppComponent],

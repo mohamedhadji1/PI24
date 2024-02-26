@@ -6,28 +6,33 @@
             <div class="container">
               <div class="row">
                 <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="idDef">idDef</label>
+                      <input type="number" class="form-control" id="idDef" [(ngModel)]="data.idDef" name="idDef" required readonly>
+                    </div>
+                  </div>
+                <div class="col-md-6">
                   <div class="form-group">
                     <label for="dateDefence">Date of Defence</label>
-                    <input type="datetime-local" class="form-control" id="dateDefence" [(ngModel)]="dateDefence" name="dateDefence" 
-                 >
+                    <input type="date" class="form-control" id="dateDefence" [(ngModel)]="data.dateDefense" name="dateDefence" required>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
                     <label for="dateDefence">time of Defence</label>
-                    <input type="text" class="form-control" id="dateDefence" [(ngModel)]="timeDefense" name="dateDefence" required>
+                    <input type="text" class="form-control" id="dateDefence" [(ngModel)]="data.timeDefense" name="dateDefence" required>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
                     <label for="numeroDeClasse">Class Number</label>
-                    <input type="number" class="form-control" id="numeroDeClasse" [(ngModel)]="numeroDeClasse" name="numeroDeClasse" required>
+                    <input type="number" class="form-control" id="numeroDeClasse" [(ngModel)]="data.numeroDeClasse" name="numeroDeClasse" required>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
                     <label for="numeroDeBloc">numeroDeBloc</label>
-                    <input type="text" class="form-control" id="numeroDeBloc" [(ngModel)]="numeroDeBloc" name="numeroDeBloc" required>
+                    <input type="text" class="form-control" id="numeroDeBloc" [(ngModel)]="data.numeroDeBloc" name="numeroDeClasse" required>
                   </div>
                 </div>
               </div>
@@ -35,13 +40,13 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label for="nomDeJuret">Nom De Juret</label>
-                    <input type="text" class="form-control" id="nomDeJuret" [(ngModel)]="nomDeJuret" name="nomDeJuret" required>
+                    <input type="text" class="form-control" id="nomDeJuret" [(ngModel)]="data.nomDeJuret" name="nomDeJuret" required>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
                     <label for="nomDeEncafrent">Nom De Encafrent</label>
-                    <input type="text" class="form-control" id="nomDeEncafrent" [(ngModel)]="nomDeEncadrent" name="nomDeEncafrent" required>
+                    <input type="text" class="form-control" id="nomDeEncafrent" [(ngModel)]="data.nomDeEncadrent" name="nomDeEncafrent" required>
                   </div>
                 </div>
               </div>
@@ -49,13 +54,13 @@
                 <div class="col-md-12">
                   <div class="form-group">
                     <label for="remarque">Remarque</label>
-                    <input type="text" class="form-control" id="remarque" [(ngModel)]="remarque" name="remarque" required>
+                    <input type="text" class="form-control" id="remarque" [(ngModel)]="data.remarque" name="remarque" required>
                   </div>
                 </div>
               </div>
               <div class="row">
                 <div class="col-md-12">
-                  <button type="submit" class="btn btn-primary btn-block" (click)="addDefense()">Add Defense</button>
+                  <button type="submit" class="btn btn-primary btn-block" (click)="updateTask(data)">update Defense</button>
                 </div>
               </div>
             </div>

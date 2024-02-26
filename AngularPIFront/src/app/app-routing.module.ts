@@ -13,6 +13,7 @@ import { InterviewfrontComponent } from './fronttemplate/interviewfront/intervie
 import { ComplaintfrontComponent } from './fronttemplate/complaintfront/complaintfront.component';
 import { FronttemplateComponent } from './fronttemplate/fronttemplate.component';
 import {ClientModule} from "./pages/client/client.module";
+import { EvaluationComponent } from './pages/ui-components/evaluation/evaluation.component';
 
 const routes: Routes = [
   {path:"",pathMatch:"full",redirectTo:"client"},
@@ -61,6 +62,7 @@ const routes: Routes = [
   {path:'company', component:CompanyfrontComponent},
   {path:'internship', component:InternshipfrontComponent},
   {path:'defense', component:DefensefrontComponent},
+  {path:'evaluation', component:EvaluationComponent},
   {path:'task', component:TaskfrontComponent},
   {path:'event', component:EventfrontComponent},
   {path:'interview', component:InterviewfrontComponent},

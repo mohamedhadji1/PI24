@@ -23,6 +23,10 @@ import { InterviewComponent } from './interview/interview.component';
 import { DocumetsComponent } from './documets/documets.component';
 import { CreateComponent } from './defense/createdefense/create/create.component';
 import { DeleteComponent } from './defense/DeleteDefense/delete/delete.component';
+import { UpdateComponent } from './defense/updateDefence/update/update.component';
+import { EvaluationComponent } from './evaluation/evaluation.component';
+import { CreateComponentt } from './evaluation/create/create.component';
+import { UpdateComponentt } from './evaluation/update/update.component';
 
 @NgModule({
   imports: [
@@ -46,6 +50,12 @@ import { DeleteComponent } from './defense/DeleteDefense/delete/delete.component
     DocumetsComponent,
     CreateComponent,
     DeleteComponent,
+    UpdateComponent,
+    EvaluationComponent,
+    CreateComponentt,
+    UpdateComponentt
+    
+    
   ],
 })
 export class UicomponentsModule {}

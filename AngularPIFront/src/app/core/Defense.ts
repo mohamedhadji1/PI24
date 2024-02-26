@@ -1,17 +1,15 @@
-import { ObjectId } from 'mongoose';
+import { User } from './User';
+import { Time } from '@angular/common';
 
 export interface defense {
-    idDef?: any;
-
-      dateDefence :Date;
-
-      numeroDeClasse: number;
-
-      nomDeJuret:String;
-
-      nomDeEncafrent:String;
-
-      remarque :String;
+  idDef: number;
+  dateDefense :Date;
+  timeDefense :string ;
+  numeroDeBloc :string  ;
+  numeroDeClasse: number;
+    nomDeJuret: User;
+    nomDeEncadrent: string;
+    remarque: string;
   }
   
  

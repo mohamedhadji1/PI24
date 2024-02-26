@@ -28,6 +28,11 @@ export const navItems: NavItem[] = [
     route: '/ui-components/defense',
   },
   {
+    displayName: 'evaluation Management',
+    iconName: 'gavel',
+    route: '/ui-components/evaluation',
+  },
+  {
     displayName: 'Task Management',
     iconName: 'checklist',
     route: '/ui-components/task',

@@ -6,9 +6,10 @@ import { CreateComponent } from 'src/app/pages/ui-components/defense/createdefen
 import { ObjectId } from 'mongoose';
 import { DefenceService } from 'src/app/services/defence.service';
 import { defense } from 'src/app/core/Defense';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { tap, catchError } from 'rxjs/operators';
-
+import { UpdateComponent } from './updateDefence/update/update.component';
+import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-defense',
   templateUrl: './defense.component.html',
@@ -16,13 +17,9 @@ import { tap, catchError } from 'rxjs/operators';
   providers:[DefenceService]
 })
 export class DefenseComponent implements OnInit{
-  defences: defense[] = [];
-  //DefenceForm:FormGroup ; 
-  showForm: boolean = true;
-  idDef: ObjectId;
- 
-  //title ="defence-app";
-  //defences: Object[]=[] ; 
+  defences: defense[] ;
+  
+  
   constructor(private http: HttpClient,private  defenceService: DefenceService,private fb:FormBuilder,private dialog: MatDialog)
    {
 
@@ -50,27 +47,21 @@ export class DefenseComponent implements OnInit{
   }
   fetchDefence(): void {
     this.defenceService.getAllDefence().subscribe({
-      next: (defences: defense[]) => {
-        this.defences = defences;
-        console.log('defences:', this.defences); // Vérifier les données récupérées
-  
-        // Parcourir les défenses pour afficher les identifiants
-        this.defences.forEach(defense => {
-          console.log('defense:', defense); // Afficher l'objet defense complet
-          const idDefString: string = JSON.stringify(defense.idDef); // Convertir ObjectId en chaîne de caractères
-          console.log('idDefString:', idDefString);
+        next: (defences: defense[]) => {
+            this.defences = defences;
+        },
+        error: (error: any) => {
+            console.error('Error fetching defences:', error);
+        }
+    });
+}
 
-        });
         
       
-      },
-      error: (error: any) => {
-        console.error('Error fetching defense:', error);
-      }
-    });
+      
 
   
-  }
+  
   deleteDefence(DefenceId: number): void {
     if (window.confirm('Are you sure you want to delete this Defence?')) {
         this.defenceService.deleteDefence(DefenceId).pipe(
@@ -84,15 +75,21 @@ export class DefenseComponent implements OnInit{
         ).subscribe();
     }
 }
+openUpdateDialog(DefenceId: number): void {
+  const dialogRef = this.dialog.open(UpdateComponent, {
+    data: { DefenceId: DefenceId, ...this.defences.find(defence => defence.idDef === DefenceId) }
+  });
 
+  dialogRef.afterClosed().subscribe(result => {
+    console.log('The dialog was closed');
+    this.fetchDefence();
+  });
+}
 
   
   
 }
-  //hidden = false;
-
-  //toggleBadgeVisibility() {
-    //this.hidden = !this.hidden;
+  
   
 
 

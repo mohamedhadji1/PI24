@@ -1,0 +1,44 @@
+<mat-card class="cardWithShadow theme-card">
+    <mat-card-header>
+      <mat-card-title class="m-b-0">Evaluation Managemet</mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="b-t-1">
+    </mat-card-content>
+    <mat-card-content class="b-t-1">
+        <button class="btn btn-primary btn-block"  (click)="openCreateDialogEval()">Create</button>
+    <br>
+    <br>
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>IDDefense</th>
+                <th>tutor</th>
+                <th>Student</th>
+                <th>Note</th>
+                <th>description</th>
+    
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let evaluation of Evaluations">
+                <td>{{ evaluation.id }}</td>
+                <td>{{ evaluation.idDefense }}</td>
+                <td>{{ evaluation.tutor  }}</td>
+                <td>{{ evaluation.student  }}</td>
+                <td>{{ evaluation.note }}</td>
+
+                <td>{{ evaluation.description }}</td>
+              
+              
+               <td><button class="btn btn-danger" (click)="deleteEvaluation(evaluation.id)">Delete</button></td>
+                  <td><button class="btn btn-primary" (click)="openUpdateDialogEval(evaluation.id)">update </button></td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </mat-card-content>
+    </mat-card>
+    
+  
