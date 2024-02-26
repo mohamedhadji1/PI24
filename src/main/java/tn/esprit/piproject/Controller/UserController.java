@@ -6,8 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import tn.esprit.piproject.Entities.Internship;
-import tn.esprit.piproject.Entities.User;
+import tn.esprit.piproject.Entities.*;
 import tn.esprit.piproject.Services.IProjectService;
 
 import java.util.List;

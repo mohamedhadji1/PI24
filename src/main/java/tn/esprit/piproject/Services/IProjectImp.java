@@ -4,14 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import tn.esprit.piproject.Entities.Documents;
-import tn.esprit.piproject.Entities.Internship;
-import tn.esprit.piproject.Entities.Task;
-import tn.esprit.piproject.Entities.User;
-import tn.esprit.piproject.Repositories.DocumentsRepository;
-import tn.esprit.piproject.Repositories.InternshipRepository;
-import tn.esprit.piproject.Repositories.TaskRepository;
-import tn.esprit.piproject.Repositories.UserRepository;
+import tn.esprit.piproject.Entities.*;
+import tn.esprit.piproject.Repositories.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -30,7 +24,12 @@ public class IProjectImp implements IProjectService {
     private InternshipRepository internshipRepository;
     @Autowired
     private DocumentsRepository documentsRepository;
-
+    @Autowired
+    private OffreRepository offerRepository;
+    @Autowired
+    private SequenceGeneratorService sequenceGeneratorService;
+    @Autowired
+    private CompanyRepository companyRepository;
     @Override
     public List<User> getAllUsers() {
         return userRepository.findAll();
@@ -115,6 +114,7 @@ public class IProjectImp implements IProjectService {
 
     @Override
     public Task createTask(Task task) {
+        task.setId(sequenceGeneratorService.generateSequence("documents_sequence"));
         return taskRepository.save(task);
     }
 
@@ -127,6 +127,59 @@ public class IProjectImp implements IProjectService {
     public void deleteTask(int id) {
         taskRepository.deleteById(id);
     }
+
+    @Override
+    public List<Offer> getAllOffer() {
+        return offerRepository.findAll();
+    }
+
+    @Override
+    public Optional<Offer> getofferById(int id) {
+        return offerRepository.findById(id);
+    }
+
+    @Override
+    public Offer createoffer(Offer offer) {
+        offer.setId(sequenceGeneratorService.generateSequence("documents_sequence"));
+        return offerRepository.save(offer);
+    }
+
+    @Override
+    public Offer updateoffer(Offer offer) {
+        return offerRepository.save(offer);
+    }
+
+    @Override
+    public void deleteoffer(int id) {
+        offerRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Company> getAllcompany() {
+        return companyRepository.findAll();
+    }
+
+    @Override
+    public Optional<Company> getCompanyById(int idComp) {
+        return companyRepository.findById(idComp);
+    }
+
+    @Override
+    public Company createcompany(Company company) {
+        company.setId(sequenceGeneratorService.generateSequence("documents_sequence"));
+        return companyRepository.save(company);
+    }
+
+
+    @Override
+    public Company updatecompany(Company company) {return companyRepository.save(company);
+    }
+
+    @Override
+    public void deletecompany(int idComp) {
+        companyRepository.deleteById(idComp);
+    }
+
     /***************************************************/
     /*
     @Override

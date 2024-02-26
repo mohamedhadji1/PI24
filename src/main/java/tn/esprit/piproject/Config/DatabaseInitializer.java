@@ -74,7 +74,7 @@ public class DatabaseInitializer implements CommandLineRunner {
         }
 
         if (offreRepository.count() == 0) {
-            Offre offre = new Offre();
+            Offer offre = new Offer();
             offreRepository.save(offre);
         }
 

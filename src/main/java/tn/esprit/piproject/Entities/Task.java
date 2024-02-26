@@ -22,6 +22,6 @@ public class Task {
     private String taskDescription;
     private String progress;
     private String duration;
-    private User supervisor;
-    private User student;
+    private int supervisor;
+    private int student;
 }
