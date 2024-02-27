@@ -1,5 +1,7 @@
 package tn.esprit.piproject.Entities;
 
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,16 +10,18 @@ import lombok.Setter;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "tasks")
-@NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Task {
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String tasks;
+    private String taskDescription;
     private String progress;
     private String duration;
-    private int idSupervisor;
-    private int idStudent;
+    private User supervisor;
+    private User student;
 }
