@@ -9,8 +9,8 @@ import { User } from '../core/User';
 })
 export class UserService {
 
-  constructor(private http: HttpClient) { }
-
+  constructor(private http: HttpClient) {}
+  
   getUsers(): Observable<User[]> {
     return this.http.get<User[]>('http://localhost:8081/api/users');
   }

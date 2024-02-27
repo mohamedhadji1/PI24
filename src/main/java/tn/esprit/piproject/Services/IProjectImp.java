@@ -4,9 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 import tn.esprit.piproject.Entities.*;
 import tn.esprit.piproject.Repositories.*;
 
+import java.time.Instant;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -141,11 +145,18 @@ public class IProjectImp implements IProjectService {
     @Override
     public Offer createoffer(Offer offer) {
         offer.setId(sequenceGeneratorService.generateSequence("documents_sequence"));
+        Date currentDate = Date.from(Instant.now());
+        Calendar c = Calendar.getInstance();
+        c.add(Calendar.DATE, 3);
+        Date date_after_3_days = (Date) c.getTime();
+        offer.setDateStart(currentDate);
+        offer.setDateEnd(date_after_3_days);
         return offerRepository.save(offer);
     }
 
     @Override
     public Offer updateoffer(Offer offer) {
+
         return offerRepository.save(offer);
     }
 

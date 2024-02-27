@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.piproject.Entities.*;
+import tn.esprit.piproject.Services.IProjectImp;
 import tn.esprit.piproject.Services.IProjectService;
 
 import java.util.List;
@@ -42,8 +43,10 @@ public class OfferController {
     // Mettre à jour une offre existante
     @PutMapping("/{id}")
     public ResponseEntity<Offer> updateOffer(@PathVariable int id, @RequestBody Offer offer) {
-        offer.setId(id);
-        Offer updatedOffer = iProjectService.updateoffer(offer);
+        Offer offer_from_db=iProjectService.getofferById(id).orElseGet(null);
+        if(offer_from_db == null) return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        offer_from_db.setTypeInternship(offer.getTypeInternship());
+        Offer updatedOffer = iProjectService.updateoffer(offer_from_db);
         return new ResponseEntity<>(updatedOffer, HttpStatus.OK);
     }
 
