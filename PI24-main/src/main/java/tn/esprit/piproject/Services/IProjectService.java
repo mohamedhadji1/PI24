@@ -23,14 +23,17 @@ public interface IProjectService {
     Documents updatedocuments(Documents documents);
     void deletedocuments(int id);
 /////////////////////////////////////DEFENCE////////////////////////////////
-    List<Defence> getAllDefence();
-    Optional<Defence> getDefenceById(ObjectId id);
-    Defence createDefence(Defence defence);
-    Defence updateDefence(Defence defence);
-    void deleteDefence(ObjectId id);
+    List<Defense> getAllDefence();
+    Optional<Defense> getDefenceById(int id);
+    Defense createDefence(Defense defence);
+    Defense updateDefence(Defense defence);
+    void deleteDefence(int id);
     List<Evaluation> getAllEvalution();
-    Optional<Evaluation> getEvalutioneById(ObjectId id);
+    Optional<Evaluation> getEvalutioneById(int id);
     Evaluation createEvalution(Evaluation evaluation);
     Evaluation updateEvalution(Evaluation evaluation);
-    void deleteEvalution(ObjectId id);
+    void deleteEvalution(int id);
+     List<Defense> getAllDefenses() ;
+    List<User> getAllUserss();
+
 }

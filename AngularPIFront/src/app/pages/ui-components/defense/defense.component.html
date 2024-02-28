@@ -6,6 +6,12 @@
   <mat-card-content class="b-t-1">
     <button class="btn btn-primary btn-block"  (click)="openCreateDialog()">Create</button>
 <br>
+<!-- search box-->
+<div class="form-outline mt-3">
+<input type="search"[(ngModel)]="searchtext" id="form1" class="form-control" placeholder="Search" aria-label="search">
+
+
+</div>
 <br>
     <div class="table-responsive">
       <table class="table table-bordered">
@@ -17,19 +23,21 @@
             <th> numeroDeBloc </th>
             <th>NumeroDeClasse</th>
             <th>NomDeJuret</th>
+            <th>nomdeStudent</th>
             <th>NomDeEncadrent</th>
             <th>Remarque</th>
 
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let def of defences">
+          <tr *ngFor="let def of defences|filter:searchtext">
             <td>{{ def.idDef }}</td>
             <td>{{ def.dateDefense| date: 'shortDate' }}</td>            
             <td>{{ def.timeDefense  }}</td>
              <td>{{def.numeroDeBloc}}</td>
             <td>{{ def.numeroDeClasse }}</td>
             <td>{{ def.nomDeJuret }}</td>
+            <td>{{ def.UserStudent?.id }}</td>
             <td>{{ def.nomDeEncadrent }}</td>
             <td>{{ def.remarque }}</td>
            <!-- --><td><button class="btn btn-danger" (click)="deleteDefence(def.idDef)">Delete</button></td>

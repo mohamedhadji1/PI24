@@ -1,5 +1,6 @@
 package tn.esprit.piproject.Config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import tn.esprit.piproject.Entities.*;
@@ -11,19 +12,18 @@ public class DatabaseInitializer implements CommandLineRunner {
     private final UserRepository userRepository;
     private final CompanyRepository companyRepository;
     private final ComplaintRepository complaintRepository;
-    private final DefenceRepository defenceRepository;
+    private final DefenseRepository defenceRepository;
     private final DocumentsRepository documentsRepository;
     private final EvaluationRepository evaluationRepository;
 
     private final OffreRepository offreRepository;
     private final ResponseRepository responseRepository;
-    private final TaskRepository taskRepository;
-
+    private final TaskRepository taskRepository ;
     public DatabaseInitializer(UserRepository userRepository,
                                CompanyRepository companyRepository, ComplaintRepository complaintRepository,
-                               DefenceRepository defenceRepository,
+                               DefenseRepository defenceRepository,
                                DocumentsRepository documentsRepository,EvaluationRepository evaluationRepository
-            , InternshipRepository internshipRepository,OffreRepository offreRepository,ResponseRepository responseRepository,TaskRepository taskRepository) {
+            , InternshipRepository internshipRepository,OffreRepository offreRepository,ResponseRepository responseRepository,TaskRepository taskRepository ) {
         this.userRepository = userRepository;
         this.companyRepository = companyRepository;
         this.complaintRepository=  complaintRepository;
@@ -34,6 +34,7 @@ public class DatabaseInitializer implements CommandLineRunner {
         this.offreRepository=offreRepository;
         this.responseRepository=responseRepository;
         this.taskRepository=taskRepository;
+
     }
 
     @Override
@@ -54,7 +55,7 @@ public class DatabaseInitializer implements CommandLineRunner {
         }
 
         if (defenceRepository.count() == 0) {
-            Defence defence = new Defence();
+            Defense defence = new Defense();
             defenceRepository.save(defence);
         }
 

@@ -18,7 +18,7 @@ import { CommonModule } from '@angular/common';
 })
 export class DefenseComponent implements OnInit{
   defences: defense[] ;
-  
+  searchtext:any ; 
   
   constructor(private http: HttpClient,private  defenceService: DefenceService,private fb:FormBuilder,private dialog: MatDialog)
    {

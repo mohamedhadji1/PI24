@@ -37,7 +37,7 @@ export class CreateComponentt {
     private fb: FormBuilder,
     private dialog: MatDialog
   ) {
-    this.defenseList = [];
+   // this.defenseList = [];
   }
   
   ngOnInit(): void {
@@ -50,7 +50,7 @@ export class CreateComponentt {
       }
     );*/
     this.loadDefenses() ; 
-    this.loadUsedDefenseIds();
+    //this.loadUsedDefenseIds();
   }
 
   loadDefenses(): void {

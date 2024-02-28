@@ -8,30 +8,45 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label for="dateDefence">Date of Defence</label>
-                    <input type="datetime-local" class="form-control" id="dateDefence" [(ngModel)]="dateDefence" name="dateDefence" 
-                 >
+                    <input type="datetime-local" class="form-control" id="dateDefence" [(ngModel)]="dateDefence" name="dateDefence" required>
                   </div>
                 </div>
+                
                 <div class="col-md-6">
                   <div class="form-group">
                     <label for="dateDefence">time of Defence</label>
-                    <input type="text" class="form-control" id="dateDefence" [(ngModel)]="timeDefense" name="dateDefence" required>
+                    <input type="text" class="form-control" id="dateDefence" [(ngModel)]="timeDefense" name="dateDefence" required disabled>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
                     <label for="numeroDeClasse">Class Number</label>
-                    <input type="number" class="form-control" id="numeroDeClasse" [(ngModel)]="numeroDeClasse" name="numeroDeClasse" required>
-                  </div>
+                    <input type="number" class="form-control" id="numeroDeClasse" [(ngModel)]="numeroDeClasse" name="numeroDeClasse" required disabled>
+                 </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
                     <label for="numeroDeBloc">numeroDeBloc</label>
-                    <input type="text" class="form-control" id="numeroDeBloc" [(ngModel)]="numeroDeBloc" name="numeroDeBloc" required>
-                  </div>
+      <input type="text" class="form-control" id="numeroDeBloc" [(ngModel)]="numeroDeBloc" name="numeroDeBloc" required disabled>
+      </div>
                 </div>
               </div>
               <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="selectedUserId">Student </label>
+                    <select [(ngModel)]="selectedUserId" name="selectedUserId" class="form-control">
+                        <option *ngFor="let user of userList" [value]="user.id">{{ user.id }}</option>
+                    </select>
+                </div>
+                
+                  
+                
+                
+                
+                </div>
+                
+                
                 <div class="col-md-6">
                   <div class="form-group">
                     <label for="nomDeJuret">Nom De Juret</label>

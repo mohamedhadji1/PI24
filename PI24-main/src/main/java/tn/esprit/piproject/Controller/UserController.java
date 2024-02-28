@@ -17,6 +17,7 @@ import java.util.Optional;
 @RequestMapping("/api")
 @AllArgsConstructor
 @NoArgsConstructor
+@CrossOrigin(origins = "http://localhost:4200")
 public class UserController {
     @Autowired
     private IProjectService iProjectService;
@@ -38,6 +39,7 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
 
     // Create user
     @PostMapping("/users")

@@ -25,7 +25,7 @@ public class IProjectImp implements IProjectService {
     @Autowired
     private DocumentsRepository documentsRepository;
     @Autowired
-    private  DefenceRepository defenceRepository ;
+    private DefenseRepository defenceRepository ;
     @Autowired
     private EvaluationRepository evaluationRepository ;
     @Override
@@ -108,27 +108,29 @@ public class IProjectImp implements IProjectService {
 //************************************************************************/////////////
 
     @Override
-    public List<Defence> getAllDefence() {
+    public List<Defense> getAllDefence() {
         return defenceRepository.findAll() ;
     }
 
     @Override
-    public Optional<Defence> getDefenceById(ObjectId id) {
+    public Optional<Defense> getDefenceById(int id) {
         return defenceRepository.findById(id) ;
     }
 
     @Override
-    public Defence createDefence(Defence defence) {
+    public Defense createDefence(Defense defence) {
+
+       defence.generateAttributes();
         return  defenceRepository.save(defence) ;
     }
 
     @Override
-    public Defence updateDefence(Defence defence) {
+    public Defense updateDefence(Defense defence) {
         return defenceRepository.save(defence) ;
     }
 
     @Override
-    public void deleteDefence(ObjectId id) {
+    public void deleteDefence(int id) {
         defenceRepository.deleteById(id);
     }
 
@@ -139,7 +141,7 @@ public class IProjectImp implements IProjectService {
     }
 
     @Override
-    public Optional<Evaluation> getEvalutioneById(ObjectId id) {
+    public Optional<Evaluation> getEvalutioneById(int id) {
         return evaluationRepository.findById(id);    }
 
 
@@ -155,9 +157,22 @@ public class IProjectImp implements IProjectService {
     }
 
     @Override
-    public void deleteEvalution(ObjectId id) {
+    public void deleteEvalution(int id) {
         evaluationRepository.deleteById(id);
     }
+
+    @Override
+    public List<Defense> getAllDefenses() {
+        return defenceRepository.findAll();
+
+    }
+
+    @Override
+    public List<User> getAllUserss() {
+        return userRepository.findAll();
+    }
+
+
 /****************************************----------Defence---------****************************************/
    /* @Override
     public List<Defence> getAllDefence() {

@@ -7,13 +7,15 @@ import { UserService } from 'src/app/services/user.service';
   templateUrl: './user.component.html',
 })
 export class UserComponent implements OnInit {
-  users: User[] = [];
+  users: User[];
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService) { 
+    
+  }
 
   ngOnInit(): void {
-    this.userService.getUsers().subscribe((data: User[]) => {
-      this.users = data;
+    this.userService.getUsers().subscribe(users => {
+      this.users = users;
     });
   }
 }
