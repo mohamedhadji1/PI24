@@ -8,6 +8,7 @@ import { defense } from 'src/app/core/Defense';
 import { Role, User } from 'src/app/core/User';
 import { DefenceService } from 'src/app/services/defence.service';
 import { UserService } from 'src/app/services/user.service';
+import * as emailjs from 'emailjs-com';
 
 @Component({
   selector: 'app-create',
@@ -38,7 +39,7 @@ export class CreateComponent implements OnInit{
   {
     this.numeroDeClasse = this.generateRandomClasse();
     this.numeroDeBloc = this.generateRandomBloc();
-    this.dateDefence = new Date(); 
+   
     this.timeDefense=this.generateRandomTime() ; 
     //this.userList= [] ;
 
@@ -63,7 +64,7 @@ loadUsers(): void {
     }
   );
 }
-addDefense(): void {
+/*addDefense(): void {
   this.timeDefense = this.generateRandomTime();
 
   console.log('UserList:', this.userList);
@@ -76,7 +77,7 @@ addDefense(): void {
   }
 
   console.log('SelectedUser:', selectedUser);
-
+  const email: string = selectedUser.email;
   const newDefense: defense = {
     idDef: this.id,
     dateDefense: this.dateDefence,
@@ -106,6 +107,66 @@ addDefense(): void {
       console.error('Error adding defense:', error);
     }
   );
+}
+*/
+addDefense(): void {
+  this.timeDefense = this.generateRandomTime();
+
+  console.log('UserList:', this.userList);
+  console.log('SelectedUserId:', this.selectedUserId);
+
+  const selectedUser: User | undefined = this.userList.find(user => user.id === +this.selectedUserId);
+  if (!selectedUser) {
+    console.error('Selected user not found');
+    return;
+  }
+
+  console.log('SelectedUser:', selectedUser);
+  const email: string = selectedUser.email;
+  console.log('email:', email);
+  const newDefense: defense = {
+    idDef: this.id,
+    dateDefense: this.dateDefence,
+    timeDefense: this.timeDefense,
+    numeroDeBloc: this.numeroDeBloc,
+    numeroDeClasse: this.numeroDeClasse,
+    nomDeJuret: this.nomDeJuret, // Utilize the selected user object
+    UserStudent: selectedUser,
+    nomDeEncadrent: this.nomDeEncadrent,
+    remarque: this.remarque
+  };
+
+  if (!newDefense.idDef) {
+    newDefense.numeroDeBloc = this.generateRandomBloc();
+    newDefense.numeroDeClasse = this.generateRandomClasse();
+  }
+
+  emailjs.send('service_vxn2zgg', 'template_30ljq0h', {
+    to_email: email,
+    from_name: 'Esprit',
+    message: `YOUR DEFENSE IS: Date: ${newDefense.dateDefense}, Heure: ${newDefense.timeDefense}, Bloc: ${newDefense.numeroDeBloc}, Salle: ${newDefense.numeroDeClasse}`
+}, 'q1LkbNrd-XG2TeyVd')
+  
+  
+  .then((response) => {
+    console.log('E-mail sent successfully:', response);
+
+    // Ajouter la défense après l'envoi de l'e-mail
+    this.defenceService.createDefence(newDefense).subscribe(
+      (response) => {
+        console.log('newDefense:', newDefense);
+        console.log('defense added successfully:', response);
+      
+        this.selectedUserId =  1;
+        this.router.navigate(['/ui-components/defense']);
+      },
+      (error) => {
+        console.error('Error adding defense:', error);
+      }
+    );
+  }, (error) => {
+    console.error('Error sending e-mail:', error);
+  });
 }
 
 
