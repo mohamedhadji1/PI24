@@ -11,22 +11,24 @@
             <th>Address</th>
             <th>Email</th>
             <th>Description</th>
-            <th>Pnumber</th>
+            <th>Phone Number</th>
             <th>Action</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let company of companies">
             <td>{{ company.name }}</td>
-            <td>{{ company.Address }}</td>
-            <td>{{ company.Email }}</td>
-            <td>{{ company.Description }}</td>
-            <td>{{ company.Pnumber }}</td>
-            <td><button class="btn btn-danger">Delete</button></td>
-            <td><button class="btn btn-primary">update company</button></td>
+            <td>{{ company.address }}</td>
+            <td>{{ company.email }}</td>
+            <td>{{ company.description }}</td>
+            <td>{{ company.pnumber }}</td>
+            <td><button class="btn btn-danger" (click)="deleteCompany(company.id)">Delete</button></td>
+            <td><button class="btn btn-primary"(click)="openUpdateDialog(company.id)">update company</button></td>
+            <td><button class="btn btn-primary"(click)="Offer()">Offers</button></td>
           </tr>
         </tbody>
       </table>
     </div>
+    <button class="btn btn-primary" (click)="openAddDialog()">Add Company</button>
   </mat-card-content>
 </mat-card>

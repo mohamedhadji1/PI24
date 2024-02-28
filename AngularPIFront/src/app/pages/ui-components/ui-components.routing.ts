@@ -10,6 +10,7 @@ import { InternshipComponent } from './internship/internship.component';
 import { EventComponent } from './event/event.component';
 import { DocumetsComponent } from './documets/documets.component';
 import { AddTaskComponent } from './task/add-task/add-task.component';
+import { OfferComponent } from './company/offer/offer.component';
 
 export const UiComponentsRoutes: Routes = [
   {
@@ -55,6 +56,11 @@ export const UiComponentsRoutes: Routes = [
       path: 'add-task',
       component: AddTaskComponent,
       },
+      {
+        path: 'offer',
+        component: OfferComponent,
+        },
+
 
     ],
   },
