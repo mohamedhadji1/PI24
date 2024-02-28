@@ -1,46 +1,49 @@
 package tn.esprit.piproject.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.Id;
+import lombok.*;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.MongoId;
 
 import java.util.Date;
+import java.util.Objects;
 
 @Document(collection = "offer")
+@Getter
+@Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 public class Offer {
 
+    @Id
+    @MongoId
     private int id;
     private Date dateStart;
     private Date dateEnd;
     private TypeInternship typeInternship;
 
-    public int getId() {
-        return id;
+    @DBRef
+    @JsonIgnore
+    private Company company;
+
+    public static Offer Empty() {
+        return Offer.builder().id(-1).build();
     }
 
-    public void setId(int id) {
-        this.id = id;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Offer offer = (Offer) o;
+        return id == offer.id;
     }
 
-    public Date getDateStart() {
-        return dateStart;
-    }
-
-    public void setDateStart(Date dateStart) {
-        this.dateStart = dateStart;
-    }
-
-    public Date getDateEnd() {
-        return dateEnd;
-    }
-
-    public void setDateEnd(Date dateEnd) {
-        this.dateEnd = dateEnd;
-    }
-
-    public TypeInternship getTypeInternship() {
-        return typeInternship;
-    }
-
-    public void setTypeInternship(TypeInternship typeInternship) {
-        this.typeInternship = typeInternship;
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

@@ -1,5 +1,7 @@
 package tn.esprit.piproject.Controller;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -8,9 +10,14 @@ import tn.esprit.piproject.Entities.*;
 import tn.esprit.piproject.Services.IProjectImp;
 import tn.esprit.piproject.Services.IProjectService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+
+@CrossOrigin(origins = "http://localhost:4200")
+@AllArgsConstructor
+@NoArgsConstructor
 @RestController
 @RequestMapping("/api/offers")
 public class OfferController {
@@ -33,9 +40,17 @@ public class OfferController {
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
+    @GetMapping("/company/{id}")
+    public ResponseEntity<List<Offer>> getOfferByCompany(@PathVariable int id) {
+        Company company = iProjectService.getCompanyById(id).orElseGet(null);
+        if(company == null) return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(company.getOffers(), HttpStatus.OK);
+    }
+
     // Créer une nouvelle offre
-    @PostMapping
-    public ResponseEntity<Offer> createOffer(@RequestBody Offer offer) {
+    @PostMapping("/post/{company_id}")
+    public ResponseEntity<Offer> createOffer(@PathVariable int company_id, @RequestBody Offer offer) {
+        offer.setCompany(Company.builder().id(company_id).build());
         Offer newOffer = iProjectService.createoffer(offer);
         return new ResponseEntity<>(newOffer, HttpStatus.CREATED);
     }

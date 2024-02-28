@@ -13,6 +13,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @NoArgsConstructor
@@ -137,9 +138,17 @@ public class IProjectImp implements IProjectService {
         return offerRepository.findAll();
     }
 
+
     @Override
     public Optional<Offer> getofferById(int id) {
         return offerRepository.findById(id);
+    }
+
+    public List<Offer> getoffersByCompany(int id) {
+        List<Offer> all_offers = offerRepository.findAll();
+        return all_offers.stream()
+                .filter(offer -> offer.getCompany().getId() == id)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -151,18 +160,31 @@ public class IProjectImp implements IProjectService {
         Date date_after_3_days = (Date) c.getTime();
         offer.setDateStart(currentDate);
         offer.setDateEnd(date_after_3_days);
+        Company company_from_db=companyRepository.findById(offer.getCompany().getId()).orElseGet(null);
+        if(company_from_db == null) return Offer.Empty();
+        company_from_db.getOffers().add(offer);
+        companyRepository.save(company_from_db);
         return offerRepository.save(offer);
     }
 
     @Override
     public Offer updateoffer(Offer offer) {
-
+        Company company_from_db=companyRepository.findById(offer.getCompany().getId()).orElseGet(null);
+        if(company_from_db == null) return Offer.Empty();
+        company_from_db.getOffers().add(offer);
+        companyRepository.save(company_from_db);
         return offerRepository.save(offer);
     }
 
     @Override
     public void deleteoffer(int id) {
-        offerRepository.deleteById(id);
+        offerRepository.findById(id).ifPresent(offer_value -> {
+            companyRepository.findById(offer_value.getCompany().getId()).ifPresent(company_value -> {
+                company_value.getOffers().remove(offer_value);
+                companyRepository.save(company_value);
+            });
+            offerRepository.deleteById(offer_value.getId());
+        });
     }
 
     @Override

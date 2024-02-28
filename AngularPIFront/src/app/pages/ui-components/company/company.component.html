@@ -24,7 +24,7 @@
             <td>{{ company.pnumber }}</td>
             <td><button class="btn btn-danger" (click)="deleteCompany(company.id)">Delete</button></td>
             <td><button class="btn btn-primary"(click)="openUpdateDialog(company.id)">update company</button></td>
-            <td><button class="btn btn-primary"(click)="Offer()">Offers</button></td>
+            <td><button class="btn btn-primary"(click)="Offer(company.id)">Offers</button></td>
           </tr>
         </tbody>
       </table>

@@ -26,6 +26,7 @@ import { UpdateTaskComponent } from './task/update-task/update-task.component';
 import { AddCompanyComponent } from './company/add-company/add-company.component';
 import { UpdateCompanyComponent } from './company/update-company/update-company.component';
 import { OfferComponent } from './company/offer/offer.component';
+import { AddOfferComponent } from './company/add-offer/add-offer.component';
 
 @NgModule({
   imports: [
@@ -52,6 +53,7 @@ import { OfferComponent } from './company/offer/offer.component';
     AddCompanyComponent,
     UpdateCompanyComponent,
     OfferComponent,
+    AddOfferComponent
   ],
 })
 export class UicomponentsModule {}

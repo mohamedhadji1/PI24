@@ -6,9 +6,9 @@ import { Component,ChangeDetectorRef } from '@angular/core';
   styleUrls: ['./video.component.scss']
 })
 export class VideoComponent {
- /*constructor(private cdr: ChangeDetectorRef) {}
+ constructor(private cdr: ChangeDetectorRef) {}
 
   ngAfterViewInit() {
     this.cdr.detectChanges();
-  }*/
+  }
 }

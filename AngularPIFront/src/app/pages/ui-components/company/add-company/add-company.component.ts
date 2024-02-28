@@ -48,7 +48,8 @@ export class AddCompanyComponent {
         address: this.companyForm.value.address,
         email: this.companyForm.value.email,
         description: this.companyForm.value.description,
-        pnumber: this.companyForm.value.pnumber
+        pnumber: this.companyForm.value.pnumber,
+        offers: []
       };
 
       this.companyservice.addCompany(newCompany).subscribe(

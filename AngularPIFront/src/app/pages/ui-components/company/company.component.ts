@@ -22,8 +22,8 @@ export class CompanyComponent implements OnInit {
       this.fetchCompanies();
     });
   }
-  Offer():void{
-    this.router.navigate(['/ui-components/offer']);
+  Offer(company_id: number):void{
+    this.router.navigate(["/ui-components/offer", company_id]);
   }
   openUpdateDialog(id: number): void {
     const dialogRef = this.dialog.open(UpdateCompanyComponent, {

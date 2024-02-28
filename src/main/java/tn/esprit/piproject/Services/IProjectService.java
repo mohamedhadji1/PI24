@@ -30,6 +30,7 @@ public interface IProjectService {
     List<Offer> getAllOffer();
 
     Optional<Offer> getofferById(int id);
+    List<Offer> getoffersByCompany(int id);
 
     Offer createoffer(Offer offer);
 
