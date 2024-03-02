@@ -3,16 +3,15 @@ package tn.esprit.piproject.Services;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
-import tn.esprit.piproject.Entities.Documents;
-import tn.esprit.piproject.Entities.Internship;
-import tn.esprit.piproject.Entities.Task;
-import tn.esprit.piproject.Entities.User;
-import tn.esprit.piproject.Repositories.DocumentsRepository;
-import tn.esprit.piproject.Repositories.InternshipRepository;
-import tn.esprit.piproject.Repositories.TaskRepository;
-import tn.esprit.piproject.Repositories.UserRepository;
+import org.springframework.web.multipart.MultipartFile;
+import tn.esprit.piproject.Entities.*;
+import tn.esprit.piproject.Repositories.*;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,7 +29,8 @@ public class IProjectImp implements IProjectService {
     private InternshipRepository internshipRepository;
     @Autowired
     private DocumentsRepository documentsRepository;
-
+    @Autowired
+    private TaskMonitoringRepository taskMonitoringRepository;
     @Override
     public List<User> getAllUsers() {
         return userRepository.findAll();
@@ -114,9 +114,7 @@ public class IProjectImp implements IProjectService {
     public Optional<Task> getTaskById(int id) {return taskRepository.findById(id);}
 
     @Override
-    public Task createTask(Task task) {
-        return taskRepository.save(task);
-    }
+    public Task createTask(Task task) {return taskRepository.save(task);}
 
     @Override
     public Task updateTask(Task task) {
@@ -127,30 +125,34 @@ public class IProjectImp implements IProjectService {
     public void deleteTask(int id) {
         taskRepository.deleteById(id);
     }
-    /***************************************************/
-    /*
     @Override
-    public List<Documents> getAllDocuments() {
-        return documentsRepository.findAll();
+    public Monitoring createTaskMonitoring(Monitoring monitoring) {
+        return taskMonitoringRepository.save(monitoring);
     }
 
     @Override
-    public Optional<Documents> getDocumentsById(int id) {
-        return DocumentsRepository.findById(id);
+    public Resource downloadTaskAttachment(int taskId) {
+        Optional<Task> optionalTask = taskRepository.findById(taskId);
+        if (optionalTask.isPresent()) {
+            Task task = optionalTask.get();
+            if (task.getAttachmentData() != null && task.getAttachmentFileName() != null) {
+                ByteArrayResource resource = new ByteArrayResource(task.getAttachmentData());
+                resource.getFilename();
+
+                return resource;
+            }
+        }
+        return null;
     }
 
     @Override
-    public User createDocument(Documents documents) {
-        return documentsRepository.save(documents);
+    public String getAttachmentFilename(int id) {
+        Optional<Task> optionalTask = taskRepository.findById(id);
+        if (optionalTask.isPresent()) {
+            Task task = optionalTask.get();
+            return task.getAttachmentFileName();
+        }
+        return null;
     }
-
-    @Override
-    public User updateDocuments(Documents documents) {
-        return userRepository.save(documents);
-    }
-
-    @Override
-    public void deleteDocuments(int id) {
-        documentsRepository.deleteById(id);
-    }*/
 }
+
