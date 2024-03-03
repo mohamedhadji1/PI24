@@ -1,3 +1,4 @@
+import { saveAs } from 'file-saver';
 import { Component } from '@angular/core';
 import { Task } from 'src/app/core/Task';
 import { TaskService } from 'src/app/services/task.service';
@@ -5,6 +6,7 @@ import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { AddTaskComponent } from './add-task/add-task.component';
 import { UpdateTaskComponent } from './update-task/update-task.component';
+
 @Component({
   selector: 'app-task',
   templateUrl: './task.component.html',
@@ -62,4 +64,26 @@ export class TaskComponent {
       );
     }
   }
+  downloadAttachment(taskId: number, attachmentFileName?: string): void {
+    if (attachmentFileName) {
+      this.taskService.downloadTaskFile(taskId, attachmentFileName).subscribe(
+        data => {
+          const blob = new Blob([data], { type: 'application/octet-stream' });
+          saveAs(blob, attachmentFileName);
+        },
+        error => {
+          console.error('Error downloading attachment:', error);
+          // Handle specific errors, if needed
+          if (error.status === 404) {
+            console.error('Attachment not found');
+          } else {
+            console.error('Unknown error occurred');
+          }
+        }
+      );
+    } else {
+      console.error('Attachment file name is undefined');
+    }
+  }
+
 }

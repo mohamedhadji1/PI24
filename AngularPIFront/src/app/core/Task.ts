@@ -7,4 +7,7 @@ export interface Task {
   duration: string;
   supervisor: User;
   student: User;
+  attachmentFileName?: string;
+  attachmentData?: ArrayBuffer | string;
 }
+

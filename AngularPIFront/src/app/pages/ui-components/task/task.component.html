@@ -7,25 +7,32 @@
       <table class="table table-striped">
         <thead>
           <tr>
-            <th>Task Number</th>
             <th>Description</th>
             <th>Progress</th>
             <th>Duration</th>
             <th>Supervisor</th>
             <th>Student</th>
+            <th>File Name</th>
             <th>Action</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let task of tasks">
-            <td>{{ task.id }}</td>
             <td>{{ task.taskDescription }}</td>
             <td>{{ task.progress }}</td>
             <td>{{ task.duration }}</td>
-            <td>{{ task.supervisor.name }}</td>
-            <td>{{ task.student.name }}</td>
-            <td><button class="btn btn-danger" (click)="deleteTask(task.id)">Delete</button></td>
-            <td><button class="btn btn-primary" (click)="openUpdateDialog(task.id)">update Task</button></td>
+            <td>{{ task.supervisor ? task.supervisor.name : 'n/a' }}</td>
+            <td>{{ task.student ? task.student.name : 'n/a' }}</td>
+            <td>{{ task.attachmentFileName }}</td>
+            <td>
+              <button class="btn btn-primary" (click)="downloadAttachment(task.id, task.attachmentFileName)">Download</button>
+            </td>
+            <td>
+              <button class="btn btn-danger" (click)="deleteTask(task.id)">Delete</button>
+            </td>
+            <td>
+              <button class="btn btn-primary" (click)="openUpdateDialog(task.id)">Update Task</button>
+            </td>
           </tr>
         </tbody>
       </table>

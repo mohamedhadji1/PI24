@@ -1,19 +1,16 @@
 package tn.esprit.piproject.Entities;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.persistence.*;
+import lombok.*;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
-
+import org.springframework.web.multipart.MultipartFile;
 @Document(collection = "tasks")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class Task {
 
     @Id
@@ -22,6 +19,10 @@ public class Task {
     private String taskDescription;
     private String progress;
     private String duration;
+    private String attachmentFileName;
+    private byte[] attachmentData;
+    @DBRef
     private User supervisor;
+    @DBRef
     private User student;
 }

@@ -4,53 +4,58 @@
       <tr>
         <td colspan="7">
           <div class="container">
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label for="taskId">Task Number</label>
-                  <input type="number" class="form-control" id="taskId" [(ngModel)]="taskId" name="taskId" required>
+            <form [formGroup]="taskForm" (ngSubmit)="addTask()" class="needs-validation" novalidate>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="taskDescription">Task Description</label>
+                    <input type="text" class="form-control" id="taskDescription" formControlName="taskDescription" placeholder="Enter task description" required>
+                    <div *ngIf="taskForm.get('taskDescription')?.invalid && (taskForm.get('taskDescription')?.dirty || taskForm.get('taskDescription')?.touched)" class="invalid-feedback">
+                      <div *ngIf="taskForm.get('taskDescription')?.errors?.['required']">Task description is required.</div>
+                      <div *ngIf="taskForm.get('taskDescription')?.errors?.['minlength']">Task description should be at least 3 characters long.</div>
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label for="taskDescription">Task Description</label>
-                  <input type="text" class="form-control" id="taskDescription" [(ngModel)]="taskDescription" name="taskDescription" required>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="progress">Progress</label>
+                    <input type="text" class="form-control" id="progress" formControlName="progress" placeholder="Enter progress" required>
+                    <div *ngIf="taskForm.get('progress')?.invalid && (taskForm.get('progress')?.dirty || taskForm.get('progress')?.touched)" class="invalid-feedback">
+                      <div *ngIf="taskForm.get('progress')?.errors?.['required']">Progress is required.</div>
+                      <div *ngIf="taskForm.get('progress')?.errors?.['minlength']">Progress should be at least 3 characters long.</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="duration">Duration</label>
+                    <input type="text" class="form-control" id="duration" formControlName="duration" placeholder="Enter duration" required>
+                    <div *ngIf="taskForm.get('duration')?.invalid && (taskForm.get('duration')?.dirty || taskForm.get('duration')?.touched)" class="invalid-feedback">
+                      <div *ngIf="taskForm.get('duration')?.errors?.['required']">Duration is required.</div>
+                      <div *ngIf="taskForm.get('duration')?.errors?.['minlength']">Duration should be at least 3 characters long.</div>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label for="progress">Progress</label>
-                  <input type="text" class="form-control" id="progress" [(ngModel)]="progress" name="progress" required>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="file">Attach File</label>
+                    <input type="file" class="form-control-file" id="file" (change)="onFileSelected($event)" required>
+                    <div *ngIf="taskForm.get('file')?.invalid && (taskForm.get('file')?.dirty || taskForm.get('file')?.touched)" class="invalid-feedback">
+                      <div *ngIf="taskForm.get('file')?.errors?.['required']">File attachment is required.</div>
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label for="duration">Duration</label>
-                  <input type="text" class="form-control" id="duration" [(ngModel)]="duration" name="duration" required>
+              <div class="row">
+                <div class="col-md-12">
+                  <button type="submit" class="btn btn-primary btn-block" [disabled]="!taskForm.valid">Add Task</button>
                 </div>
               </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label for="supervisorId">Supervisor</label>
-                  <input type="number" class="form-control" id="supervisorId" [(ngModel)]="supervisorId" name="supervisorId" value="2">
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label for="studentId">Student</label>
-                  <input type="number" class="form-control" id="studentId" [(ngModel)]="studentId" name="studentId" value="3">
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
-                <button type="submit" class="btn btn-primary btn-block" (click)="addTask()">Add Task</button>
-              </div>
-            </div>
+            </form>
           </div>
         </td>
       </tr>

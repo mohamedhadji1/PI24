@@ -18,12 +18,12 @@ public class DatabaseInitializer implements CommandLineRunner {
     private final OffreRepository offreRepository;
     private final ResponseRepository responseRepository;
     private final TaskRepository taskRepository;
-
+    private final TaskMonitoringRepository taskMonitoringRepository;
     public DatabaseInitializer(UserRepository userRepository,
                                CompanyRepository companyRepository, ComplaintRepository complaintRepository,
                                DefenceRepository defenceRepository,
                                DocumentsRepository documentsRepository,EvaluationRepository evaluationRepository
-            , InternshipRepository internshipRepository,OffreRepository offreRepository,ResponseRepository responseRepository,TaskRepository taskRepository) {
+            , InternshipRepository internshipRepository,OffreRepository offreRepository,ResponseRepository responseRepository,TaskRepository taskRepository,TaskMonitoringRepository taskMonitoringRepository) {
         this.userRepository = userRepository;
         this.companyRepository = companyRepository;
         this.complaintRepository=  complaintRepository;
@@ -34,6 +34,7 @@ public class DatabaseInitializer implements CommandLineRunner {
         this.offreRepository=offreRepository;
         this.responseRepository=responseRepository;
         this.taskRepository=taskRepository;
+        this.taskMonitoringRepository=taskMonitoringRepository;
     }
 
     @Override
@@ -86,6 +87,10 @@ public class DatabaseInitializer implements CommandLineRunner {
         if (taskRepository.count() == 0) {
             Task task = new Task();
             taskRepository.save(task);
+        }
+        if (taskMonitoringRepository.count() == 0) {
+            Monitoring MonitoringRepository = new Monitoring();
+            taskMonitoringRepository.save(MonitoringRepository);
         }
     }
 }

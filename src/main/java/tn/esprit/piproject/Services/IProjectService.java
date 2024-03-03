@@ -1,9 +1,8 @@
 package tn.esprit.piproject.Services;
 
-import tn.esprit.piproject.Entities.Documents;
-import tn.esprit.piproject.Entities.Internship;
-import tn.esprit.piproject.Entities.Task;
-import tn.esprit.piproject.Entities.User;
+import tn.esprit.piproject.Entities.*;
+import org.springframework.core.io.Resource;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
@@ -29,4 +28,9 @@ public interface IProjectService {
     Task createTask(Task task);
     Task updateTask(Task task);
     void deleteTask(int id);
+    Monitoring createTaskMonitoring (Monitoring monitoring);
+    Resource downloadTaskAttachment(int taskId);
+    String getAttachmentFilename(int id);
+
 }
+

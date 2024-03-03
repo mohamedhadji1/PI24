@@ -1,23 +1,18 @@
-import { Component } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Role , User } from 'src/app/core/User';
+import { Role, User } from '../core/User';
 
-@Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
+@Injectable({
+  providedIn: 'root'
 })
-export class AppSideLoginComponent {
-  email: string = '';
-  password: string = '';
-  errorMessage: string = '';
-
-  constructor(private router: Router) {}
+export class AuthService {
+  constructor(private router: Router) { }
 
   login(email: string, password: string): boolean {
     // Simulating authentication logic
     if (email === 'student@esprit.tn' && password === 'aaa') {
       localStorage.setItem('currentUser', JSON.stringify({ id: 1, email: email, role: Role.STUDENT }));
-      this.router.navigate(['/dashboard']);
+      this.router.navigate(['/dashboard/student']);
       return true;
     }
        console.log('Attempting login with email:', email);
@@ -31,6 +26,16 @@ export class AppSideLoginComponent {
       return false;
     }
   }
+
+  logout(): void {
+    localStorage.removeItem('currentUser');
+    this.router.navigate(['/login']);
+  }
+
+  isLoggedIn(): boolean {
+    return !!localStorage.getItem('currentUser');
+  }
+
   getCurrentUser(): User | null {
     const userString = localStorage.getItem('currentUser');
     return userString ? JSON.parse(userString) : null;

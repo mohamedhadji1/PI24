@@ -3,11 +3,13 @@ package tn.esprit.piproject.Controller;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import tn.esprit.piproject.Entities.Internship;
+import tn.esprit.piproject.Config.AutoIncrementUtil;
 import tn.esprit.piproject.Entities.User;
+import tn.esprit.piproject.Repositories.UserRepository;
 import tn.esprit.piproject.Services.IProjectService;
 
 import java.util.List;
@@ -21,6 +23,10 @@ import java.util.Optional;
 public class UserController {
     @Autowired
     private IProjectService iProjectService;
+    @Autowired
+    private AutoIncrementUtil autoIncrementUtil;
+    @Autowired
+    UserRepository userRepository;
 
     // Get all users
     @GetMapping("/users")
@@ -43,20 +49,24 @@ public class UserController {
     // Create user
     @PostMapping("/users")
     public User addChambre(@RequestBody User user) {
+        int id = autoIncrementUtil.getNextSequence("votre_sequence");
+        user.setId(id);
         return iProjectService.createUser(user);
     }
 
     // Update user
     @PutMapping("/users/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable int id, @RequestBody User user) {
-        Optional<User> oldUser = iProjectService.getUserById(id);
-        if (oldUser.isPresent()) {
-            User updatedUser = iProjectService.updateUser(user);
-            return new ResponseEntity<>(updatedUser, HttpStatus.OK);
+    public ResponseEntity<User> updateTask(@PathVariable("id") int id, @RequestBody User updatedUser) {
+        User userExist = userRepository.findById(id).orElse(null);
+        if (userExist != null) {
+            updatedUser.setId(id);
+            User savedUser = userRepository.save(updatedUser);
+            return new ResponseEntity<>(savedUser, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
 
     // Delete user
     @DeleteMapping("/users/{id}")
@@ -64,7 +74,4 @@ public class UserController {
         iProjectService.deleteUser(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-
-
-
 }
