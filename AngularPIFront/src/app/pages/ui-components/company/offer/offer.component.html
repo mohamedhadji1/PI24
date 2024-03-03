@@ -1,0 +1,34 @@
+<mat-card class="cardWithShadow theme-card">
+    <mat-card-header style="
+    display: flex;
+    justify-content: center;
+"> 
+      <mat-card-title class="m-b-0">Offers</mat-card-title>
+    </mat-card-header> 
+    <mat-card-content class="b-t-1">
+
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Internship type</th>
+            <th>Start date</th>
+            <th>End date</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let offer of offers">
+            <td>{{ offer.typeInternship }}</td>
+            <td>{{ offer.dateStart | date:"MMM dd, yyyy 'at' hh:mm a" }}</td>
+            <td>{{ offer.dateEnd | date:"MMM dd, yyyy 'at' hh:mm a"  }}</td>
+            <td><button class="btn btn-danger">Delete</button></td>
+            <td><button class="btn btn-primary">update Offer</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <button class="btn btn-primary">Add Offer</button>
+  
+
+    </mat-card-content>

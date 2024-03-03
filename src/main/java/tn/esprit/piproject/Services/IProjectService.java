@@ -31,6 +31,27 @@ public interface IProjectService {
     Monitoring createTaskMonitoring (Monitoring monitoring);
     Resource downloadTaskAttachment(int taskId);
     String getAttachmentFilename(int id);
+    /*****************************************/
+    List<Offer> getAllOffer();
 
+    Optional<Offer> getofferById(int id);
+    List<Offer> getoffersByCompany(int id);
+
+    Offer createoffer(Offer offer);
+
+    Offer updateoffer(Offer offer);
+
+    void deleteoffer(int id);
+    /***************************************/
+    List<Company> getAllcompany();
+
+    Optional<Company> getCompanyById(int idComp);
+
+    Company createcompany(Company company);
+
+    Company updatecompany(Company company);
+
+    void deletecompany(int idComp);
+    /***************************************/
 }
 

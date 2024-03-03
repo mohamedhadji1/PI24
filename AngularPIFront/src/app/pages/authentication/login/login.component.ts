@@ -26,6 +26,10 @@ export class AppSideLoginComponent {
       console.log('Logged in as supervisor');
       this.router.navigate(['/dashboard']);
       return true;
+    } else if (email === 'admin@esprit.tn' && password === 'aaa') {
+      localStorage.setItem('currentUser', JSON.stringify({ id: 2, email: email, role: Role.ADMIN }));
+      this.router.navigate(['/dashboard']);
+      return true;
     } else {
       console.log('Login failed');
       return false;

@@ -11,9 +11,7 @@ public class SequenceCounter {
 
     @Id
     private String id;
-
     private int seq;
-
     public SequenceCounter(String id, int seq) {
         this.id = id;
         this.seq = seq;

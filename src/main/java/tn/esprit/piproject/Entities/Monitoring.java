@@ -23,7 +23,7 @@ public class Monitoring {
     private String taskId;
     private String supervisorId;
     private String studentId;
-    private List<Note> notes;
+    private int notes;
     private int percentageCompletion;
     private String status;
 }

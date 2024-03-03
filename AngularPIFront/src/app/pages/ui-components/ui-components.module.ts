@@ -23,6 +23,10 @@ import { InterviewComponent } from './interview/interview.component';
 import { DocumetsComponent } from './documets/documets.component';
 import { AddTaskComponent } from './task/add-task/add-task.component';
 import { UpdateTaskComponent } from './task/update-task/update-task.component';
+import { AddCompanyComponent } from './company/add-company/add-company.component';
+import { AddOfferComponent } from './company/add-offer/add-offer.component';
+import { OfferComponent } from './company/offer/offer.component';
+import { UpdateCompanyComponent } from './company/update-company/update-company.component';
 
 @NgModule({
   imports: [
@@ -46,6 +50,10 @@ import { UpdateTaskComponent } from './task/update-task/update-task.component';
     DocumetsComponent,
     AddTaskComponent,
     UpdateTaskComponent,
+    AddCompanyComponent,
+    AddOfferComponent,
+    OfferComponent,
+    UpdateCompanyComponent,
   ],
 })
 export class UicomponentsModule {}
