@@ -9,11 +9,13 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label for="id">id</label>
-                    <input type="number" class="form-control" id="id" [(ngModel)]="data.id" name="id" required>
+                    <input type="number" class="form-control" id="id" [(ngModel)]="data.id" name="id" required disabled>
                   </div>
                 </div>
                 <div class="col-md-6">
-                  <select class="form-control" id="idDefense" [(ngModel)]="selectedDefenseId" name="idDefense" required>
+                  <label for="idDefense"> idDefense</label>
+
+                  <select class="form-control" id="idDefense" [(ngModel)]="selectedDefenseId" name="idDefense" required disabled>
                     <option value="">Sélectionnez une option</option>
                     <option *ngFor="let defenseItem of defenseList" [value]="defenseItem.idDef">{{ defenseItem.idDef }}</option>
                 </select>
@@ -28,12 +30,13 @@
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-6">
+               <!-- <div class="col-md-6">
                   <div class="form-group">
                     <label for="student">Progress</label>
                     <input type="text" class="form-control" id="student" [(ngModel)]="data.student" name="student" required>
                   </div>
                 </div>
+                -->
                 <div class="col-md-6">
                   <div class="form-group">
                     <label for="tutor">tutor</label>
@@ -52,7 +55,7 @@
               </div>
               <div class="row">
                 <div class="col-md-12">
-                  <button type="submit" class="btn btn-primary btn-block" (click)="updateEvaluation(data)">Add Task</button>
+                  <button type="submit" class="btn btn-primary btn-block" (click)="updateEvaluation(data)">UPDATE Evaluation</button>
                 </div>
               </div>
             </div>

@@ -1,3 +1,6 @@
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
 <mat-card class="cardWithShadow theme-card">
   <mat-card-header>
     <mat-card-title class="m-b-0">Defense Management</mat-card-title>
@@ -5,14 +8,24 @@
 
   <mat-card-content class="b-t-1">
     <button class="btn btn-primary btn-block"  (click)="openCreateDialog()">Create</button>
-<br>
-<!-- search box-->
-<div class="form-outline mt-3">
-<input type="search"[(ngModel)]="searchtext" id="form1" class="form-control" placeholder="Search" aria-label="search">
+    <!--<button class="btn btn-primary btn-block"  (click)="openCreateDialogMaps()">Maps</button>-->
 
+    <br>
+    <!-- search box-->
+    <div class="form-outline mt-3">
+      <input type="search" [(ngModel)]="searchtext" class="form-control" placeholder="Search" aria-label="search" (input)="applyFilters()">
+    </div>
+    <br>
+    <input type="date" [(ngModel)]="filterDate" (change)="applyFilters()">
+    <br>
+    <br>
+    <select class="form-select custom-select-blue" [(ngModel)]="filterStudent" (change)="applyFilters()">
+      <option value="">-- Sélectionnez un étudiant --</option>
+      <option *ngFor="let student of defences" [value]="student.UserStudent?.id">{{ student.UserStudent?.id }}</option>
+    </select>
+    <br>
+    
 
-</div>
-<br>
     <div class="table-responsive">
       <table class="table table-bordered">
         <thead>
@@ -26,25 +39,35 @@
             <th>nomdeStudent</th>
             <th>NomDeEncadrent</th>
             <th>Remarque</th>
-
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let def of defences|filter:searchtext">
-            <td>{{ def.idDef }}</td>
-            <td>{{ def.dateDefense| date: 'shortDate' }}</td>            
-            <td>{{ def.timeDefense  }}</td>
-             <td>{{def.numeroDeBloc}}</td>
-            <td>{{ def.numeroDeClasse }}</td>
-            <td>{{ def.nomDeJuret }}</td>
-            <td>{{ def.UserStudent?.id }}</td>
-            <td>{{ def.nomDeEncadrent }}</td>
-            <td>{{ def.remarque }}</td>
-           <!-- --><td><button class="btn btn-danger" (click)="deleteDefence(def.idDef)">Delete</button></td>
-            <td><button class="btn btn-primary" (click)="openUpdateDialog(def.idDef)">update </button></td>
-          </tr>
+          <ng-container *ngFor="let def of paginatedDefenses[currentIndex]">
+            <tr>
+              <td>{{ def.idDef }}</td>
+              <td>{{ def.dateDefense| date: 'shortDate' }}</td>            
+              <td>{{ def.timeDefense }}</td>
+              <td>{{ def.numeroDeBloc }}</td>
+              <td>{{ def.numeroDeClasse }}</td>
+              <td>{{ def.nomDeJuret }}</td>
+              <td>{{ def.UserStudent?.id }}</td>
+              <td>{{ def.nomDeEncadrent }}</td>
+              <td>{{ def.remarque }}</td>
+              <td><button class="btn btn-danger" (click)="deleteDefence(def.idDef)">Delete</button></td>
+              <td><button class="btn btn-primary" (click)="openUpdateDialog(def.idDef)">update </button></td>
+             <!-- defense.component.html -->
+
+             <td>
+  {{ def.numeroDeBloc }}
+ <button   class="btn btn-primary" (click)="openCreateDialogMapslocation(def.numeroDeBloc)">Voir le trajet</button>
+</td>
+
+            </tr>
+          </ng-container>
         </tbody>
       </table>
     </div>
   </mat-card-content>
+
 </mat-card>
+<div id="map" ></div>

@@ -28,6 +28,7 @@ import { EvaluationComponent } from './evaluation/evaluation.component';
 import { CreateComponentt } from './evaluation/create/create.component';
 import { UpdateComponentt } from './evaluation/update/update.component';
 import { FilterPipe } from './defense/filter.pipe';
+import { MapsComponent } from './defense/maps/maps.component';
 
 @NgModule({
   imports: [
@@ -55,7 +56,8 @@ import { FilterPipe } from './defense/filter.pipe';
     EvaluationComponent,
     CreateComponentt,
     UpdateComponentt,
-    FilterPipe
+    FilterPipe,
+    MapsComponent
     
     
   ],

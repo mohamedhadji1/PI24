@@ -6,6 +6,7 @@
             <div class="container">
               <div class="row">
                 <div class="col-md-6">
+                  <label for="description"> DefenseId</label>
                   <select class="form-control" id="idDefense" [(ngModel)]="selectedDefenseId" name="idDefense" required>
                     <option value="">Sélectionnez une option</option>
                     <option *ngFor="let defenseItem of defenseList" [value]="defenseItem.idDef">{{ defenseItem.idDef }}</option>
@@ -21,12 +22,14 @@
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-6">
+                <!--<div class="col-md-6">
                   <div class="form-group">
-                    <label for="student">student</label>
-                    <input type="text" class="form-control" id="student" [(ngModel)]="student" name="student" required>
+                    <label for="student">Student ID</label>
+                    <input type="text" class="form-control" id="student" [(ngModel)]="studentIdLabel" name="student" readonly>
                   </div>
                 </div>
+              -->
+                
                 <div class="col-md-6">
                   <div class="form-group">
                     <label for="tutor">tutor</label>
