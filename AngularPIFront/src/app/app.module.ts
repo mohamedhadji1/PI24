@@ -24,6 +24,11 @@ import { BrandingComponent } from './layouts/full/sidebar/branding.component';
 import { AppNavItemComponent } from './layouts/full/sidebar/nav-item/nav-item.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FooterComponent } from './pages/client/footer/footer.component';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { UpdateComponent } from './pages/ui-components/defense/updateDefence/update/update.component';
+import { NgApexchartsModule } from 'ng-apexcharts';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,6 +38,8 @@ import { FooterComponent } from './pages/client/footer/footer.component';
     HeaderComponent,
     BrandingComponent,
     AppNavItemComponent,
+    FooterComponent,
+    
     
   ],
   imports: [
@@ -44,6 +51,8 @@ import { FooterComponent } from './pages/client/footer/footer.component';
     ReactiveFormsModule,
     MaterialModule,
     TablerIconsModule.pick(TablerIcons),
+    
+
  
   ],
   exports: [TablerIconsModule],

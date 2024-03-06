@@ -5,7 +5,7 @@ import { FormBuilder } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Route, Router } from '@angular/router';
 import { defense } from 'src/app/core/Defense';
-import { Role, User } from 'src/app/core/User';
+import { ERole, User } from 'src/app/core/User';
 import { DefenceService } from 'src/app/services/defence.service';
 import { UserService } from 'src/app/services/user.service';
 import * as emailjs from 'emailjs-com';
@@ -16,6 +16,8 @@ import * as emailjs from 'emailjs-com';
   styleUrls: ['./create.component.scss']
 })
 export class CreateComponent implements OnInit{
+
+  
   id: number  ; 
   defenseList: defense[] = [];
   dateDefence: Date;
@@ -27,10 +29,13 @@ export class CreateComponent implements OnInit{
   nomDeEncadrent:string ;
   remarque :string = '';
   userList: User[] = [];
+  userListt: User[] = [];
+  selectedUserIdSuper: number;
   //selectedDefenseId: number ;
   //userList: defense[] ;
   usedDefenseIds: User[] ;
   selectedUserId: number;
+ERole :ERole ;
   //filterDate: string = '';
   //filterStudent: string = '';
   //currentPage: number = 1;
@@ -55,19 +60,28 @@ export class CreateComponent implements OnInit{
  
 ngOnInit ()
 {
- //this.loadusers() ;
- //this.loadUsedUsers() ;
- //console.log(this.userList);
-//this.addDefense() ; 
+ 
 this.loadUsers();
+this.loadUserss() ; 
 }
 loadUsers(): void {
-  this.userService.getUsers().subscribe(
+  this.userService.getUsersByRole(ERole.STUDENT).subscribe(
     (users: User[]) => {
-      this.userList = users; // Utiliser userList au lieu de usedDefenseIds
+      this.userList = users;
     },
     (error) => {
       console.error('Erreur lors de la récupération des utilisateurs:', error);
+    }
+  );
+}
+
+loadUserss(): void {
+  this.userService.getUsersByRole(ERole.SUPERVISOR).subscribe(
+    (users: User[]) => {
+      this.userListt = users; // Filtrer les utilisateurs par le rôle SUPERVISOR
+    },
+    (error) => {
+      console.error('Erreur lors de la récupération des superviseurs:', error);
     }
   );
 }
@@ -76,13 +90,29 @@ loadUsers(): void {
 
 addDefense(): void {
   this.timeDefense = this.generateRandomTime();
-
+  console.log('UserListt:', this.userListt);
   console.log('UserList:', this.userList);
-  console.log('SelectedUserId:', this.selectedUserId);
+  console.log('SelectedUserIdSuper:', this.selectedUserIdSuper);
+  
+  console.log('selectedUserId:', this.selectedUserId);
 
-  const selectedUser: User | undefined = this.userList.find(user => user.id === +this.selectedUserId);
+  const selectedUserSuper: User | undefined = this.userListt.find(user => user.id === +this.selectedUserIdSuper); 
+   if (!selectedUserSuper) {
+    console.error('Selected supervisor not found');
+    return;
+  }
+  console.log('Selected supervisor:', selectedUserSuper);
+
+
+  console.log('SelectedUserId:', this.selectedUserId);
+  console.log('UserList:', this.userList);
+ // const selectedUser: User = this.userList.find(user => user.id === this.selectedUserId) ;
+ const selectedUser: User | undefined = this.userList.find(user => user.id === +this.selectedUserId); 
+ 
+ console.log('SelectedUser:', selectedUser);
+
   if (!selectedUser) {
-    console.error('Selected user not found');
+    console.error('Selected user not found or not a student');
     return;
   }
 
@@ -95,16 +125,27 @@ addDefense(): void {
     timeDefense: this.timeDefense,
     numeroDeBloc: this.numeroDeBloc,
     numeroDeClasse: this.numeroDeClasse,
-    nomDeJuret: this.nomDeJuret, // Utilize the selected user object
-    UserStudent: selectedUser,
+    nomDeJuret: {
+      id: this.selectedUserIdSuper,
+      ERole: ERole.SUPERVISOR
+    },
+    UserStudent: {
+      id: this.selectedUserId,
+      ERole: ERole.STUDENT
+    },
     nomDeEncadrent: this.nomDeEncadrent,
-    remarque: this.remarque
+    remarque: this.remarque,
+     ERole : this.ERole
   };
 
   if (!newDefense.idDef) {
     newDefense.numeroDeBloc = this.generateRandomBloc();
     newDefense.numeroDeClasse = this.generateRandomClasse();
   }
+  console.log('newDefense:', newDefense);
+
+
+  // add the newDefense object to the defenseList array
 
   emailjs.send('service_vxn2zgg', 'template_30ljq0h', {
     to_email: email,

@@ -22,6 +22,8 @@ public class Evaluation {
     private int id;
     @DBRef
       private Defense defense ;
+    @DBRef
+    private HistoriqueDefense historiqueDefense ;
     private  String  tutor;
     private String  student  ;
     private  double note  ;

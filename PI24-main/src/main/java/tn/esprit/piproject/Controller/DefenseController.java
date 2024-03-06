@@ -5,11 +5,18 @@ import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.piproject.Config.AutoIncrementUtil;
 import tn.esprit.piproject.Entities.Defense;
+import tn.esprit.piproject.Entities.HistoriqueDefense;
+import tn.esprit.piproject.Repositories.DefenseRepository;
+import tn.esprit.piproject.Repositories.HistoriqueDefenseRepository;
 import tn.esprit.piproject.Services.IProjectService;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 @RequestMapping("/api/Defence")
@@ -24,7 +31,22 @@ public class DefenseController {
     private IProjectService iProjectService;
     @Autowired
     private AutoIncrementUtil autoIncrementUtil;
+    @Autowired
+    private DefenseRepository defenseRepository;
+    @Autowired
+    private HistoriqueDefenseRepository historiqueDefenseRepository;
 
+
+
+  /*  @GetMapping("/search")
+    public List<HistoriqueDefense> searchHistoriques(@RequestParam String query) {
+        return iProjectService.searchHistoriques(query);
+    }*/
+  @GetMapping("/search")
+  public ResponseEntity<List<HistoriqueDefense>> searchHistoriques(@RequestParam String query) {
+      List<HistoriqueDefense> historiques = iProjectService.searchHistoriques(query);
+      return ResponseEntity.ok().body(historiques);
+  }
     @GetMapping
     public ResponseEntity<List<Defense>> getAllDefence() {
         List<Defense> defences = iProjectService.getAllDefence();
@@ -76,4 +98,41 @@ public class DefenseController {
         List<Defense> defenses = iProjectService.getAllDefenses();
         return ResponseEntity.ok().body(defenses);
     }
+    @GetMapping("/getAllHistoriqueDefense")
+    public ResponseEntity<List<HistoriqueDefense>> getAllHistoriqueDefense() {
+        List<HistoriqueDefense> historiqueDefense = iProjectService.getAllHistoriqueDefense();
+        return ResponseEntity.ok().body(historiqueDefense);
+    }
+
+    //////afficher historiqueDefense par ID
+
+
+    /*@GetMapping("/historique/{id}")
+    public ResponseEntity<HistoriqueDefense> getHistoriqueDefenseById(@PathVariable int id) {
+        Optional<HistoriqueDefense> historiqueDefense = iProjectService.gethistoriqueDefenceByIdById(id);
+        if (historiqueDefense.isPresent()) {
+            return new ResponseEntity<>(historiqueDefense.get(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }*/
+
+/*@GetMapping("/historique")
+public ResponseEntity<Void> moveOldDefencesToHistory() {
+    iProjectService.moveOldDefencesToHistory();
+    return new ResponseEntity<>(HttpStatus.OK);
 }
+   // @GetMapping("/historique")
+*/
+@PostMapping("/transfer-to-history")
+public ResponseEntity<String> transferDefensesToHistory() {
+    try {
+        iProjectService.transferOldDefensesToHistory();
+        return new ResponseEntity<>("Transfert des défenses obsolètes vers l'historique réussi.", HttpStatus.OK);
+    } catch (Exception e) {
+        return new ResponseEntity<>("Une erreur s'est produite lors du transfert des défenses vers l'historique.", HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+}
+    }
+
+

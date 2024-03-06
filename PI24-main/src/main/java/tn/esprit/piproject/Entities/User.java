@@ -1,6 +1,8 @@
 package tn.esprit.piproject.Entities;
 
 
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,7 +28,9 @@ public class User {
      @Email*/
     private String email;
 
+    @Enumerated(EnumType.STRING)
     private ERole ERole;
+
     private Role roles;
 
     private String address;

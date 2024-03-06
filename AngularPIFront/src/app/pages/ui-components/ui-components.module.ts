@@ -29,6 +29,8 @@ import { CreateComponentt } from './evaluation/create/create.component';
 import { UpdateComponentt } from './evaluation/update/update.component';
 import { FilterPipe } from './defense/filter.pipe';
 import { MapsComponent } from './defense/maps/maps.component';
+import { NgApexchartsModule } from 'ng-apexcharts';
+//import { FullCalendarModule } from '@fullcalendar/angular';
 
 @NgModule({
   imports: [
@@ -38,7 +40,7 @@ import { MapsComponent } from './defense/maps/maps.component';
     FormsModule,
     ReactiveFormsModule,
     TablerIconsModule.pick(TablerIcons),
-    MatNativeDateModule,
+    MatNativeDateModule,CommonModule ,NgApexchartsModule,
   ],
   declarations: [
     UserComponent,
@@ -57,8 +59,8 @@ import { MapsComponent } from './defense/maps/maps.component';
     CreateComponentt,
     UpdateComponentt,
     FilterPipe,
-    MapsComponent
-    
+    MapsComponent,
+    UpdateComponent ,
     
   ],
 })

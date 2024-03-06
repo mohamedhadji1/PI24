@@ -23,7 +23,7 @@ import { EvaluationService } from 'src/app/services/evaluation.service';
       private defenceService: DefenceService
     ) {
       this.loadDefenses();
-      this.loadUsedDefenseIds();
+      //this.loadUsedDefenseIds();
     }
   
     loadDefenses(): void {
@@ -37,7 +37,7 @@ import { EvaluationService } from 'src/app/services/evaluation.service';
       );
     }
   
-    loadUsedDefenseIds(): void {
+    /*loadUsedDefenseIds(): void {
       // Appel à la méthode du service pour récupérer les IDs de défense déjà utilisés
       this.evaluationService.getUsedDefenseIds().subscribe(
         (usedIds: number[]) => {
@@ -47,7 +47,7 @@ import { EvaluationService } from 'src/app/services/evaluation.service';
           console.error('Erreur lors de la récupération des IDs de défense utilisés:', error);
         }
       );
-    }
+    }*/
   
     updateEvaluation(evaluation: evaluation): void {
       this.evaluationService.updateEvaluation(this.data.id, evaluation).subscribe(

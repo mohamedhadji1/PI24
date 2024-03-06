@@ -3,6 +3,7 @@ package tn.esprit.piproject.Services;
 import org.bson.types.ObjectId;
 import tn.esprit.piproject.Entities.*;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,7 +23,16 @@ public interface IProjectService {
     Documents createdocuments(Documents documents);
     Documents updatedocuments(Documents documents);
     void deletedocuments(int id);
-/////////////////////////////////////DEFENCE////////////////////////////////
+
+    void transferOldDefensesToHistory()   ;
+
+
+    ///////////////////////////////HistoriqueDefense///////////////////////
+   Optional<HistoriqueDefense> gethistoriqueDefenceByIdById(int id);
+    //public Date getDateThreshold()  ;
+    //public void moveOldDefencesToHistory()  ;
+
+        /////////////////////////////////////DEFENCE////////////////////////////////
     List<Defense> getAllDefence();
     Optional<Defense> getDefenceById(int id);
     Defense createDefence(Defense defence);
@@ -35,5 +45,12 @@ public interface IProjectService {
     void deleteEvalution(int id);
      List<Defense> getAllDefenses() ;
     List<User> getAllUserss();
+    public void createEvaluationWithHistory(int defenseId, Evaluation evaluation) ;
+    List<HistoriqueDefense> getAllHistoriqueDefense();
+     public List<HistoriqueDefense> searchHistoriques(String query)  ;
+
+    public List<User> getUsersByRole(ERole role)  ;
+
+
 
 }

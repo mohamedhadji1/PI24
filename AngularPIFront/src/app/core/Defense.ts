@@ -1,4 +1,4 @@
-import { User } from './User';
+import { ERole, User } from './User';
 import { Time } from '@angular/common';
 
 export interface defense {
@@ -7,10 +7,11 @@ export interface defense {
   timeDefense: string;
   numeroDeBloc: string;
   numeroDeClasse: number;
-  nomDeJuret: User;
+ nomDeJuret?: Partial<User>;
   UserStudent?: Partial<User>;
   nomDeEncadrent: string;
   remarque: string;
+  ERole: ERole;
 }
 
   

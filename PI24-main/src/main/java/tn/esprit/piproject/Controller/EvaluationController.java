@@ -42,8 +42,8 @@ public class EvaluationController {
         }
     }
     // Create Evaluation
-    @PostMapping
-    public ResponseEntity<Evaluation> createEvaluation(@RequestBody Evaluation evaluation) {
+    /*@PostMapping
+    public ResponseEntity<Evaluation> createEvaluation(@PathVariable Integer defenseId ,@RequestBody Evaluation evaluation) {
         int id = autoIncrementUtil.getNextSequence("votre_sequence");
 
         try {
@@ -53,7 +53,33 @@ public class EvaluationController {
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }*/
+    /*@PostMapping("/{defenseId}")
+    public ResponseEntity<Evaluation> createEvaluation(@PathVariable Integer defenseId, @RequestBody Evaluation evaluation) {
+        int id = autoIncrementUtil.getNextSequence("votre_sequence");
+
+        try {
+            evaluation.setId(id);
+            Evaluation newEvaluation = iProjectService.createEvalution(evaluation);
+            return new ResponseEntity<>(newEvaluation, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }*/
+    @PostMapping("/{defenseId}")
+    public ResponseEntity<Void> createEvaluation(@PathVariable Integer defenseId, @RequestBody Evaluation evaluation) {
+        int id = autoIncrementUtil.getNextSequence("votre_sequence");
+
+        try {
+            evaluation.setId(id);
+            iProjectService.createEvaluationWithHistory(defenseId, evaluation);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
+
+
     @PutMapping("/{id}")
     public ResponseEntity<Evaluation> updateEvaluation(@PathVariable int id, @RequestBody Evaluation evaluation) {
         Optional<Evaluation> oldEvaluation = iProjectService.getEvalutioneById(id) ;

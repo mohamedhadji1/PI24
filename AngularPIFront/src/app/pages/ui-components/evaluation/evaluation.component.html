@@ -1,20 +1,40 @@
+
+
 <mat-card class="cardWithShadow theme-card">
     <mat-card-header>
       <mat-card-title class="m-b-0">Evaluation Managemet</mat-card-title>
     </mat-card-header>
     <mat-card-content class="b-t-1">
     </mat-card-content>
+  
     <mat-card-content class="b-t-1">
         <button class="btn btn-primary btn-block"  (click)="openCreateDialogEval()">Create</button>
     <br>
     <br>
+    
+    <mat-card class="cardWithShadow theme-card" >
+      <div>
+        <input type="text" [(ngModel)]="query" placeholder="Enter your search query">
+        <button (click)="search()">Search</button>
+      </div>
+      
+      <ul *ngIf="historiqueDefenseArray && historiqueDefenseArray.length">
+        <li *ngFor="let historique of historiqueDefenseArray">
+          {{ historique.idDef }} - {{ historique.dateDefense | date }} - {{ historique.UserStudent?.address }} {{ historique.UserStudent?.id }}
+        </li>
+      </ul>  
+     
+
+
+</mat-card>
+
         <div class="table-responsive">
           <table class="table table-bordered">
             <thead>
               <tr>
                 <th>ID</th>
-                <th>IDDefense</th>
-                <th>tutor</th>
+                <!-- <th>IDDefense</th>-->
+                <th>NomDeJuret</th>
                <!-- <th>Student</th>
                 --><th>Note</th>
                 <th>description</th>
@@ -24,17 +44,14 @@
             <tbody>
               <tr *ngFor="let evaluation of Evaluations">
                 <td>{{ evaluation.id }}</td>
-                <td> {{ evaluation.defense?.idDef }}</td>
-                <td>{{ evaluation.tutor  }}</td>
-               <!--  <td>{{ evaluation.student  }}</td>-->
+              <!--   <td>{{ getHistoriqueDefenseId(evaluation) }}</td>-->
+                
+                                <td>{{ evaluation.tutor }}</td>
                 <td>{{ evaluation.note }}</td>
-
                 <td>{{ evaluation.description }}</td>
-              
-              
-               <td><button class="btn btn-danger" (click)="deleteEvaluation(evaluation.id)">Delete</button></td>
-                  <td><button class="btn btn-primary" (click)="openUpdateDialogEval(evaluation.id)">update </button></td>
-            </tr>
+                <td><button class="btn btn-danger" (click)="deleteEvaluation(evaluation.id)">Delete</button></td>
+                <td><button class="btn btn-primary" (click)="openUpdateDialogEval(evaluation.id)">update</button></td>
+              </tr>
             </tbody>
           </table>
         </div>

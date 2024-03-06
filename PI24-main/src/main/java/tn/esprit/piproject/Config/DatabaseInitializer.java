@@ -15,15 +15,17 @@ public class DatabaseInitializer implements CommandLineRunner {
     private final DefenseRepository defenceRepository;
     private final DocumentsRepository documentsRepository;
     private final EvaluationRepository evaluationRepository;
-
+ private final HistoriqueDefenseRepository historiqueDefenseRepository  ;
     private final OffreRepository offreRepository;
+    private final RoleRepository roleRepository;
     private final ResponseRepository responseRepository;
+
     private final TaskRepository taskRepository ;
     public DatabaseInitializer(UserRepository userRepository,
                                CompanyRepository companyRepository, ComplaintRepository complaintRepository,
                                DefenseRepository defenceRepository,
-                               DocumentsRepository documentsRepository,EvaluationRepository evaluationRepository
-            , InternshipRepository internshipRepository,OffreRepository offreRepository,ResponseRepository responseRepository,TaskRepository taskRepository ) {
+                               DocumentsRepository documentsRepository, EvaluationRepository evaluationRepository
+            , InternshipRepository internshipRepository, OffreRepository offreRepository, ResponseRepository responseRepository, TaskRepository taskRepository , HistoriqueDefenseRepository historiqueDefenseRepository , RoleRepository roleRepository) {
         this.userRepository = userRepository;
         this.companyRepository = companyRepository;
         this.complaintRepository=  complaintRepository;
@@ -34,7 +36,8 @@ public class DatabaseInitializer implements CommandLineRunner {
         this.offreRepository=offreRepository;
         this.responseRepository=responseRepository;
         this.taskRepository=taskRepository;
-
+this.historiqueDefenseRepository=historiqueDefenseRepository ;
+        this.roleRepository = roleRepository;
     }
 
     @Override
@@ -73,6 +76,10 @@ public class DatabaseInitializer implements CommandLineRunner {
             Internship internship = new Internship();
             internshipRepository.save(internship);
         }
+        if (roleRepository.count() == 0) {
+            Role role = new Role();
+            roleRepository.save(role);
+        }
 
         if (offreRepository.count() == 0) {
             Offre offre = new Offre();
@@ -87,6 +94,10 @@ public class DatabaseInitializer implements CommandLineRunner {
         if (taskRepository.count() == 0) {
             Task task = new Task();
             taskRepository.save(task);
+        }
+        if (historiqueDefenseRepository.count() == 0) {
+            HistoriqueDefense historiqueDefense = new HistoriqueDefense();
+            historiqueDefenseRepository.save(historiqueDefense);
         }
     }
 }

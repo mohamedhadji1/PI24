@@ -1,5 +1,7 @@
-<div class="table-responsive">
-    <table class="table table-striped">
+
+  <div>
+
+  <table class="table table-striped">
       <tbody>
         <tr>
           <td colspan="7">
@@ -11,12 +13,12 @@
                       <input type="number" class="form-control" id="idDef" [(ngModel)]="data.idDef" name="idDef" required readonly>
                     </div>
                   </div>
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label for="dateDefence">Date of Defence</label>
-                    <input type="date" class="form-control" id="dateDefence" [(ngModel)]="data.dateDefense" name="dateDefence" required>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="dateDefence">Date of Defence</label>
+                      <input type="date" class="form-control" id="dateDefence" [(ngModel)]="data.dateDefense" name="dateDefence" required [disabled]="isDateDisabled()">
+                    </div>
                   </div>
-                </div>
                 <div class="col-md-6">
                   <div class="form-group">
                     <label for="dateDefence">time of Defence</label>

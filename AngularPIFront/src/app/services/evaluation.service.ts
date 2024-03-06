@@ -15,10 +15,13 @@ export class EvaluationService {
  
     return this.http.get<evaluation[]>(this.baseUrl);
    }
-   createEvaluation(evaluation: evaluation): Observable<evaluation> {
+   /*createEvaluation(evaluation: evaluation): Observable<evaluation> {
     return this.http.post<evaluation>(this.baseUrl, evaluation);
+  }*/
+  createEvaluation(defenseId: number, evaluation: evaluation): Observable<void> {
+    const url = `${this.baseUrl}/${defenseId}`;
+    return this.http.post<void>(url, evaluation);
   }
- 
   deleteEvaluation(EvaluationId: number): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/${EvaluationId}`);
   }
@@ -30,8 +33,9 @@ export class EvaluationService {
     const url = `${this.baseUrl}/${taskId}`;
     return this.http.get<evaluation>(url);
   }
-  getUsedDefenseIds(): Observable<number[]> {
+  
+ /* getUsedDefenseIds(): Observable<number[]> {
     // Appel HTTP pour récupérer les IDs des défenses déjà utilisées depuis un service externe
     return this.http.get<number[]>(`${this.baseUrl}/defenses`);
-  }
+  }*/
 }

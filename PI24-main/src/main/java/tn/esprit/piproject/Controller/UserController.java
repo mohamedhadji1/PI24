@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import tn.esprit.piproject.Entities.ERole;
 import tn.esprit.piproject.Entities.Internship;
 import tn.esprit.piproject.Entities.User;
 import tn.esprit.piproject.Services.IProjectService;
@@ -28,7 +29,11 @@ public class UserController {
         List<User> users = iProjectService.getAllUsers();
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
-
+    @GetMapping("/byRole/{role}")
+    public ResponseEntity<List<User>> getUsersByRole(@PathVariable ERole role) {
+        List<User> users = iProjectService.getUsersByRole(role);
+        return ResponseEntity.ok(users);
+    }
     // Get user by id
     @GetMapping("/users/{id}")
     public ResponseEntity<User> getUserById(@PathVariable int id) {

@@ -8,12 +8,12 @@ import { User } from '../core/User';
   providedIn: 'root'
 })
 export class UserService {
-  private baseUrl = 'http://localhost:8081/api/users';
+  private baseUrl = 'http://localhost:8081/api';
   constructor(private http: HttpClient) { }
 
   
   getUsers(): Observable<User[]> {
-    return this.http.get<User[]>(this.baseUrl) ; 
+    return this.http.get<User[]>(`${this.baseUrl}/users`) ; 
   }
     /*  .pipe(
         catchError((error) => {
@@ -27,6 +27,10 @@ export class UserService {
   getUserById(id: number): Observable<User> {
     const url = `${this.baseUrl}/${id}`;
     return this.http.get<User>(url);
+  }
+
+  getUsersByRole(role: string): Observable<User[]> {
+    return this.http.get<User[]>(`${this.baseUrl}/byRole/${role}`);
   }
    /*getUsers(): Observable<User[]> {
     return this.http.get<User[]>(this.baseUrl).pipe(

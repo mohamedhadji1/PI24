@@ -6,25 +6,20 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.MongoId;
-import org.springframework.format.annotation.DateTimeFormat;
 
-import java.time.LocalDateTime;
 import java.util.Date;
-
 @Setter
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Document(collection = "defences")
-public class Defense {
+@Document(collection = "HistoriqueDefense")
+public class HistoriqueDefense {
     @MongoId
     @Id
     private int  idDef;
-
     @JsonProperty("dateDefense")
     private Date dateDefense;
     @JsonProperty("timeDefense")
@@ -47,21 +42,16 @@ public class Defense {
 
     @JsonProperty("remarque")
     private String remarque;
-
-   public void generateAttributes() {
-        // Génération automatique de numeroDeBloc
-        String[] blocs = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "M"};
-        int randomBlocIndex = (int) (Math.random() * blocs.length);
-        this.numeroDeBloc = blocs[randomBlocIndex];
-
-        // Génération automatique de numeroDeClasse
-        this.numeroDeClasse = (int) (Math.random() * 15) + 1; // Valeurs de 01 à 15
+    public HistoriqueDefense(Defense defense) {
+        this.idDef = defense.getIdDef();
+        this.dateDefense = defense.getDateDefense();
+        this.timeDefense = defense.getTimeDefense();
+        this.numeroDeBloc = defense.getNumeroDeBloc();
+        this.numeroDeClasse = defense.getNumeroDeClasse();
+        this.nomDeJuret = defense.getNomDeJuret();
+        this.UserStudent = defense.getUserStudent();
+        this.nomDeEncadrent = defense.getNomDeEncadrent();
+        this.remarque = defense.getRemarque();
     }
-    public void modifyAttributes(String newNumeroDeBloc, int newNumeroDeClasse) {
-        // Vérifier si la classe existe déjà
-        // Si elle existe déjà, afficher un message ou lancer une exception
-        // Sinon, modifier les attributs
-        this.numeroDeBloc = newNumeroDeBloc;
-        this.numeroDeClasse = newNumeroDeClasse;
-    }
+
 }

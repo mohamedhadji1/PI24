@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, OnInit, Output, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
@@ -15,9 +15,25 @@ import { Angular2CsvModule } from 'angular2-csv';
 import { MapsComponent } from './maps/maps.component';
 import * as L from 'leaflet';
 import 'leaflet-routing-machine';
+import { Chart } from 'chart.js';
+import { forkJoin } from 'rxjs';
 
-
-
+//import { ChartOptions } from 'chart.js';
+import {
+  ChartComponent,
+  ApexAxisChartSeries,
+  ApexChart,
+  ApexXAxis,
+  ApexTitleSubtitle
+} from "ng-apexcharts";
+import { HistoriqueDefense } from 'src/app/core/HistoriqueDefense';
+//import { FullCalendarComponent } from '@fullcalendar/angular';
+export type ChartOptions = {
+  series: ApexAxisChartSeries;
+  chart: ApexChart;
+  xaxis: ApexXAxis;
+  title: ApexTitleSubtitle;
+};
 @Component({
   selector: 'app-defense',
   templateUrl: './defense.component.html',
@@ -30,6 +46,8 @@ import 'leaflet-routing-machine';
 export class DefenseComponent implements OnInit,AfterViewInit {
   @Output() calculateRouteEvent: EventEmitter<string> = new EventEmitter<string>();
   @ViewChild(MapsComponent) mapsComponent: MapsComponent;
+ // @ViewChildren('chart') chartElements: QueryList<ElementRef<HTMLCanvasElement>>;
+
 
   defences: defense[];
   searchtext: any;
@@ -45,26 +63,65 @@ export class DefenseComponent implements OnInit,AfterViewInit {
   blocList: defense[] = [];
   selectedDefenceBloc: string ='' ;
   map: L.Map ; 
+  chartData: number[]; 
+  public chartOptions: Partial<ChartOptions>;
+  historiqueDefenses: HistoriqueDefense[] = []; // Déclarer la propriété historiqueDefenses
+
  // private map: L.Map;
   private centroidH: L.LatLngExpression = [36.8981970128221, 10.189970708975915];
   private centroidE: L.LatLngExpression = [36.89966874789553, 10.18982196413415];
   private centroidM: L.LatLngExpression = [36.90225021696681, 10.189360434924096];
+  private centroidI: L.LatLngExpression = [ 36.90108025227159, 10.19027638089706];
+  private centroidJ: L.LatLngExpression = [ 36.90108025227159, 10.19027638089706];
+  private centroidK: L.LatLngExpression = [ 36.90108025227159, 10.19027638089706];
+  private centroidA: L.LatLngExpression = [ 36.89913305034116, 10.189278376812915];
+  private centroidB: L.LatLngExpression = [ 36.89913305034116, 10.189278376812915];
+  private centroidC: L.LatLngExpression = [ 36.89913305034116, 10.189278376812915];
+  private centroidD: L.LatLngExpression = [ 36.89913305034116, 10.189278376812915];
+
+
+
+   
   private userLocation: L.LatLngExpression;
   
   //const bloc: string = this.selectedUserBloc ? this.selectedUserBloc.numeroDeBloc : '';
   selectedUserBloc: defense | null | undefined = null;
   //const map = this.mapsComponent.getMap(); // Obtenir l'instance de la carte
 
-constructor(private http: HttpClient, private defenceService: DefenceService, private dialog: MatDialog) {}
+constructor(private http: HttpClient, private defenceService: DefenceService, private dialog: MatDialog) {
+
+  /*this.chartOptions = {
+    series: [
+      {
+        name: "My-series",
+        data: [1, 2, 3, 51, 49, 62, 69, 91, 148]
+      }
+    ],
+    chart: {
+      height: 350,
+      type: "bar"
+    },
+    title: {
+      text: "My First Angular Chart"
+    },
+    xaxis: {
+      categories: ["Jan", "Feb",  "Mar",  "Apr",  "May",  "Jun",  "Jul",  "Aug", "Sep"]
+    }
+  };
+*/
+
+}
 ngOnInit(): void {
   console.log('OnInit....');
   this.fetchDefence();
   this.loadBloc();
+  //this.initCharts() ; 
   // Écouter l'événement pour calculer l'itinéraire
   //if (this.selectedUserBloc) {
     //this.initMap(); // Initialisez d'abord la carte
     //this.calculateRoute();
   //}
+  
 }
 
 ngAfterViewInit(): void {
@@ -75,6 +132,10 @@ ngAfterViewInit(): void {
     this.userLocation = [position.coords.latitude, position.coords.longitude];
     this.calculateRoute(); // Appelez calculateRoute() après avoir obtenu la position de l'utilisateur
   });
+
+ /* setTimeout(() => {
+    this.initCharts();
+  }, 0);*/
 }
 
 private initMap(): void {
@@ -96,6 +157,13 @@ private initMap(): void {
       L.latLng(this.centroidH),
       L.latLng(this.centroidE),
       L.latLng(this.centroidM),
+      L.latLng(this.centroidI),
+      L.latLng(this.centroidJ),
+      L.latLng(this.centroidK),
+      L.latLng(this.centroidA),
+      L.latLng(this.centroidB),
+      L.latLng(this.centroidC),
+      L.latLng(this.centroidD),
       L.latLng(this.userLocation)
     ]
   }).addTo(this.map);
@@ -114,6 +182,36 @@ console.log("location user",L.latLng(this.userLocation)) ;
   L.marker(this.centroidM).addTo(this.map)
     .bindPopup('Bloc M - Esprit')
     .openPopup();
+     // Ajouter le marqueur pour le bloc I
+  L.marker(this.centroidI).addTo(this.map)
+  .bindPopup('Bloc I,J,K - Esprit')
+  .openPopup();
+   // Ajouter le marqueur pour le bloc J
+   L.marker(this.centroidJ).addTo(this.map)
+   .bindPopup('Bloc I,J,K - Esprit')
+   .openPopup();
+    // Ajouter le marqueur pour le bloc K
+  L.marker(this.centroidK).addTo(this.map)
+  .bindPopup('Bloc I,J,K - Esprit')
+  .openPopup();
+      // Ajouter le marqueur pour le bloc A
+      L.marker(this.centroidA).addTo(this.map)
+      .bindPopup('Bloc A,B,C,D- Esprit')
+      .openPopup();
+          // Ajouter le marqueur pour le bloc B
+  L.marker(this.centroidB).addTo(this.map)
+  .bindPopup('Bloc A,B,C,D- Esprit')
+  .openPopup();
+      // Ajouter le marqueur pour le bloc C
+      L.marker(this.centroidC).addTo(this.map)
+      .bindPopup('Bloc A,B,C,D- Esprit')
+      .openPopup();
+          // Ajouter le marqueur pour le bloc D
+  L.marker(this.centroidD).addTo(this.map)
+  .bindPopup('Bloc A,B,C,D- Esprit')
+  .openPopup();
+
+  
 
   // Ajouter le marqueur de votre position actuelle
   navigator.geolocation.getCurrentPosition((position) => {
@@ -203,6 +301,29 @@ console.log("location user",L.latLng(this.userLocation)) ;
       case 'M':
         location = this.centroidM;
         break;
+        case 'I':
+        location = this.centroidI;
+        break;
+        case 'J':
+        location = this.centroidJ;
+        break;
+        case 'K':
+        location = this.centroidK;
+        break;
+        case 'A':
+          location = this.centroidA;
+          break;
+          case 'B':
+            location = this.centroidB;
+            break;
+            case 'C':
+              location = this.centroidC;
+              break;
+              case 'D':
+                location = this.centroidD;
+                break;
+
+        
       default:
         console.error('Unknown bloc:', numeroDeBloc);
         return;
@@ -254,7 +375,18 @@ console.log("location user",L.latLng(this.userLocation)) ;
     const distance = startLatLng.distanceTo(endLatLng);
     console.log('Distance:', distance);
   }
-  
+  /*transferDefenses() {
+    //this.defenceService.transferDefensesToHistory().subscribe(
+      Response => {
+      //  console.log('Transfert réussi :', response);
+        // Gérer la réponse de l'API ici, par exemple afficher un message de succès à l'utilisateur
+      },
+      error => {
+        console.error('Erreur lors du transfert :', error);
+        // Gérer les erreurs ici, par exemple afficher un message d'erreur à l'utilisateur
+      }
+    );
+  }*/
   
   getDestinationLatLng(numeroDeBloc: string): L.LatLngExpression | null {
     let destination: L.LatLngExpression | null = null;
@@ -269,6 +401,27 @@ console.log("location user",L.latLng(this.userLocation)) ;
       case 'M':
         destination = this.centroidM;
         break;
+        case 'I':
+          destination = this.centroidI;
+          break;
+          case 'J':
+            destination = this.centroidJ;
+            break;
+            case 'K':
+              destination = this.centroidK;
+              break;
+              case 'A':
+                destination = this.centroidA;
+                break;
+                case 'B':
+                  destination = this.centroidB;
+                  break;
+                  case 'C':
+                    destination = this.centroidC;
+                    break;
+                    case 'D':
+                      destination = this.centroidD;
+                      break;
       default:
         console.error("Destination coordinates not found for the selected bloc.");
         break;
@@ -425,31 +578,34 @@ calculateRoute(): void {
     }
   }
   */
-  
-
-  
-
-
-
-
-  fetchDefence(): void {
-
-    
-    this.defenceService.getAllDefence().subscribe({
-      next: (defences: defense[]) => {
-        this.defences = defences;
-        for (let index = 0; index < defences.length; index++) {
-          this.totalItems[index] = defences.length;
-          this.currentPage[index] = [1];
-          this.totalPagess[index] = [Math.ceil(defences.length / this.itemsPerPage)];
-          this.paginateDefenses(defences, index);
-        }
+  /*fetchHistoriqueDefenses(ids: number[]): void {
+    const observables: Observable<HistoriqueDefense>[] = [];
+    for (const id of ids) {
+      observables.push(this.defenceService.gethistoriqueDefenceByIdById(id));
+    }
+    forkJoin(observables).subscribe({
+      next: (historiqueDefenses: HistoriqueDefense[]) => {
+        // Faites quelque chose avec les défenses historiques récupérées
+        this.historiqueDefenses = historiqueDefenses;
       },
       error: (error: any) => {
-        console.error('Error fetching defences:', error);
+        console.error('Error fetching historique defenses:', error);
       }
     });
   }
+
+  getHistoriqueDefenseById(id: number): void {
+    this.defenceService.gethistoriqueDefenceByIdById(id).subscribe({
+      next: (historiqueDefense: HistoriqueDefense) => {
+        // Faites quelque chose avec la défense historique récupérée, comme l'ajouter à une liste ou la traiter d'une autre manière
+      },
+
+      error: (error: any) => {
+        console.error('Error fetching historique defense:', error);
+      }
+    });
+  }*/
+
   deleteDefence(DefenceId: number): void {
     if (window.confirm('Are you sure you want to delete this Defence?')) {
       this.defenceService.deleteDefence(DefenceId).pipe(
@@ -466,7 +622,41 @@ calculateRoute(): void {
     }
   }
 
- 
+ fetchDefence(): void {
+
+        console.log('Début de la récupération des défenses...');
+        this.defenceService.getAllDefence().subscribe({
+          next: (defences: defense[]) => {
+            console.log('Défenses récupérées avec succès:', defences);
+            this.defences = defences;
+            const observables: Observable<HistoriqueDefense>[] = [];   
+        for (let index = 0; index < defences.length; index++) {
+          this.totalItems[index] = defences.length;
+          this.currentPage[index] = [1];
+          this.totalPagess[index] = [Math.ceil(defences.length / this.itemsPerPage)];
+          this.paginateDefenses(defences, index);
+          
+          // Créer un observable pour chaque appel à la fonction
+          //observables.push(this.defenceService.gethistoriqueDefenceByIdById(defences[index].idDef));
+        }
+        
+        
+   /* forkJoin(observables).subscribe({
+      next: (historiqueDefenses: HistoriqueDefense[]) => {
+        console.log('Défenses historiques récupérées avec succès:', historiqueDefenses);
+        this.historiqueDefenses = historiqueDefenses;
+      },
+      error: (error: any) => {
+        console.error('Erreur lors de la récupération des défenses historiques:', error);
+      }
+    });*/
+  },
+  error: (error: any) => {
+    console.error('Erreur lors de la récupération des défenses:', error);
+  }
+});
+  }
+  
   openUpdateDialog(DefenceId: number): void {
     const dialogRef = this.dialog.open(UpdateComponent, {
       data: { DefenceId: DefenceId, ...this.defences.find(defence => defence.idDef === DefenceId) }
@@ -494,19 +684,20 @@ calculateRoute(): void {
     }
   
     for (let index = 0; index < this.defences.length; index++) {
-      this.totalItems[index] = filteredDefenses.length;
-      this.currentPage[index] = [1];
-      this.totalPagess[index] = [Math.ceil(filteredDefenses.length / this.itemsPerPage)];
       this.paginateDefenses(filteredDefenses, index);
     }
   }
-  
   
   paginateDefenses(filteredDefenses: defense[], index: number): void {
     const startIndex = (this.currentPage[index][0] - 1) * this.itemsPerPage;
     const endIndex = startIndex + this.itemsPerPage;
     this.paginatedDefenses[index] = filteredDefenses.slice(startIndex, endIndex);
+  
+    // Mise à jour des données de pagination
+    this.totalItems[index] = filteredDefenses.length;
+    this.totalPagess[index] = [Math.ceil(filteredDefenses.length / this.itemsPerPage)];
   }
+  
 
   previousPage(index: number): void {
     if (this.currentPage[index][0] > 1) {
@@ -526,7 +717,94 @@ calculateRoute(): void {
   get totalPages(): number {
     return Math.ceil(this.totalItems[this.currentIndex] / this.itemsPerPage);
   }
+  /*initCharts(): void {
+    this.defences.forEach(defense => {
+      const ctx = document.getElementById(`chart-${defense.idDef}`) as HTMLCanvasElement;
+      if (ctx) {
+        const myChart = new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: ['A', 'B', 'C', 'D', 'E'],
+            datasets: [{
+              label: 'Sample Data',
+              data: Array(5).fill(defense.idDef),
+              backgroundColor: 'rgba(255, 99, 132, 0.2)',
+              borderColor: 'rgba(255, 99, 132, 1)',
+              borderWidth: 1
+            }]
+          },
+          options: {
+            scales: {
+              y: {
+                type: 'linear',
+                ticks: {
+                  // Utilisez un type explicite pour les options des ticks de l'axe y
+                  // pour éviter les erreurs de compilation
+                  // beginAtZero: true as boolean
+                }
+              }
+            }
+          }
+        });
+      }
+    });
+  }
+  
+  initCharts(): void {
+    // Créer un objet pour stocker les données par semaine
+    const dataByWeek: { [key: number]: number } = {};
 
+  
+    // Remplir l'objet avec les données
+    this.defences.forEach(defense => {
+      const weekNumber = this.getWeekNumber(new Date(defense.dateDefense));
+      if (!dataByWeek[weekNumber]) {
+        dataByWeek[weekNumber] = 0;
+      }
+      dataByWeek[weekNumber]++;
+    });
+  
+    // Créer les données de chart à partir de l'objet
+    const chartData = Object.keys(dataByWeek).map(weekNumber => {
+      return { week: 'Week ' + weekNumber, idRefCount: dataByWeek[parseInt(weekNumber)] };
+    });
+  
+    // Définir les options du chart
+    const options: ChartOptions = {
+      titre: {
+        display: true,
+        text: 'Number of idRef per week'
+      },
+      legend: {
+        display: false
+      }
+    };
+  
+    const myChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: chartData.map(data => data.week),
+        datasets: [{
+          label: 'Number of idRef',
+          data: chartData.map(data => data.idRefCount),
+          backgroundColor: 'rgba(255, 99, 132, 0.2)',
+          borderColor: 'rgba(255, 99, 132, 1)',
+          borderWidth: 1
+        }]
+      },
+      options: options
+    });
+  } */
+  
+  // Fonction pour obtenir le numéro de la semaine à partir d'une date
+  getWeekNumber(date: Date): number {
+    const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+    const dayNum = d.getUTCDay() || 7;
+    d.setUTCDate(d.getUTCDate() + 4 - dayNum);
+    const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+    return Math.ceil((((d.getTime() - yearStart.getTime()) / 86400000) + 1) / 7);
+  }
+  
 
 }
 

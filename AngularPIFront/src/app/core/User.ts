@@ -1,3 +1,5 @@
+import { Role } from "./Role";
+
 export interface User {
   id: number;
   name: string;
@@ -5,9 +7,10 @@ export interface User {
   email: string;
   role: Role;
   address: string;
+   ERole:ERole;
 }
 
-export enum Role {
+export enum ERole {
   ADMIN = 'ADMIN',
   STUDENT = 'STUDENT',
   SUPERVISOR = 'SUPERVISOR',
