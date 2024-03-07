@@ -12,19 +12,18 @@
     <br>
     <br>
     
-    <mat-card class="cardWithShadow theme-card" >
+    <mat-card class="cardWithShadow theme-card">
       <div>
-       <input type="text" [(ngModel)]="query" placeholder="Enter your search query">
-       <button type="submit" (click)="search()">Search</button>
-            </div>
-      
+        <input type="text" [(ngModel)]="query" placeholder="Enter your search query" (keyup.enter)="search()">
+      </div>
+    
       <ul *ngIf="historiqueDefenseArray && historiqueDefenseArray.length">
         <li *ngFor="let historique of historiqueDefenseArray">
           {{ historique.idDef }} - {{ historique.dateDefense | date }} - {{ historique.UserStudent?.address }} {{ historique.UserStudent?.id }}
         </li>
       </ul>  
-      
-</mat-card>
+    </mat-card>
+    
 
         <div class="table-responsive">
           <table class="table table-bordered">
@@ -54,6 +53,13 @@
           </table>
         </div>
       </mat-card-content>
+
+      <apx-chart
+      class="flex-auto w-full h-80"
+      [series]="chartOptions.series!"
+      [chart]="chartOptions.chart!"
+      [responsive]="chartOptions.responsive!">
+  </apx-chart>
     </mat-card>
     
   

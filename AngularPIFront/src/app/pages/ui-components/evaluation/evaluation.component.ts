@@ -12,13 +12,22 @@ import { DefenceService } from 'src/app/services/defence.service';
 import { User } from 'src/app/core/User';
 import { Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
-
+import { ApexAxisChartSeries, ApexChart, ApexResponsive, ApexXAxis, ApexTitleSubtitle } from 'ng-apexcharts';
+import * as moment from 'moment';
+export type ChartOptions = {
+  series: ApexAxisChartSeries;
+  chart: ApexChart;
+  xaxis: ApexXAxis;
+  responsive: ApexResponsive[];
+  title: ApexTitleSubtitle;
+};
 @Component({
   selector: 'app-evaluation',
   templateUrl: './evaluation.component.html',
   styleUrls: ['./evaluation.component.scss'] ,
   providers:[EvaluationService]
 })
+
 export class EvaluationComponent {
 Evaluations :evaluation[] ; 
 historiqueDefenseArray: HistoriqueDefense[] = [];
@@ -33,6 +42,19 @@ userList: User[] = [];
 searchPerformed = false;
 selectedUserIdSuper: number;
 value :any[] ;
+public chartOptions: Partial<ChartOptions> = {
+  series: [],
+  chart: {
+      height: 350,
+      type: "bar"
+  },
+  title: {
+      text: "Top Visited Subjects"
+  },
+  xaxis: {
+      categories: []
+  },
+};
 constructor(private http: HttpClient,private  evaluationService: EvaluationService,    private defenceService: DefenceService,
   private fb:FormBuilder,private dialog: MatDialog)
    {
@@ -44,6 +66,7 @@ constructor(private http: HttpClient,private  evaluationService: EvaluationServi
       //this.defenceService.getAllDefence().subscribe((data: defense[]) => {
         //this.defences = data;
       this.fetchEvaluation() ; 
+      this.fetchChartData();
      // this.getHistoriqueDefenseId(evaluation) ;
     // this.loadHistoriqueDefenses()   ;
    //  this.historiqueDefenseArray = [];
@@ -218,5 +241,47 @@ checkForHistoriqueMatch(value: string, historiqueId: number) {
     }
   );
 }
+private fetchChartData(): void {
+  this.defenceService.getAllDefence().subscribe({
+      next: (data: any[]) => {
+          if (!data || data.length === 0) {
+              console.error('No data returned by the service');
+              return;
+          }
+
+          // Group data by week
+          const groupedData = data.reduce((acc, item) => {
+              const weekNumber = this.getWeekNumber(new Date(item.dateDefense));
+              if (!acc[weekNumber]) {
+                  acc[weekNumber] = [];
+              }
+              acc[weekNumber].push(item);
+              return acc;
+          }, {});
+
+          // Extract series data and labels from the grouped data
+          const seriesData = Object.keys(groupedData).map(week => groupedData[week].length);
+          const labels = Object.keys(groupedData);
+
+          // Update chart options with the fetched data
+          this.chartOptions.series = [{
+              name: "Defenses",
+              data: seriesData
+          }];
+          this.chartOptions.xaxis = {
+              categories: labels
+          };
+      },
+      error: (error) => {
+          console.error('Error fetching defense statistics:', error);
+      }
+  });
+}
+
+private getWeekNumber(date: Date): string {
+  const weekNumber = moment(date).isoWeek();
+  return `Week ${weekNumber}`;
+}
+
 
 }
