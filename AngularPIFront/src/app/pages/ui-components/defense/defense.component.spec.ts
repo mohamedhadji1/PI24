@@ -1,6 +1,22 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DefenseComponent } from './defense.component';
+import {
+  ApexChart,
+  ChartComponent,
+  ApexDataLabels,
+  ApexLegend,
+  ApexStroke,
+  ApexTooltip,
+  ApexAxisChartSeries,
+  ApexXAxis,
+  ApexYAxis,
+  ApexGrid,
+  ApexPlotOptions,
+  ApexFill,
+  ApexMarkers,
+  ApexResponsive,
+} from 'ng-apexcharts';
 
 describe('DefenseComponent', () => {
   let component: DefenseComponent;

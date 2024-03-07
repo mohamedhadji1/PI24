@@ -5,7 +5,6 @@ import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.piproject.Config.AutoIncrementUtil;
 import tn.esprit.piproject.Entities.Defense;
@@ -14,9 +13,6 @@ import tn.esprit.piproject.Repositories.DefenseRepository;
 import tn.esprit.piproject.Repositories.HistoriqueDefenseRepository;
 import tn.esprit.piproject.Services.IProjectService;
 
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 @RequestMapping("/api/Defence")
@@ -41,12 +37,27 @@ public class DefenseController {
   /*  @GetMapping("/search")
     public List<HistoriqueDefense> searchHistoriques(@RequestParam String query) {
         return iProjectService.searchHistoriques(query);
-    }*/
+    }
   @GetMapping("/search")
-  public ResponseEntity<List<HistoriqueDefense>> searchHistoriques(@RequestParam String query) {
+  public ResponseEntity<List<String> >searchHistoriques(@RequestParam String query) {
+      if (query == null || query.isEmpty() || query.length() < 3) {
+      //    return ResponseEntity.badRequest().body("Query must have at least 3 characters.");
+      }
+
       List<HistoriqueDefense> historiques = iProjectService.searchHistoriques(query);
-      return ResponseEntity.ok().body(historiques);
-  }
+     // qreturn ResponseEntity.ok().body(historiques.toString());
+  }*/
+    @GetMapping("/search")
+    public ResponseEntity<List<HistoriqueDefense>> searchHistoriques(@RequestParam String query) {
+        System.out.println("Searching for historiques with query: " + query); // Debug log
+        List<HistoriqueDefense> historiques = iProjectService.searchHistoriques(query);
+        System.out.println("Searching for historiques with query: " + historiques); // Debug log
+
+        return ResponseEntity.ok(historiques);
+    }
+
+
+
     @GetMapping
     public ResponseEntity<List<Defense>> getAllDefence() {
         List<Defense> defences = iProjectService.getAllDefence();

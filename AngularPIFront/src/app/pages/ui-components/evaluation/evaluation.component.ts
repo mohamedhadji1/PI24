@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, createComponent } from '@angular/core';
+import { Component, Input, createComponent } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { evaluation } from 'src/app/core/Evaluation';
@@ -10,6 +10,9 @@ import { catchError, tap } from 'rxjs';
 import { HistoriqueDefense } from 'src/app/core/HistoriqueDefense';
 import { DefenceService } from 'src/app/services/defence.service';
 import { User } from 'src/app/core/User';
+import { Observable } from 'rxjs';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+
 @Component({
   selector: 'app-evaluation',
   templateUrl: './evaluation.component.html',
@@ -18,13 +21,18 @@ import { User } from 'src/app/core/User';
 })
 export class EvaluationComponent {
 Evaluations :evaluation[] ; 
-historiqueDefenseArray: HistoriqueDefense[] ;
-query: string;
+historiqueDefenseArray: HistoriqueDefense[] = [];
+@Input() ressource: any;
+@Input() searchTriggered: boolean;
+//historiqueDialogShown: boolean;
+//historiqueDefenseArray: any[];
+query: string = '';
 historiqueDialogShown: boolean = false;
-ressource: HistoriqueDefense; // Déclarer la propriété ressource
+//ressource: HistoriqueDefense; // Déclarer la propriété ressource
 userList: User[] = [];
 searchPerformed = false;
 selectedUserIdSuper: number;
+value :any[] ;
 constructor(private http: HttpClient,private  evaluationService: EvaluationService,    private defenceService: DefenceService,
   private fb:FormBuilder,private dialog: MatDialog)
    {
@@ -37,7 +45,11 @@ constructor(private http: HttpClient,private  evaluationService: EvaluationServi
         //this.defences = data;
       this.fetchEvaluation() ; 
      // this.getHistoriqueDefenseId(evaluation) ;
-     this.loadHistoriqueDefenses()   ;
+    // this.loadHistoriqueDefenses()   ;
+   //  this.historiqueDefenseArray = [];
+  
+   }
+ 
     /* this.defenceService.searchHistoriques('numeroDeClasse').subscribe(
       (results) => {
         this.historiqueDefenseArray = results;
@@ -46,7 +58,7 @@ constructor(private http: HttpClient,private  evaluationService: EvaluationServi
         console.error('Erreur lors de la recherche:', error);
       }
     );*/
-  }
+
   
  openCreateDialogEval(): void {
     const dialogRef = this.dialog.open(CreateComponentt, {
@@ -145,60 +157,66 @@ deleteEvaluation(EvaluationId: number): void {
       ).subscribe();
   }
 }
-getHistoriqueDefenseId(evaluation: evaluation): number {
-/*  if (!evaluation.defense?.idDef) {
-      return -1; // Si l'ID de la défense est indéfini, retournez une valeur par défaut
-  }*/
-
-  const matchingHistoriqueDefense = this.historiqueDefenseArray.find(historiqueDefense => historiqueDefense.idDef === evaluation.HistoriqueDefense?.idDef);
+getHistoriqueDefenseId(historiqueDefense: HistoriqueDefense): number {
+  console.log('getHistoriqueDefenseId called with evaluation:', historiqueDefense);
+  const matchingHistoriqueDefense = this.historiqueDefenseArray.find(historiqueDefense => historiqueDefense.idDef === historiqueDefense?.idDef);
   if (matchingHistoriqueDefense) {
-      return matchingHistoriqueDefense.idDef;
+    console.log('Matching historiqueDefense found:', matchingHistoriqueDefense);
+    return matchingHistoriqueDefense.idDef;
   } else {
-      return -1; // Si aucune correspondance n'est trouvée, retournez une valeur par défaut (par exemple, -1)
+    console.log('No matching historiqueDefense found, returning -1');
+    return -1;
   }
 }
 
-search(): void {
-  if (!this.evaluation) {
-    this.historiqueDefenseArray = []; // Réinitialiser la liste si l'évaluation est indéfinie
+//searchTriggered = false; // Initialize searchTriggered flag to false
+
+/*search(): void {
+  console.log('Search function called with query:', this.query);
+  if (!this.query) {
+    this.historiqueDefenseArray = [];
     return;
   }
 
-  const historiqueDefenseId = this.getHistoriqueDefenseId(this.evaluation);
-
-  if (historiqueDefenseId === -1) {
-    this.historiqueDefenseArray = [];
-  } else {
-    this.defenceService.(historiqueDefenseId).subscribe(
-      historique => {
-        this.historiqueDefenseArray = [historique];
-      },
-      error => {
-        console.error('Error getting historique defense:', error);
-      }
-    );
-  }
+  this.defenceService.searchHistoriques(this.query).subscribe(
+    historiques => {
+      this.historiqueDefenseArray = historiques;
+      console.log('Historique defense array updated with', this.historiqueDefenseArray.length, 'items');
+      this.searchTriggered = true;
+    },
+    error => {
+      console.error('Error searching historiques:', error);
+    }
+  );
 }
-checkForHistoriqueMatch(value: string) {
-  // Reset dialog shown flag if value is changed
-  if (this.ressource.nomDeEncadrent !== value && this.ressource.UserStudent !== value) {
-      this.historiqueDialogShown = false;
+*/
+search(): void {
+  console.log('Search function called with query:', this.query);
+  if (!this.query) {
+    this.historiqueDefenseArray = [];
+    return;
   }
 
-  // Check if the dialog has already been shown, if not, proceed
-  if (!this.historiqueDialogShown) {
-      this.defenceService.searchHistoriques(value).subscribe(matches => {
-          if (matches.length > 0) {
-              this.historiqueDialogShown = true; // Prevent dialog from showing again
-              const dialogRef = this.dialog.open(EvaluationComponent, {
-                  width: '250px',
-                  data: { historiqueId: matches[0].idDef,  chapterId: this.historiqueDefenseArray } // Assuming matches[0] is a HistoriqueDefense object
-              });
-
-          
-          }
-      });
-  }
+  this.defenceService.searchHistoriques(this.query).subscribe(
+    historiques => {
+      this.historiqueDefenseArray = historiques;
+      console.log('Historique defense array updated with', this.historiqueDefenseArray.length, 'items');
+      this.searchTriggered = true;
+    },
+    error => {
+      console.error('Error searching historiques:', error);
+    }
+  );
+}
+checkForHistoriqueMatch(value: string, historiqueId: number) {
+  this.defenceService.searchHistoriques(value).subscribe(
+    (results) => {
+      this.historiqueDefenseArray = results;
+    },
+    (error) => {
+      console.error('Erreur lors de la recherche:', error);
+    }
+  );
 }
 
 }

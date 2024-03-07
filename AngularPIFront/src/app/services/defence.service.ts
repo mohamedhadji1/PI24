@@ -57,6 +57,7 @@ export class DefenceService {
       return this.http.get<any[]>(`${this.baseUrl}/search?query=${query}`);
     }
     
+    
    /* searchHistoriques(query: string): Observable<HistoriqueDefense[]> {
       return this.http.get<HistoriqueDefense[]>(`${this.baseUrl}/search?query=${query}`);
     }*/

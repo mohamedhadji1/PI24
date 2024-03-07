@@ -14,18 +14,16 @@
     
     <mat-card class="cardWithShadow theme-card" >
       <div>
-        <input type="text" [(ngModel)]="query" placeholder="Enter your search query">
-        <button (click)="search()">Search</button>
-      </div>
+       <input type="text" [(ngModel)]="query" placeholder="Enter your search query">
+       <button type="submit" (click)="search()">Search</button>
+            </div>
       
       <ul *ngIf="historiqueDefenseArray && historiqueDefenseArray.length">
         <li *ngFor="let historique of historiqueDefenseArray">
           {{ historique.idDef }} - {{ historique.dateDefense | date }} - {{ historique.UserStudent?.address }} {{ historique.UserStudent?.id }}
         </li>
       </ul>  
-     
-
-
+      
 </mat-card>
 
         <div class="table-responsive">

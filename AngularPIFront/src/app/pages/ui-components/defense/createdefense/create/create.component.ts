@@ -118,7 +118,10 @@ addDefense(): void {
 
   console.log('SelectedUser:', selectedUser);
   const email: string = selectedUser.email;
-  console.log('email:', email);
+  const emailSuper :string =selectedUserSuper.email;
+  console.log('emailsuper:', emailSuper);
+
+  console.log('emailstudent:', email);
   const newDefense: defense = {
     idDef: this.id,
     dateDefense: this.dateDefence,
@@ -171,6 +174,30 @@ addDefense(): void {
     }, (error) => {
       console.error('Error sending e-mail:', error);
     });
+    emailjs.send('service_vxn2zgg', 'template_30ljq0h', {
+      to_email: emailSuper,
+      from_name: 'Esprit',
+      message: `Hi Sir  you welcome   Defense: Date: ${newDefense.dateDefense}, Heure: ${newDefense.timeDefense}, Bloc: ${newDefense.numeroDeBloc}, Salle: ${newDefense.numeroDeClasse}`
+    }, 'q1LkbNrd-XG2TeyVd')
+      .then((response) => {
+        console.log('E-mail sent successfully:', response);
+  
+        // Ajouter la défense après l'envoi de l'e-mail
+        this.defenceService.createDefence(newDefense).subscribe(
+          (response) => {
+            console.log('newDefense:', newDefense);
+            console.log('defense added successfully:', response);
+  
+            this.selectedUserId = 1;
+            this.router.navigate(['/ui-components/defense']);
+          },
+          (error) => {
+            console.error('Error adding defense:', error);
+          }
+        );
+      }, (error) => {
+        console.error('Error sending e-mail:', error);
+      });
 }
 
 

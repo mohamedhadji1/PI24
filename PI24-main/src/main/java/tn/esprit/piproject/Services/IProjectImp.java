@@ -10,6 +10,7 @@ import org.springframework.data.mongodb.core.index.TextIndexDefinition;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.TextCriteria;
 import org.springframework.data.mongodb.core.query.TextQuery;
+import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -48,19 +49,27 @@ public class IProjectImp implements IProjectService {
 
     @PostConstruct
     public void createTextIndexForHistorique() {
-        mongoTemplate.indexOps(HistoriqueDefense.class)
-                .ensureIndex(new TextIndexDefinition.TextIndexDefinitionBuilder()
-                        .onField("dateDefense")
-                        .onField("UserStudent")
-                        .build());
+        try {
+            mongoTemplate.indexOps(HistoriqueDefense.class)
+                    .dropIndex("dateDefense_text_UserStudent_text"); // Supprimer l'index existant
+        } catch (Exception e) {
+            // Gérer l'erreur si l'index n'existe pas ou s'il y a une autre erreur
+        }
+
+        // Créer le nouvel index
+        try {
+            mongoTemplate.indexOps(HistoriqueDefense.class)
+                    .ensureIndex(new TextIndexDefinition.TextIndexDefinitionBuilder()
+                            .onField("numeroDeBloc")
+                            .onField("UserStudent")
+                            .build());
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("Failed to create text index for HistoriqueDefense collection", e);
+        }
     }
 
-   /* private String cleanText(String text) {
-        return text.toLowerCase()
-                .replaceAll("\\p{Punct}", " ")
-                .replaceAll("\\s+", " ")
-                .trim();
-    }*/
+
     private String cleanText(String text) {
         return text.toLowerCase()
                 .replaceAll("\\p{Punct}", " ")
@@ -78,12 +87,6 @@ public class IProjectImp implements IProjectService {
         return initialResults;
     }
 
-    /*private Set<String> prepareQuery(String query) {
-        Set<String> queryWords = Arrays.stream(cleanText(query).split("\\s+"))
-                .filter(word -> !stopWords.contains(word))
-                .collect(Collectors.toSet());
-        return queryWords;
-    }*/
     private Set<String> prepareQuery(String query) {
         Set<String> queryWords = Arrays.stream(cleanText(query).split("\\s+"))
                 .filter(word -> !stopWords.contains(word))
@@ -91,11 +94,6 @@ public class IProjectImp implements IProjectService {
         return queryWords;
     }
 
-    /*private List<HistoriqueDefense> performMongoDBTextSearch(String query) {
-        TextCriteria criteria = TextCriteria.forDefaultLanguage().matching(query);
-        Query queryMongo = TextQuery.queryText(criteria).sortByScore().limit(10);
-        return mongoTemplate.find(queryMongo, HistoriqueDefense.class);
-    }*/
     private List<HistoriqueDefense> performMongoDBTextSearch(String query) {
         TextCriteria criteria = TextCriteria.forDefaultLanguage().matching(query);
         Query queryMongo = TextQuery.queryText(criteria).sortByScore().limit(10);

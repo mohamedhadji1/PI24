@@ -24,7 +24,8 @@ import {
   ApexAxisChartSeries,
   ApexChart,
   ApexXAxis,
-  ApexTitleSubtitle
+  ApexTitleSubtitle,
+  ApexDataLabels
 } from "ng-apexcharts";
 import { HistoriqueDefense } from 'src/app/core/HistoriqueDefense';
 //import { FullCalendarComponent } from '@fullcalendar/angular';
@@ -34,6 +35,54 @@ export type ChartOptions = {
   xaxis: ApexXAxis;
   title: ApexTitleSubtitle;
 };
+import {
+ 
+  ApexLegend,
+  ApexStroke,
+  ApexTooltip,
+ 
+  ApexYAxis,
+  ApexGrid,
+  ApexPlotOptions,
+  ApexFill,
+  ApexMarkers,
+  ApexResponsive,
+} from 'ng-apexcharts';
+
+
+
+export interface salesOverviewChart {
+  series: ApexAxisChartSeries;
+  chart: ApexChart;
+  dataLabels: ApexDataLabels;
+  plotOptions: ApexDataLabels;
+  yaxis: ApexYAxis;
+  xaxis: ApexXAxis;
+  fill: ApexFill;
+  tooltip: ApexTooltip;
+  stroke: ApexStroke;
+  legend: ApexLegend;
+  grid: ApexGrid;
+  marker: ApexMarkers;
+}
+
+
+
+export interface monthlyChart {
+  series: ApexAxisChartSeries;
+  chart: ApexChart;
+  dataLabels: ApexDataLabels;
+  plotOptions: ApexPlotOptions;
+  tooltip: ApexTooltip;
+  stroke: ApexStroke;
+  legend: ApexLegend;
+  responsive: ApexResponsive;
+}
+
+
+
+// ecommerce card
+
 @Component({
   selector: 'app-defense',
   templateUrl: './defense.component.html',
@@ -48,7 +97,9 @@ export class DefenseComponent implements OnInit,AfterViewInit {
   @ViewChild(MapsComponent) mapsComponent: MapsComponent;
  // @ViewChildren('chart') chartElements: QueryList<ElementRef<HTMLCanvasElement>>;
 
-
+ @ViewChild('chart') chart: ChartComponent = Object.create(null);
+ public monthlyChart!: Partial<monthlyChart> | any;
+ 
   defences: defense[];
   searchtext: any;
   filterDate: string = '';
@@ -89,26 +140,8 @@ export class DefenseComponent implements OnInit,AfterViewInit {
   //const map = this.mapsComponent.getMap(); // Obtenir l'instance de la carte
 
 constructor(private http: HttpClient, private defenceService: DefenceService, private dialog: MatDialog) {
-
-  /*this.chartOptions = {
-    series: [
-      {
-        name: "My-series",
-        data: [1, 2, 3, 51, 49, 62, 69, 91, 148]
-      }
-    ],
-    chart: {
-      height: 350,
-      type: "bar"
-    },
-    title: {
-      text: "My First Angular Chart"
-    },
-    xaxis: {
-      categories: ["Jan", "Feb",  "Mar",  "Apr",  "May",  "Jun",  "Jul",  "Aug", "Sep"]
-    }
-  };
-*/
+  
+  
 
 }
 ngOnInit(): void {
@@ -717,84 +750,7 @@ calculateRoute(): void {
   get totalPages(): number {
     return Math.ceil(this.totalItems[this.currentIndex] / this.itemsPerPage);
   }
-  /*initCharts(): void {
-    this.defences.forEach(defense => {
-      const ctx = document.getElementById(`chart-${defense.idDef}`) as HTMLCanvasElement;
-      if (ctx) {
-        const myChart = new Chart(ctx, {
-          type: 'bar',
-          data: {
-            labels: ['A', 'B', 'C', 'D', 'E'],
-            datasets: [{
-              label: 'Sample Data',
-              data: Array(5).fill(defense.idDef),
-              backgroundColor: 'rgba(255, 99, 132, 0.2)',
-              borderColor: 'rgba(255, 99, 132, 1)',
-              borderWidth: 1
-            }]
-          },
-          options: {
-            scales: {
-              y: {
-                type: 'linear',
-                ticks: {
-                  // Utilisez un type explicite pour les options des ticks de l'axe y
-                  // pour éviter les erreurs de compilation
-                  // beginAtZero: true as boolean
-                }
-              }
-            }
-          }
-        });
-      }
-    });
-  }
-  
-  initCharts(): void {
-    // Créer un objet pour stocker les données par semaine
-    const dataByWeek: { [key: number]: number } = {};
-
-  
-    // Remplir l'objet avec les données
-    this.defences.forEach(defense => {
-      const weekNumber = this.getWeekNumber(new Date(defense.dateDefense));
-      if (!dataByWeek[weekNumber]) {
-        dataByWeek[weekNumber] = 0;
-      }
-      dataByWeek[weekNumber]++;
-    });
-  
-    // Créer les données de chart à partir de l'objet
-    const chartData = Object.keys(dataByWeek).map(weekNumber => {
-      return { week: 'Week ' + weekNumber, idRefCount: dataByWeek[parseInt(weekNumber)] };
-    });
-  
-    // Définir les options du chart
-    const options: ChartOptions = {
-      titre: {
-        display: true,
-        text: 'Number of idRef per week'
-      },
-      legend: {
-        display: false
-      }
-    };
-  
-    const myChart = new Chart(ctx, {
-      type: 'bar',
-      data: {
-        labels: chartData.map(data => data.week),
-        datasets: [{
-          label: 'Number of idRef',
-          data: chartData.map(data => data.idRefCount),
-          backgroundColor: 'rgba(255, 99, 132, 0.2)',
-          borderColor: 'rgba(255, 99, 132, 1)',
-          borderWidth: 1
-        }]
-      },
-      options: options
-    });
-  } */
+ 
   
   // Fonction pour obtenir le numéro de la semaine à partir d'une date
   getWeekNumber(date: Date): number {
