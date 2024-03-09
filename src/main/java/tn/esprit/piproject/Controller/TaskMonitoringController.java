@@ -22,16 +22,6 @@ public class TaskMonitoringController {
     private AutoIncrementUtil autoIncrementUtil;
     @Autowired
     private TaskRepository taskRepository;
-    @PostMapping()
-    public ResponseEntity<Monitoring> createTaskMonitoring(@RequestBody Monitoring monitoring) {
-        int id = autoIncrementUtil.getNextSequence("votre_sequence");
-        monitoring.setId(id);
-        Task task = taskRepository.findById(monitoring.getTask().getId()).orElse(null);
-        if (task == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        monitoring.setTask(task);
-        Monitoring createdTaskMonitoring = iProjectService.createTaskMonitoring(monitoring);
-        return new ResponseEntity<>(createdTaskMonitoring, HttpStatus.CREATED);
-    }
+
+
 }

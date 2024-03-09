@@ -27,9 +27,8 @@ public class ChatController {
         private UserRepository userRepository;
         @Autowired
         private AutoIncrementUtil autoIncrementUtil;
-
-        @MessageMapping("/chat")
-        @SendTo("/topic/messages")
+        @MessageMapping("/add_new_chat")
+        @SendTo("/chat/added_chat")
         public ChatMessage handleMessage(ChatMessage message) {
             User sender = userRepository.findById(message.getRecipient().getId())
                     .orElseThrow(() -> new IllegalArgumentException("Sender not found"));
@@ -45,9 +44,4 @@ public class ChatController {
 
             return iProjectService.saveMessage(message);
         }
-
-    @GetMapping("/messages/{supervisorId}/{studentId}")
-    public List<ChatMessage> getMessagesBetweenSupervisorAndStudent(@PathVariable int supervisorId, @PathVariable int studentId) {
-        return iProjectService.getMessagesBetweenSupervisorAndStudent(supervisorId, studentId);
-    }
 }
