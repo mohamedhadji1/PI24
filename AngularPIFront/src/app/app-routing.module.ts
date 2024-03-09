@@ -4,6 +4,7 @@ import { BlankComponent } from './layouts/blank/blank.component';
 import { FullComponent } from './layouts/full/full.component';
 import { NotfoundComponent } from './notfound/notfound.component';
 import { AddTaskComponent } from './pages/ui-components/task/add-task/add-task.component';
+import { OfferComponent } from './pages/ui-components/company/offer/offer.component';
 
 const routes: Routes = [
   {path:"",pathMatch:"full",redirectTo:"home"},
@@ -48,6 +49,11 @@ const routes: Routes = [
       },
     ],
   },
+  {
+    path: 'ui-components/offer/:id'
+    ,component: OfferComponent
+  }
+  ,
   {path: 'add-task',component: AddTaskComponent},
   {path:'**', component:NotfoundComponent}
 ];

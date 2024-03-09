@@ -10,6 +10,7 @@ import { InternshipComponent } from './internship/internship.component';
 import { EventComponent } from './event/event.component';
 import { DocumetsComponent } from './documets/documets.component';
 import { AddTaskComponent } from './task/add-task/add-task.component';
+import { ChatComponent } from './Chat/Chat.component';
 
 export const UiComponentsRoutes: Routes = [
   {
@@ -55,7 +56,10 @@ export const UiComponentsRoutes: Routes = [
       path: 'add-task',
       component: AddTaskComponent,
       },
-
+      {
+        path: 'chat',
+        component: ChatComponent,
+      },
     ],
   },
 ];

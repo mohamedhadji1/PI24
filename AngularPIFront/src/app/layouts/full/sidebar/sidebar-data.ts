@@ -58,6 +58,11 @@ export const navItems: NavItem[] = [
     route: '/ui-components/documents',
   },
   {
+    displayName: 'Chat Coaching',
+    iconName: 'file-type-doc',
+    route: '/ui-components/chat',
+  },
+  {
     displayName: 'Login',
     iconName: 'lock',
     route: '/authentication/login',
