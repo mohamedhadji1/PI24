@@ -19,11 +19,12 @@ public class DatabaseInitializer implements CommandLineRunner {
     private final ResponseRepository responseRepository;
     private final TaskRepository taskRepository;
     private final TaskMonitoringRepository taskMonitoringRepository;
+    private final ChatMessageRepository chatMessageRepository;
     public DatabaseInitializer(UserRepository userRepository,
                                CompanyRepository companyRepository, ComplaintRepository complaintRepository,
                                DefenceRepository defenceRepository,
                                DocumentsRepository documentsRepository,EvaluationRepository evaluationRepository
-            , InternshipRepository internshipRepository,OffreRepository offreRepository,ResponseRepository responseRepository,TaskRepository taskRepository,TaskMonitoringRepository taskMonitoringRepository) {
+            , InternshipRepository internshipRepository,OffreRepository offreRepository,ResponseRepository responseRepository,TaskRepository taskRepository,TaskMonitoringRepository taskMonitoringRepository,ChatMessageRepository chatMessageRepository) {
         this.userRepository = userRepository;
         this.companyRepository = companyRepository;
         this.complaintRepository=  complaintRepository;
@@ -35,6 +36,7 @@ public class DatabaseInitializer implements CommandLineRunner {
         this.responseRepository=responseRepository;
         this.taskRepository=taskRepository;
         this.taskMonitoringRepository=taskMonitoringRepository;
+        this.chatMessageRepository=chatMessageRepository;
     }
 
     @Override
@@ -91,6 +93,9 @@ public class DatabaseInitializer implements CommandLineRunner {
         if (taskMonitoringRepository.count() == 0) {
             Monitoring MonitoringRepository = new Monitoring();
             taskMonitoringRepository.save(MonitoringRepository);
+        }if (chatMessageRepository.count() == 0) {
+            ChatMessage chatrepo = new ChatMessage();
+            chatMessageRepository.save(chatrepo);
         }
     }
 }

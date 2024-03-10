@@ -1,7 +1,10 @@
+import { User } from "./User";
+
+
 export interface ChatMessage {
-  id: number;
+  id?: number;
   message: string;
   timestamp: Date;
-  senderId: number;
-  recipientId: number;
+  sender: User;
+  recipient: User;
 }

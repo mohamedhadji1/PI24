@@ -2,7 +2,6 @@ package tn.esprit.piproject.Services;
 
 import tn.esprit.piproject.Entities.*;
 import org.springframework.core.io.Resource;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
@@ -33,27 +32,12 @@ public interface IProjectService {
     Task updateTask(Task task);
     void deleteTask(int id);
     String getAttachmentFilename(int id);
-<<<<<<< Updated upstream
-
-=======
     Resource downloadTaskAttachment(int taskId);
     /**************Offer******************/
-    List<Offer> getAllOffer();
-
-    Optional<Offer> getofferById(int id);
-    List<Offer> getoffersByCompany(int id);
-
-    Offer createoffer(Offer offer);
-
-    Offer updateoffer(Offer offer);
-
-    void deleteoffer(int id);
     /*************Company******************/
     List<Company> getAllcompany();
 
     Optional<Company> getCompanyById(int idComp);
-
-    Company createcompany(Company company);
 
     Company updatecompany(Company company);
 
@@ -77,7 +61,5 @@ public interface IProjectService {
     ChatMessage saveMessage(ChatMessage message);
     List<ChatMessage> getAllMessages();
     List<ChatMessage> getMessagesBetweenSupervisorAndStudent(int supervisorId, int studentId);
-
->>>>>>> Stashed changes
 }
 

@@ -4,18 +4,14 @@
 <div class="container">
   <div class="chat-container">
     <div class="chat-messages" id="chat-messages">
-      <div class="message sent">
-        <p>Hello!</p>
+      <div *ngFor="let data of chats" [ngClass]="(data.sender.id === currentUserId) ? 'message sent':'message received'">
+        <p>{{data.text}}</p>
         <span class="timestamp">12:30 PM</span>
       </div>
-      <div class="message received">
-        <p>Hi there!</p>
-        <span class="timestamp">12:31 PM</span>
-      </div>
     </div>
-    <div class="chat-input">
-      <textarea id="message-input" placeholder="Type your message..."></textarea>
-      <button id="send-button">Send</button>
+    <div class="chat-input" [formGroup]="chatForm">
+      <textarea formControlName="message" id="message-input" placeholder="Type your message..."></textarea>
+      <button (click)="add()"  id="send-button">Send</button>
     </div>
   </div>
 </div>

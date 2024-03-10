@@ -21,7 +21,6 @@ public class Monitoring {
     private int id;
     @DBRef
     private Task task;
-<<<<<<< Updated upstream
     private boolean reviewedBySupervisor;
 
     public int getId() {
@@ -46,9 +45,6 @@ public class Monitoring {
 
     public void setReviewedBySupervisor(boolean reviewedBySupervisor) {
         this.reviewedBySupervisor = reviewedBySupervisor;
-    }
-=======
-    private List<MonitoringNote> notes;
->>>>>>> Stashed changes
+    }private List<MonitoringNote> notes;
 }
 

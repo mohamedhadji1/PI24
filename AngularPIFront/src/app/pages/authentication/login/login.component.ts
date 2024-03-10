@@ -10,9 +10,7 @@ export class AppSideLoginComponent {
   email: string = '';
   password: string = '';
   errorMessage: string = '';
-
   constructor(private router: Router) {}
-
   login(email: string, password: string): boolean {
     // Simulating authentication logic
     if (email === 'student@esprit.tn' && password === 'aaa') {
@@ -27,7 +25,7 @@ export class AppSideLoginComponent {
       this.router.navigate(['/dashboard']);
       return true;
     } else if (email === 'admin@esprit.tn' && password === 'aaa') {
-      localStorage.setItem('currentUser', JSON.stringify({ id: 2, email: email, role: Role.ADMIN }));
+      localStorage.setItem('currentUser', JSON.stringify({ id: 3, email: email, role: Role.ADMIN }));
       this.router.navigate(['/dashboard']);
       return true;
     } else {
