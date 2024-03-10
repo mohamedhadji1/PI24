@@ -4,14 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
-import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 import tn.esprit.piproject.Entities.*;
 import tn.esprit.piproject.Repositories.*;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,8 +28,6 @@ public class IProjectImp implements IProjectService {
     private DocumentsRepository documentsRepository;
     @Autowired
     private TaskMonitoringRepository taskMonitoringRepository;
-<<<<<<< Updated upstream
-=======
     @Autowired
     private OffreRepository offerRepository;
     @Autowired
@@ -42,7 +37,6 @@ public class IProjectImp implements IProjectService {
     @Autowired
     private SequenceGeneratorService sequenceGeneratorService;
 
->>>>>>> Stashed changes
     @Override
     public List<User> getAllUsers() {
         return userRepository.findAll();
@@ -67,7 +61,8 @@ public class IProjectImp implements IProjectService {
     public void deleteUser(int id) {
         userRepository.deleteById(id);
     }
-/*********************************************************/
+
+    /*********************************************************/
     @Override
     public List<Internship> getAllinternships() {
         return internshipRepository.findAll();
@@ -120,13 +115,19 @@ public class IProjectImp implements IProjectService {
     }
 
     @Override
-    public List<Task> getAllTasks() {return taskRepository.findAll();}
+    public List<Task> getAllTasks() {
+        return taskRepository.findAll();
+    }
 
     @Override
-    public Optional<Task> getTaskById(int id) {return taskRepository.findById(id);}
+    public Optional<Task> getTaskById(int id) {
+        return taskRepository.findById(id);
+    }
 
     @Override
-    public Task createTask(Task task) {return taskRepository.save(task);}
+    public Task createTask(Task task) {
+        return taskRepository.save(task);
+    }
 
     @Override
     public Task updateTask(Task task) {
@@ -148,6 +149,7 @@ public class IProjectImp implements IProjectService {
         }
         return null;
     }
+
     @Override
     public Resource downloadTaskAttachment(int taskId) {
         Optional<Task> optionalTask = taskRepository.findById(taskId);
@@ -162,71 +164,6 @@ public class IProjectImp implements IProjectService {
         }
         return null;
     }
-<<<<<<< Updated upstream
-
-    @Override
-    public String getAttachmentFilename(int id) {
-        Optional<Task> optionalTask = taskRepository.findById(id);
-        if (optionalTask.isPresent()) {
-            Task task = optionalTask.get();
-            return task.getAttachmentFileName();
-        }
-        return null;
-    }
-=======
-    @Override
-    public List<Offer> getAllOffer() {
-        return offerRepository.findAll();
-    }
-
-
-    @Override
-    public Optional<Offer> getofferById(int id) {
-        return offerRepository.findById(id);
-    }
-
-    public List<Offer> getoffersByCompany(int id) {
-        List<Offer> all_offers = offerRepository.findAll();
-        return all_offers.stream()
-                .filter(offer -> offer.getCompany().getId() == id)
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public Offer createoffer(Offer offer) {
-        offer.setId(sequenceGeneratorService.generateSequence("documents_sequence"));
-        Date currentDate = Date.from(Instant.now());
-        Calendar c = Calendar.getInstance();
-        c.add(Calendar.DATE, 3);
-        Date date_after_3_days = (Date) c.getTime();
-        offer.setDateStart(currentDate);
-        offer.setDateEnd(date_after_3_days);
-        Company company_from_db=companyRepository.findById(offer.getCompany().getId()).orElseGet(null);
-        if(company_from_db == null) return Offer.Empty();
-        company_from_db.getOffers().add(offer);
-        companyRepository.save(company_from_db);
-        return offerRepository.save(offer);
-    }
-
-    @Override
-    public Offer updateoffer(Offer offer) {
-        Company company_from_db=companyRepository.findById(offer.getCompany().getId()).orElseGet(null);
-        if(company_from_db == null) return Offer.Empty();
-        company_from_db.getOffers().add(offer);
-        companyRepository.save(company_from_db);
-        return offerRepository.save(offer);
-    }
-
-    @Override
-    public void deleteoffer(int id) {
-        offerRepository.findById(id).ifPresent(offer_value -> {
-            companyRepository.findById(offer_value.getCompany().getId()).ifPresent(company_value -> {
-                company_value.getOffers().remove(offer_value);
-                companyRepository.save(company_value);
-            });
-            offerRepository.deleteById(offer_value.getId());
-        });
-    }
 
     @Override
     public List<Company> getAllcompany() {
@@ -239,14 +176,8 @@ public class IProjectImp implements IProjectService {
     }
 
     @Override
-    public Company createcompany(Company company) {
-        company.setId(sequenceGeneratorService.generateSequence("documents_sequence"));
+    public Company updatecompany(Company company) {
         return companyRepository.save(company);
-    }
-
-
-    @Override
-    public Company updatecompany(Company company) {return companyRepository.save(company);
     }
 
     @Override
@@ -319,8 +250,5 @@ public class IProjectImp implements IProjectService {
         return chatMessageRepository.findBySender_IdAndRecipient_Id(supervisorId, studentId);
 
     }
-
-
->>>>>>> Stashed changes
 }
 

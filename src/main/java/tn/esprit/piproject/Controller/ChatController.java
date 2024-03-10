@@ -1,53 +1,53 @@
 package tn.esprit.piproject.Controller;
 
-import lombok.*;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.SendTo;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import tn.esprit.piproject.Config.AutoIncrementUtil;
 import tn.esprit.piproject.Entities.ChatMessage;
 import tn.esprit.piproject.Entities.User;
 import tn.esprit.piproject.Repositories.UserRepository;
 import tn.esprit.piproject.Services.IProjectService;
-
-import java.util.List;
+import tn.esprit.piproject.models.ChatMessageModel;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @AllArgsConstructor
-@NoArgsConstructor
 @RestController
 @RequestMapping("/api")
 public class ChatController {
 
-        @Autowired
-        private IProjectService iProjectService;
-        @Autowired
-        private UserRepository userRepository;
-        @Autowired
-        private AutoIncrementUtil autoIncrementUtil;
 
-        @MessageMapping("/chat")
-        @SendTo("/topic/messages")
-        public ChatMessage handleMessage(ChatMessage message) {
-            User sender = userRepository.findById(message.getRecipient().getId())
-                    .orElseThrow(() -> new IllegalArgumentException("Sender not found"));
+    private final IProjectService iProjectService;
 
-            User recipient = userRepository.findById(message.getSender().getId())
-                    .orElseThrow(() -> new IllegalArgumentException("Recipient not found"));
+    private final UserRepository userRepository;
 
-            message.setSender(sender);
-            message.setRecipient(recipient);
+    private final AutoIncrementUtil autoIncrementUtil;
 
-            int id = autoIncrementUtil.getNextSequence("votre_sequence");
-            message.setId(id);
+    private final SimpMessagingTemplate simpMessagingTemplate;
 
-            return iProjectService.saveMessage(message);
-        }
 
-    @GetMapping("/messages/{supervisorId}/{studentId}")
-    public List<ChatMessage> getMessagesBetweenSupervisorAndStudent(@PathVariable int supervisorId, @PathVariable int studentId) {
-        return iProjectService.getMessagesBetweenSupervisorAndStudent(supervisorId, studentId);
+    @MessageMapping("/add_new_chat")
+//    @SendTo("/chat/added_chat")
+    public ChatMessage handleMessage(ChatMessageModel message) {
+        System.out.println(message);
+        User sender = userRepository.findById(message.senderId())
+                .orElseThrow(() -> new IllegalArgumentException("Sender not found"));
+
+        User recipient = userRepository.findById(message.receiverId())
+                .orElseThrow(() -> new IllegalArgumentException("Recipient not found"));
+
+        ChatMessage chatMessage = new ChatMessage();
+        chatMessage.setSender(sender);
+        chatMessage.setRecipient(recipient);
+        chatMessage.setText(message.text());
+        int id = autoIncrementUtil.getNextSequence("votre_sequence");
+        chatMessage.setId(id);
+        var savedMessage = iProjectService.saveMessage(chatMessage);
+        simpMessagingTemplate.convertAndSend("/topic/added_chat", savedMessage);
+
+        return savedMessage;
     }
 }

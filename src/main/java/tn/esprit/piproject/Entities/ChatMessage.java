@@ -17,7 +17,7 @@ import java.util.Date;
 public class ChatMessage {
     @Id
     private int id;
-    private String message;
+    private String text;
     private Date timestamp;
     @DBRef
     private User sender;
