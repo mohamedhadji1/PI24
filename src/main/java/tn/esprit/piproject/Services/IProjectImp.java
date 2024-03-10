@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import tn.esprit.piproject.Entities.*;
 import tn.esprit.piproject.Repositories.*;
@@ -37,6 +38,16 @@ public class IProjectImp implements IProjectService {
     @Autowired
     private SequenceGeneratorService sequenceGeneratorService;
 
+    @Autowired
+    private SimpMessagingTemplate messagingTemplate;
+    @Autowired
+    private NotificationRepository notificationRepository;
+    public IProjectImp (SimpMessagingTemplate messagingTemplate) {
+        this.messagingTemplate = messagingTemplate;
+    }
+    public void sendNotification(Notification notification) {
+        messagingTemplate.convertAndSend("/topic/notification", notification);
+    }
     @Override
     public List<User> getAllUsers() {
         return userRepository.findAll();
@@ -222,7 +233,7 @@ public class IProjectImp implements IProjectService {
 
     @Override
     public Notification createNotification(Notification notification) {
-        return null;
+        return notificationRepository.save(notification);
     }
 
     @Override

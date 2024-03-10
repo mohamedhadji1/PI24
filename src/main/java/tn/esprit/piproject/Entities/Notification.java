@@ -10,14 +10,14 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 public class Notification {
+
     @Id
     private int id;
-    private String message;
-    private boolean read;
-    @DBRef
-    private User sender;
-    @DBRef
-    private User recipient;
+    private String description;
+    private String sender;
+    private User reciever;
+
+    public Notification(User supervisor, String taskDescription) {
+    }
 }

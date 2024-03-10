@@ -1,5 +1,6 @@
 import { StompSubscription } from '@stomp/stompjs/src/stomp-subscription';
 import { CompatClient, Stomp } from '@stomp/stompjs';
+
 import { Injectable, OnDestroy } from '@angular/core';
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
 import { ChatMessage } from '../core/ChatMessage';
@@ -25,7 +26,6 @@ export class ChatService implements OnDestroy{
       this.connection?.send('/app/add_new_chat', {}, JSON.stringify(chat));
     // }
   }
-
   public listen(fun: ListenerCallBack): void {
     if (this.connection) {
       this.connection.connect({}, () => {
@@ -33,7 +33,6 @@ export class ChatService implements OnDestroy{
       });
     }
   }
-
   ngOnDestroy(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();

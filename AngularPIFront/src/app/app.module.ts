@@ -26,6 +26,7 @@ import { AppNavItemComponent } from './layouts/full/sidebar/nav-item/nav-item.co
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FooterComponent } from './pages/client/footer/footer.component';
 import { CommonModule } from '@angular/common';
+import { NotificationComponent } from './layouts/notification/notification.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,7 @@ import { CommonModule } from '@angular/common';
     HeaderComponent,
     BrandingComponent,
     AppNavItemComponent,
-
+    NotificationComponent
   ],
   imports: [
     BrowserModule,

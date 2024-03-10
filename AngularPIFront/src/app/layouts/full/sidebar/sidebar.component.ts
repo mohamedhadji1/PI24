@@ -81,6 +81,11 @@ export class SidebarComponent implements OnInit {
           route: '/ui-components/task',
         },
         {
+          displayName: 'Turn in tasks',
+          iconName: 'checklist',
+          route: '/ui-components/taskstudent',
+        },
+        {
           navCap: 'Chat',
         },
         {

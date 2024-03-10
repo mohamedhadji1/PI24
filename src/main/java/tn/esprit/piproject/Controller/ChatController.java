@@ -13,6 +13,8 @@ import tn.esprit.piproject.Repositories.UserRepository;
 import tn.esprit.piproject.Services.IProjectService;
 import tn.esprit.piproject.models.ChatMessageModel;
 
+import java.util.Date;
+
 @CrossOrigin(origins = "http://localhost:4200")
 @AllArgsConstructor
 @RestController
@@ -35,10 +37,8 @@ public class ChatController {
         System.out.println(message);
         User sender = userRepository.findById(message.senderId())
                 .orElseThrow(() -> new IllegalArgumentException("Sender not found"));
-
         User recipient = userRepository.findById(message.receiverId())
                 .orElseThrow(() -> new IllegalArgumentException("Recipient not found"));
-
         ChatMessage chatMessage = new ChatMessage();
         chatMessage.setSender(sender);
         chatMessage.setRecipient(recipient);
@@ -47,7 +47,6 @@ public class ChatController {
         chatMessage.setId(id);
         var savedMessage = iProjectService.saveMessage(chatMessage);
         simpMessagingTemplate.convertAndSend("/topic/added_chat", savedMessage);
-
         return savedMessage;
     }
 }

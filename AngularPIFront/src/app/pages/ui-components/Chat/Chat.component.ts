@@ -1,3 +1,5 @@
+import { WebSocketService } from './../../../services/WebSocket.service';
+import { webSocket } from 'rxjs/webSocket';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { ChatMessage } from 'src/app/core/ChatMessage';
@@ -32,9 +34,14 @@ this.chatservice.listen(chaters => {
     const chatmem= {
       text: this.chatForm.value.message!,
       senderId:this.currentUserId,
-      receiverId:2
+      receiverId:1,
+      timestamp: new Date()
     };
     console.log(chatmem);
     this.chatservice.send(chatmem);
+    
   }
+notify(): void {
+
+}
 }

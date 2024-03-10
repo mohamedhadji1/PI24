@@ -1,0 +1,12 @@
+<div *ngFor="let notification of notifications">
+  <p>{{ notification.description }} by {{ notification.user }}</p>
+</div>
+<button mat-icon-button aria-label="Notifications">
+  <i-tabler
+    class="d-flex"
+    name="bell"
+    matBadge="{{notificationcount}}"
+    matBadgeColor="primary"
+  ></i-tabler>
+</button>
+

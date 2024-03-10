@@ -1,12 +1,9 @@
-<title>Chat Interface</title>
-<body>
-
 <div class="container">
   <div class="chat-container">
     <div class="chat-messages" id="chat-messages">
       <div *ngFor="let data of chats" [ngClass]="(data.sender.id === currentUserId) ? 'message sent':'message received'">
-        <p>{{data.text}}</p>
-        <span class="timestamp">12:30 PM</span>
+        <p>{{ data.sender?.name }}</p>
+        <p>{{ data.text }}</p>
       </div>
     </div>
     <div class="chat-input" [formGroup]="chatForm">
@@ -15,5 +12,4 @@
     </div>
   </div>
 </div>
-
-</body>
+<button (click)="notify()"> test </button>

@@ -8,10 +8,12 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.piproject.Config.AutoIncrementUtil;
+import tn.esprit.piproject.Entities.Notification;
 import tn.esprit.piproject.Entities.Task;
 import tn.esprit.piproject.Entities.User;
 import tn.esprit.piproject.Repositories.*;
 import org.springframework.web.multipart.MultipartFile;
+import tn.esprit.piproject.Services.IProjectImp;
 import tn.esprit.piproject.Services.IProjectService;
 
 import javax.annotation.Resource;
@@ -34,15 +36,14 @@ public class TaskController {
     private UserRepository userRepository;
     @Autowired
     private IProjectService iProjectService;
-
+    @Autowired
+    private IProjectImp iProjectImp;
     @PostMapping
     public ResponseEntity<Task> createTask(@RequestParam("file") MultipartFile file, @RequestParam("task") String taskJson) {
         try {
-            // Convert JSON string to Task object
             ObjectMapper objectMapper = new ObjectMapper();
             Task task = objectMapper.readValue(taskJson, Task.class);
 
-            // Handle file upload
             if (!file.isEmpty()) {
                 task.setAttachmentFileName(file.getOriginalFilename());
                 task.setAttachmentData(file.getBytes());
@@ -58,6 +59,8 @@ public class TaskController {
             task.setStudent(student);
             int id = autoIncrementUtil.getNextSequence("votre_sequence");
             task.setId(id);
+            Notification notif = new Notification(task.getSupervisor(),task.getTaskDescription());
+            iProjectImp.sendNotification(notif);
             Task createdTask = taskRepository.save(task);
             return new ResponseEntity<>(createdTask, HttpStatus.CREATED);
         } catch (Exception e) {

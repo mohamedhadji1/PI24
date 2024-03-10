@@ -20,11 +20,12 @@ public class DatabaseInitializer implements CommandLineRunner {
     private final TaskRepository taskRepository;
     private final TaskMonitoringRepository taskMonitoringRepository;
     private final ChatMessageRepository chatMessageRepository;
+    private final NotificationRepository notificationRepository;
     public DatabaseInitializer(UserRepository userRepository,
                                CompanyRepository companyRepository, ComplaintRepository complaintRepository,
                                DefenceRepository defenceRepository,
                                DocumentsRepository documentsRepository,EvaluationRepository evaluationRepository
-            , InternshipRepository internshipRepository,OffreRepository offreRepository,ResponseRepository responseRepository,TaskRepository taskRepository,TaskMonitoringRepository taskMonitoringRepository,ChatMessageRepository chatMessageRepository) {
+            , InternshipRepository internshipRepository,OffreRepository offreRepository,ResponseRepository responseRepository,TaskRepository taskRepository,TaskMonitoringRepository taskMonitoringRepository,ChatMessageRepository chatMessageRepository,NotificationRepository notificationRepository) {
         this.userRepository = userRepository;
         this.companyRepository = companyRepository;
         this.complaintRepository=  complaintRepository;
@@ -37,6 +38,7 @@ public class DatabaseInitializer implements CommandLineRunner {
         this.taskRepository=taskRepository;
         this.taskMonitoringRepository=taskMonitoringRepository;
         this.chatMessageRepository=chatMessageRepository;
+        this.notificationRepository=notificationRepository;
     }
 
     @Override
@@ -96,6 +98,10 @@ public class DatabaseInitializer implements CommandLineRunner {
         }if (chatMessageRepository.count() == 0) {
             ChatMessage chatrepo = new ChatMessage();
             chatMessageRepository.save(chatrepo);
+        }
+        if (notificationRepository.count() == 0) {
+            Notification notification = new Notification();
+            notificationRepository.save(notification);
         }
     }
 }
