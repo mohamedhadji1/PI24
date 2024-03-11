@@ -1,29 +1,35 @@
 package tn.esprit.piproject.Entities;
 
-import jakarta.persistence.*;
-import lombok.*;
+
+import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.web.multipart.MultipartFile;
-@Document(collection = "tasks")
+
+import java.util.Date;
+
+
+@Document(collection ="TurnIn")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
-public class Task {
+public class TurnIn {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String taskDescription;
-    private String progress;
-    private String duration;
+    private Date submissionDate = new Date();
+    private String comment;
     private String attachmentFileName;
     private byte[] attachmentData;
     @DBRef
+    private User student;
+    @DBRef
     private User supervisor;
     @DBRef
-    private User student;
-}
+    private Task task;
 
+}

@@ -48,7 +48,6 @@ public class TaskController {
                 task.setAttachmentFileName(file.getOriginalFilename());
                 task.setAttachmentData(file.getBytes());
             }
-
             // Process task creation
             User supervisor = userRepository.findById(task.getSupervisor().getId()).orElse(null);
             User student = userRepository.findById(task.getStudent().getId()).orElse(null);

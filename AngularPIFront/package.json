@@ -30,6 +30,7 @@
     "cors": "^2.8.5",
     "file-saver": "^2.0.5",
     "ng-apexcharts": "^1.7.1",
+    "ngx-emoji-picker": "^0.1.6",
     "rellax": "^1.12.1",
     "rxjs": "~7.5.0",
     "sass": "^1.57.1",

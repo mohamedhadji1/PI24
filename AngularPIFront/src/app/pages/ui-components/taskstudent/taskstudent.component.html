@@ -26,12 +26,11 @@
               <button class="btn btn-primary" (click)="downloadAttachment(task.id, task.attachmentFileName)">Download</button>
             </td>
             <td>
-              <button class="btn btn-primary">Turn in</button>
+              <button class="btn btn-primary" (click)="openTurnInDialog(task.id)">Turn in</button>
             </td>
           </tr>
         </tbody>
       </table>
     </div>
-    <button class="btn btn-primary" (click)="openAddDialog()">Turn in</button>
   </mat-card-content>
 </mat-card>

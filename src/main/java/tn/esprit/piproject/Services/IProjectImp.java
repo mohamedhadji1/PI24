@@ -37,7 +37,8 @@ public class IProjectImp implements IProjectService {
     private ChatMessageRepository chatMessageRepository;
     @Autowired
     private SequenceGeneratorService sequenceGeneratorService;
-
+    @Autowired
+    private TurnInRepository turnInRepository;
     @Autowired
     private SimpMessagingTemplate messagingTemplate;
     @Autowired
@@ -260,6 +261,27 @@ public class IProjectImp implements IProjectService {
     public List<ChatMessage> getMessagesBetweenSupervisorAndStudent(int supervisorId, int studentId) {
         return chatMessageRepository.findBySender_IdAndRecipient_Id(supervisorId, studentId);
 
+    }
+
+    @Override
+    public TurnIn submitTurnIn(TurnIn turnIn) {
+        return turnInRepository.save(turnIn);
+    }
+
+    @Override
+    public List<TurnIn> getAllTurnIns() {
+        return turnInRepository.findAll();
+    }
+
+    @Override
+    public TurnIn getTurnInById(int turnInId) {
+        Optional<TurnIn> turnIn = turnInRepository.findById(turnInId);
+        return turnIn.orElse(null);
+    }
+
+    @Override
+    public List<TurnIn> getTurnInsByStudentId(int studentId) {
+        return turnInRepository.findByStudentId(studentId);
     }
 }
 

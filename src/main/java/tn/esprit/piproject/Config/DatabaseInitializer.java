@@ -21,11 +21,12 @@ public class DatabaseInitializer implements CommandLineRunner {
     private final TaskMonitoringRepository taskMonitoringRepository;
     private final ChatMessageRepository chatMessageRepository;
     private final NotificationRepository notificationRepository;
+    private final TurnInRepository turnInRepository;
     public DatabaseInitializer(UserRepository userRepository,
                                CompanyRepository companyRepository, ComplaintRepository complaintRepository,
                                DefenceRepository defenceRepository,
                                DocumentsRepository documentsRepository,EvaluationRepository evaluationRepository
-            , InternshipRepository internshipRepository,OffreRepository offreRepository,ResponseRepository responseRepository,TaskRepository taskRepository,TaskMonitoringRepository taskMonitoringRepository,ChatMessageRepository chatMessageRepository,NotificationRepository notificationRepository) {
+            , InternshipRepository internshipRepository,OffreRepository offreRepository,ResponseRepository responseRepository,TaskRepository taskRepository,TaskMonitoringRepository taskMonitoringRepository,ChatMessageRepository chatMessageRepository,NotificationRepository notificationRepository,TurnInRepository turnInRepository) {
         this.userRepository = userRepository;
         this.companyRepository = companyRepository;
         this.complaintRepository=  complaintRepository;
@@ -39,6 +40,7 @@ public class DatabaseInitializer implements CommandLineRunner {
         this.taskMonitoringRepository=taskMonitoringRepository;
         this.chatMessageRepository=chatMessageRepository;
         this.notificationRepository=notificationRepository;
+        this.turnInRepository=turnInRepository;
     }
 
     @Override
@@ -98,10 +100,12 @@ public class DatabaseInitializer implements CommandLineRunner {
         }if (chatMessageRepository.count() == 0) {
             ChatMessage chatrepo = new ChatMessage();
             chatMessageRepository.save(chatrepo);
-        }
-        if (notificationRepository.count() == 0) {
+        }if (notificationRepository.count() == 0) {
             Notification notification = new Notification();
             notificationRepository.save(notification);
+        }if (turnInRepository.count() == 0) {
+            TurnIn turnin = new TurnIn();
+            turnInRepository.save(turnin);
         }
     }
 }

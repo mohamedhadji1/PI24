@@ -5,6 +5,7 @@ import { FullComponent } from './layouts/full/full.component';
 import { NotfoundComponent } from './notfound/notfound.component';
 import { AddTaskComponent } from './pages/ui-components/task/add-task/add-task.component';
 import { OfferComponent } from './pages/ui-components/company/offer/offer.component';
+import { AddturninComponent } from './pages/ui-components/taskstudent/addturnin/addturnin.component';
 
 const routes: Routes = [
   {path:"",pathMatch:"full",redirectTo:"home"},
@@ -55,6 +56,7 @@ const routes: Routes = [
   }
   ,
   {path: 'add-task',component: AddTaskComponent},
+  {path: 'add-turnin',component: AddturninComponent},
   {path:'**', component:NotfoundComponent}
 ];
 

@@ -52,6 +52,7 @@ export class AddTaskComponent {
         duration: this.taskForm.value.duration,
         supervisor: { id: this.taskForm.value.supervisorId } as User,
         student: { id: this.taskForm.value.studentId } as User,
+        
       }));
 
       this.taskService.createTask(formData).subscribe(

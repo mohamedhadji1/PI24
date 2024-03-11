@@ -18,6 +18,4 @@ public class Notification {
     private String sender;
     private User reciever;
 
-    public Notification(User supervisor, String taskDescription) {
-    }
 }
