@@ -30,6 +30,7 @@ import { UpdateCompanyComponent } from './company/update-company/update-company.
 import { ChatComponent } from './Chat/Chat.component';
 import { TaskstudentComponent } from './taskstudent/taskstudent.component';
 import { AddturninComponent } from './taskstudent/addturnin/addturnin.component';
+import { TurnInsComponent } from './taskstudent/addturnin/turnIns/turnIns.component';
 
 @NgModule({
   imports: [
@@ -59,7 +60,8 @@ import { AddturninComponent } from './taskstudent/addturnin/addturnin.component'
     UpdateCompanyComponent,
     ChatComponent,
     TaskstudentComponent,
-    AddturninComponent
+    AddturninComponent,
+    TurnInsComponent
   ],
 })
 export class UicomponentsModule {}

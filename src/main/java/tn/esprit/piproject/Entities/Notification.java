@@ -15,7 +15,9 @@ public class Notification {
     @Id
     private int id;
     private String description;
-    private String sender;
-    private User reciever;
+    @DBRef
+    private User sender;
+    @DBRef
+    private User receiver;
 
 }

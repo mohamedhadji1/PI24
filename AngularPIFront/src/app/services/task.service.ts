@@ -37,6 +37,4 @@ export class TaskService {
   downloadTaskFile(taskId: number, fileName: string): Observable<Blob> {
     return this.http.get(`${this.baseUrl}/${taskId}/attachment/download`, { responseType: 'blob' });
   }
-
-
 }

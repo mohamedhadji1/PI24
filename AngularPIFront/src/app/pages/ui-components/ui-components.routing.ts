@@ -13,6 +13,7 @@ import { AddTaskComponent } from './task/add-task/add-task.component';
 import { ChatComponent } from './Chat/Chat.component';
 import { TaskstudentComponent } from './taskstudent/taskstudent.component';
 import { AddturninComponent } from './taskstudent/addturnin/addturnin.component';
+import { TurnInsComponent } from './taskstudent/addturnin/turnIns/turnIns.component';
 
 export const UiComponentsRoutes: Routes = [
   {
@@ -69,6 +70,10 @@ export const UiComponentsRoutes: Routes = [
       {
         path: 'turnin',
         component: AddturninComponent,
+      },
+      {
+        path: 'turnins',
+        component: TurnInsComponent,
       },
     ],
   },

@@ -40,6 +40,11 @@ export class SidebarComponent implements OnInit {
           route: '/ui-components/task',
         },
         {
+          displayName: 'Student tasks',
+          iconName: 'checklist',
+          route: '/ui-components/turnins',
+        },
+        {
           navCap: 'Chat',
         },
         {
@@ -74,11 +79,6 @@ export class SidebarComponent implements OnInit {
           displayName: 'Documents Managements',
           iconName: 'file-type-doc',
           route: '/ui-components/documents',
-        },
-        {
-          displayName: 'Task Management',
-          iconName: 'checklist',
-          route: '/ui-components/task',
         },
         {
           displayName: 'Turn in tasks',

@@ -46,9 +46,7 @@ public class IProjectImp implements IProjectService {
     public IProjectImp (SimpMessagingTemplate messagingTemplate) {
         this.messagingTemplate = messagingTemplate;
     }
-    public void sendNotification(Notification notification) {
-        messagingTemplate.convertAndSend("/topic/notification", notification);
-    }
+
     @Override
     public List<User> getAllUsers() {
         return userRepository.findAll();
@@ -223,30 +221,9 @@ public class IProjectImp implements IProjectService {
     }
 
     @Override
-    public List<Notification> getAllNotifications() {
-        return null;
-    }
-
-    @Override
-    public Optional<Notification> getNotificationById(String id) {
-        return Optional.empty();
-    }
-
-    @Override
-    public Notification createNotification(Notification notification) {
+    public Notification saveNotification(Notification notification) {
         return notificationRepository.save(notification);
     }
-
-    @Override
-    public Notification updateNotification(Notification notification) {
-        return null;
-    }
-
-    @Override
-    public void deleteNotificationById(String id) {
-
-    }
-
     @Override
     public ChatMessage saveMessage(ChatMessage message) {
         return chatMessageRepository.save(message);

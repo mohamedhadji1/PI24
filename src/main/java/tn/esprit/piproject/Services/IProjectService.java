@@ -51,12 +51,7 @@ public interface IProjectService {
     void deleteMonitoringNoteById(String id);
 
     /************Notification**************/
-    List<Notification> getAllNotifications();
-    Optional<Notification> getNotificationById(String id);
-    Notification createNotification(Notification notification);
-    Notification updateNotification(Notification notification);
-    void deleteNotificationById(String id);
-
+    Notification saveNotification(Notification notification);
     /*****ChatMessage********/
     ChatMessage saveMessage(ChatMessage message);
     List<ChatMessage> getAllMessages();

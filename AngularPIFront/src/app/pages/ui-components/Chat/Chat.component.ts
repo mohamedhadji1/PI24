@@ -22,14 +22,14 @@ export class ChatComponent implements OnInit {
 this.chatForm = this.formBuilder.group({
   message: ['', Validators.required]
 })
-var user = JSON.parse(localStorage.getItem('currentUser')!) as User
-this.currentUserId = user.id!;
-this.chatservice.listen(chaters => {
-      this.chats.push(chaters);
-      console.log(this.chats);
+    var user = JSON.parse(localStorage.getItem('currentUser')!) as User
+    this.currentUserId = user.id!;
+    this.chatservice.listen(chaters => {
+          this.chats.push(chaters);
+          console.log(this.chats);
+        });
+      }
 
-    });
-  }
   add(): void {
     const chatmem= {
       text: this.chatForm.value.message!,
@@ -39,7 +39,6 @@ this.chatservice.listen(chaters => {
     };
     console.log(chatmem);
     this.chatservice.send(chatmem);
-    
   }
 notify(): void {
 

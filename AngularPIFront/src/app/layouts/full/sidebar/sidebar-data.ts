@@ -38,6 +38,11 @@ export const navItems: NavItem[] = [
     route: '/ui-components/taskstudent',
   },
   {
+    displayName: 'Student tasks',
+    iconName: 'checklist',
+    route: '/ui-components/turnins',
+  },
+  {
     displayName: 'Complaint Management',
     iconName: 'tooltip',
     route: '/ui-components/complaint',

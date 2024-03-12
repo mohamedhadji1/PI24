@@ -48,7 +48,6 @@ public class TaskController {
                 task.setAttachmentFileName(file.getOriginalFilename());
                 task.setAttachmentData(file.getBytes());
             }
-            // Process task creation
             User supervisor = userRepository.findById(task.getSupervisor().getId()).orElse(null);
             User student = userRepository.findById(task.getStudent().getId()).orElse(null);
             if (supervisor == null || student == null) {
@@ -58,8 +57,6 @@ public class TaskController {
             task.setStudent(student);
             int id = autoIncrementUtil.getNextSequence("votre_sequence");
             task.setId(id);
-            Notification notif = new Notification(task.getSupervisor(),task.getTaskDescription());
-            iProjectImp.sendNotification(notif);
             Task createdTask = taskRepository.save(task);
             return new ResponseEntity<>(createdTask, HttpStatus.CREATED);
         } catch (Exception e) {
