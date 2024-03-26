@@ -1,3 +1,4 @@
+import { MonitoringNote } from './../../core/MonitoringNote';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -31,6 +32,8 @@ import { ChatComponent } from './Chat/Chat.component';
 import { TaskstudentComponent } from './taskstudent/taskstudent.component';
 import { AddturninComponent } from './taskstudent/addturnin/addturnin.component';
 import { TurnInsComponent } from './taskstudent/addturnin/turnIns/turnIns.component';
+import { AddmonitoringComponent } from './taskstudent/addturnin/turnIns/Addmonitoring/Addmonitoring.component';
+import { MonitoringChartsComponent } from './taskstudent/addturnin/turnIns/MonitoringCharts/MonitoringCharts.component';
 
 @NgModule({
   imports: [
@@ -61,7 +64,9 @@ import { TurnInsComponent } from './taskstudent/addturnin/turnIns/turnIns.compon
     ChatComponent,
     TaskstudentComponent,
     AddturninComponent,
-    TurnInsComponent
+    TurnInsComponent,
+    AddmonitoringComponent,
+    MonitoringChartsComponent
   ],
 })
 export class UicomponentsModule {}

@@ -73,6 +73,11 @@ export const navItems: NavItem[] = [
     route: '/ui-components/chat',
   },
   {
+    displayName: 'charts notes',
+    iconName: 'checklist',
+    route: '/ui-components/monitoringnotes',
+  },
+  {
     displayName: 'Login',
     iconName: 'lock',
     route: '/authentication/login',

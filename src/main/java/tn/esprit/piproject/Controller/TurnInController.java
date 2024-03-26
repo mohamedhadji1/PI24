@@ -10,7 +10,9 @@ import tn.esprit.piproject.Config.AutoIncrementUtil;
 import tn.esprit.piproject.Entities.*;
 import tn.esprit.piproject.Entities.TurnIn;
 import tn.esprit.piproject.Repositories.TaskRepository;
+import tn.esprit.piproject.Repositories.TurnInRepository;
 import tn.esprit.piproject.Repositories.UserRepository;
+import tn.esprit.piproject.Services.IProjectImp;
 import tn.esprit.piproject.Services.IProjectService;
 
 import java.io.IOException;
@@ -28,6 +30,10 @@ public class TurnInController {
     private TaskRepository taskRepository;
     @Autowired
     private AutoIncrementUtil autoIncrementUtil;
+    @Autowired
+    private TurnInRepository turnInRepository;
+    @Autowired
+    private IProjectImp monitoringNoteService;
 
     @PostMapping
     public ResponseEntity<TurnIn> submitTurnIn(@RequestParam("file") MultipartFile file, @RequestParam("turnIn") String turnInJson) {

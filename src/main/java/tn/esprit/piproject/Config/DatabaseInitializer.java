@@ -14,19 +14,29 @@ public class DatabaseInitializer implements CommandLineRunner {
     private final DefenceRepository defenceRepository;
     private final DocumentsRepository documentsRepository;
     private final EvaluationRepository evaluationRepository;
-
     private final OffreRepository offreRepository;
     private final ResponseRepository responseRepository;
     private final TaskRepository taskRepository;
-    private final TaskMonitoringRepository taskMonitoringRepository;
     private final ChatMessageRepository chatMessageRepository;
     private final NotificationRepository notificationRepository;
     private final TurnInRepository turnInRepository;
-    public DatabaseInitializer(UserRepository userRepository,
-                               CompanyRepository companyRepository, ComplaintRepository complaintRepository,
+    private final MonitoringNoteRepository monitoringNoteRepository;
+    public DatabaseInitializer(
+                               UserRepository userRepository,
+                               CompanyRepository companyRepository,
+                               ComplaintRepository complaintRepository,
                                DefenceRepository defenceRepository,
-                               DocumentsRepository documentsRepository,EvaluationRepository evaluationRepository
-            , InternshipRepository internshipRepository,OffreRepository offreRepository,ResponseRepository responseRepository,TaskRepository taskRepository,TaskMonitoringRepository taskMonitoringRepository,ChatMessageRepository chatMessageRepository,NotificationRepository notificationRepository,TurnInRepository turnInRepository) {
+                               DocumentsRepository documentsRepository,
+                               EvaluationRepository evaluationRepository,
+                               InternshipRepository internshipRepository,
+                               OffreRepository offreRepository,
+                               ResponseRepository responseRepository,
+                               TaskRepository taskRepository,
+                               ChatMessageRepository chatMessageRepository,
+                               NotificationRepository notificationRepository,
+                               TurnInRepository turnInRepository,
+                               MonitoringNoteRepository monitoringNoteRepository
+    ) {
         this.userRepository = userRepository;
         this.companyRepository = companyRepository;
         this.complaintRepository=  complaintRepository;
@@ -37,10 +47,10 @@ public class DatabaseInitializer implements CommandLineRunner {
         this.offreRepository=offreRepository;
         this.responseRepository=responseRepository;
         this.taskRepository=taskRepository;
-        this.taskMonitoringRepository=taskMonitoringRepository;
         this.chatMessageRepository=chatMessageRepository;
         this.notificationRepository=notificationRepository;
         this.turnInRepository=turnInRepository;
+        this.monitoringNoteRepository=monitoringNoteRepository;
     }
 
     @Override
@@ -93,10 +103,6 @@ public class DatabaseInitializer implements CommandLineRunner {
         if (taskRepository.count() == 0) {
             Task task = new Task();
             taskRepository.save(task);
-        }
-        if (taskMonitoringRepository.count() == 0) {
-            Monitoring MonitoringRepository = new Monitoring();
-            taskMonitoringRepository.save(MonitoringRepository);
         }if (chatMessageRepository.count() == 0) {
             ChatMessage chatrepo = new ChatMessage();
             chatMessageRepository.save(chatrepo);
@@ -106,6 +112,10 @@ public class DatabaseInitializer implements CommandLineRunner {
         }if (turnInRepository.count() == 0) {
             TurnIn turnin = new TurnIn();
             turnInRepository.save(turnin);
+        }
+        if (monitoringNoteRepository.count() == 0) {
+            MonitoringNote notes = new MonitoringNote();
+            monitoringNoteRepository.save(notes);
         }
     }
 }

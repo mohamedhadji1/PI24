@@ -12,7 +12,6 @@ import java.util.Date;
 
 @Document(collection = "offres")
 @Getter
-@Setter
 public class Offre {
 
     private int id;

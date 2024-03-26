@@ -6,7 +6,8 @@ import { NotfoundComponent } from './notfound/notfound.component';
 import { AddTaskComponent } from './pages/ui-components/task/add-task/add-task.component';
 import { OfferComponent } from './pages/ui-components/company/offer/offer.component';
 import { AddturninComponent } from './pages/ui-components/taskstudent/addturnin/addturnin.component';
-
+import { AddmonitoringComponent } from './pages/ui-components/taskstudent/addturnin/turnIns/Addmonitoring/Addmonitoring.component';
+import { MonitoringChartsComponent } from './pages/ui-components/taskstudent/addturnin/turnIns/MonitoringCharts/MonitoringCharts.component';
 const routes: Routes = [
   {path:"",pathMatch:"full",redirectTo:"home"},
   {
@@ -53,10 +54,11 @@ const routes: Routes = [
   {
     path: 'ui-components/offer/:id'
     ,component: OfferComponent
-  }
-  ,
+  },
   {path: 'add-task',component: AddTaskComponent},
+  {path: 'monitoring',component: AddmonitoringComponent},
   {path: 'add-turnin',component: AddturninComponent},
+  {path: 'monitoringnotes',component: MonitoringChartsComponent},
   {path:'**', component:NotfoundComponent}
 ];
 

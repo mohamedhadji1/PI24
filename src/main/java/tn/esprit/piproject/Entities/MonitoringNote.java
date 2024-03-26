@@ -1,5 +1,7 @@
 package tn.esprit.piproject.Entities;
 
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -14,14 +16,12 @@ import java.util.Date;
 @ToString
 public class MonitoringNote {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String note;
-    private double percentageComplete;
-    private MonitoringStatus status;
+    private Date submissionDate = new Date();
+    private String comment;
+    private double grade;
+    private Status status;
     @DBRef
-    private User updater;
-    private Date updatedAt;
-    public enum MonitoringStatus {
-        TODO, IN_PROGRESS, COMPLETE
-    }
+    private TurnIn turnIn;
 }

@@ -28,10 +28,6 @@ public class IProjectImp implements IProjectService {
     @Autowired
     private DocumentsRepository documentsRepository;
     @Autowired
-    private TaskMonitoringRepository taskMonitoringRepository;
-    @Autowired
-    private OffreRepository offerRepository;
-    @Autowired
     private CompanyRepository companyRepository;
     @Autowired
     private ChatMessageRepository chatMessageRepository;
@@ -43,6 +39,8 @@ public class IProjectImp implements IProjectService {
     private SimpMessagingTemplate messagingTemplate;
     @Autowired
     private NotificationRepository notificationRepository;
+    @Autowired
+    private MonitoringNoteRepository monitoringNoteRepository;
     public IProjectImp (SimpMessagingTemplate messagingTemplate) {
         this.messagingTemplate = messagingTemplate;
     }
@@ -128,12 +126,10 @@ public class IProjectImp implements IProjectService {
     public List<Task> getAllTasks() {
         return taskRepository.findAll();
     }
-
     @Override
     public Optional<Task> getTaskById(int id) {
         return taskRepository.findById(id);
     }
-
     @Override
     public Task createTask(Task task) {
         return taskRepository.save(task);
@@ -148,8 +144,6 @@ public class IProjectImp implements IProjectService {
     public void deleteTask(int id) {
         taskRepository.deleteById(id);
     }
-
-
     @Override
     public String getAttachmentFilename(int id) {
         Optional<Task> optionalTask = taskRepository.findById(id);
@@ -159,7 +153,6 @@ public class IProjectImp implements IProjectService {
         }
         return null;
     }
-
     @Override
     public Resource downloadTaskAttachment(int taskId) {
         Optional<Task> optionalTask = taskRepository.findById(taskId);
@@ -197,28 +190,32 @@ public class IProjectImp implements IProjectService {
 
     @Override
     public List<MonitoringNote> getAllMonitoringNotes() {
-        return null;
+        return monitoringNoteRepository.findAll();
     }
 
     @Override
-    public Optional<MonitoringNote> getMonitoringNoteById(String id) {
-        return Optional.empty();
+    public Optional<MonitoringNote> getMonitoringNoteById(int id) {
+        return monitoringNoteRepository.findById(id);
     }
 
     @Override
     public MonitoringNote createMonitoringNote(MonitoringNote monitoringNote) {
-        return null;
+        return monitoringNoteRepository.save(monitoringNote);
     }
-
     @Override
     public MonitoringNote updateMonitoringNote(MonitoringNote monitoringNote) {
-        return null;
+        return monitoringNoteRepository.save(monitoringNote);
+    }
+    @Override
+    public void deleteMonitoringNoteById(int id) {
+        monitoringNoteRepository.deleteById(id);
     }
 
     @Override
-    public void deleteMonitoringNoteById(String id) {
-
+    public List<MonitoringNote> getMonitoringNotesByStatus(Status status) {
+        return monitoringNoteRepository.findByStatus(status);
     }
+
 
     @Override
     public Notification saveNotification(Notification notification) {

@@ -94,6 +94,11 @@ export class SidebarComponent implements OnInit {
           route: '/ui-components/chat',
         },
         {
+          displayName: 'Task Monitoring Chart',
+          iconName: 'checklist',
+          route: '/ui-components/monitoringnotes',
+        },
+        {
           navCap: 'Auth',
         },
         {

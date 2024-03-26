@@ -14,7 +14,6 @@ import { TurnInService } from 'src/app/services/TurnIn.service';
   styleUrls: ['./addturnin.component.css']
 })
 export class AddturninComponent implements OnInit {
-
   turnin: TurnIn[];
   taskId: number;
   id: number;

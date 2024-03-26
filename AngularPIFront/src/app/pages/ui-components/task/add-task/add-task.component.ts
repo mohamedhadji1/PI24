@@ -22,8 +22,6 @@ export class AddTaskComponent {
   studentId: number = 1;
   selectedFile: File;
   taskForm: FormGroup;
-  pageSize = 10; // Number of tasks per page
-  currentPage = 1; // Current page number
   constructor(
     private router: Router,
     private taskService: TaskService,

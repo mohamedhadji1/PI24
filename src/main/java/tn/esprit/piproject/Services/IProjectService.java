@@ -7,6 +7,14 @@ import java.util.List;
 import java.util.Optional;
 
 public interface IProjectService {
+    /******Tasks*****/
+    List<Task> getAllTasks();
+    Optional<Task> getTaskById(int id);
+    Task createTask(Task task);
+    Task updateTask(Task task);
+    void deleteTask(int id);
+    String getAttachmentFilename(int id);
+    Resource downloadTaskAttachment(int taskId);
     /*******USER*********/
     List<User> getAllUsers();
     Optional<User> getUserById(int id);
@@ -25,14 +33,7 @@ public interface IProjectService {
     Documents createdocuments(Documents documents);
     Documents updatedocuments(Documents documents);
     void deletedocuments(int id);
-    /******Tasks*****/
-    List<Task> getAllTasks();
-    Optional<Task> getTaskById(int id);
-    Task createTask(Task task);
-    Task updateTask(Task task);
-    void deleteTask(int id);
-    String getAttachmentFilename(int id);
-    Resource downloadTaskAttachment(int taskId);
+
     /**************Offer******************/
     /*************Company******************/
     List<Company> getAllcompany();
@@ -45,11 +46,11 @@ public interface IProjectService {
 
     /************Monitoring**************/
     List<MonitoringNote> getAllMonitoringNotes();
-    Optional<MonitoringNote> getMonitoringNoteById(String id);
+    Optional<MonitoringNote> getMonitoringNoteById(int id);
     MonitoringNote createMonitoringNote(MonitoringNote monitoringNote);
     MonitoringNote updateMonitoringNote(MonitoringNote monitoringNote);
-    void deleteMonitoringNoteById(String id);
-
+    void deleteMonitoringNoteById(int id);
+    List<MonitoringNote> getMonitoringNotesByStatus(Status status);
     /************Notification**************/
     Notification saveNotification(Notification notification);
     /*****ChatMessage********/
