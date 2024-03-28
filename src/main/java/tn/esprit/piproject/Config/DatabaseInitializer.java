@@ -14,27 +14,36 @@ public class DatabaseInitializer implements CommandLineRunner {
     private final DefenceRepository defenceRepository;
     private final DocumentsRepository documentsRepository;
     private final EvaluationRepository evaluationRepository;
-
     private final OffreRepository offreRepository;
     private final ResponseRepository responseRepository;
     private final TaskRepository taskRepository;
-    private final TaskMonitoringRepository taskMonitoringRepository;
+    private final NotificationRepository notificationRepository;
+    private final MonitoringNoteRepository monitoringNoteRepository;
+    private final ChatMessageRepository chatMessageRepository;
+    private final RequestRepository requestRepository;
+
     public DatabaseInitializer(UserRepository userRepository,
                                CompanyRepository companyRepository, ComplaintRepository complaintRepository,
                                DefenceRepository defenceRepository,
-                               DocumentsRepository documentsRepository,EvaluationRepository evaluationRepository
-            , InternshipRepository internshipRepository,OffreRepository offreRepository,ResponseRepository responseRepository,TaskRepository taskRepository,TaskMonitoringRepository taskMonitoringRepository) {
+                               DocumentsRepository documentsRepository, EvaluationRepository evaluationRepository,
+                               InternshipRepository internshipRepository, OffreRepository offreRepository,
+                               ResponseRepository responseRepository, TaskRepository taskRepository,
+                               NotificationRepository notificationRepository, MonitoringNoteRepository monitoringNoteRepository,
+                               ChatMessageRepository chatMessageRepository, RequestRepository requestRepository) {
         this.userRepository = userRepository;
         this.companyRepository = companyRepository;
-        this.complaintRepository=  complaintRepository;
-        this.defenceRepository= defenceRepository;
-        this.documentsRepository=documentsRepository;
-        this.evaluationRepository=evaluationRepository;
-        this.internshipRepository=internshipRepository;
-        this.offreRepository=offreRepository;
-        this.responseRepository=responseRepository;
-        this.taskRepository=taskRepository;
-        this.taskMonitoringRepository=taskMonitoringRepository;
+        this.complaintRepository = complaintRepository;
+        this.defenceRepository = defenceRepository;
+        this.documentsRepository = documentsRepository;
+        this.evaluationRepository = evaluationRepository;
+        this.internshipRepository = internshipRepository;
+        this.offreRepository = offreRepository;
+        this.responseRepository = responseRepository;
+        this.taskRepository = taskRepository;
+        this.notificationRepository = notificationRepository;
+        this.monitoringNoteRepository = monitoringNoteRepository;
+        this.chatMessageRepository = chatMessageRepository;
+        this.requestRepository = requestRepository;
     }
 
     @Override
@@ -88,9 +97,24 @@ public class DatabaseInitializer implements CommandLineRunner {
             Task task = new Task();
             taskRepository.save(task);
         }
-        if (taskMonitoringRepository.count() == 0) {
-            Monitoring MonitoringRepository = new Monitoring();
-            taskMonitoringRepository.save(MonitoringRepository);
+
+        if (notificationRepository.count() == 0) {
+            Notification notification = new Notification();
+            notificationRepository.save(notification);
+        }
+
+        if (monitoringNoteRepository.count() == 0) {
+            MonitoringNote monitoringNote = new MonitoringNote();
+            monitoringNoteRepository.save(monitoringNote);
+        }
+
+        if (chatMessageRepository.count() == 0) {
+            ChatMessage chatMessage = new ChatMessage();
+            chatMessageRepository.save(chatMessage);
+        }
+        if (requestRepository.count() == 0) {
+            Request request = new Request();
+            requestRepository.save(request);
         }
     }
 }

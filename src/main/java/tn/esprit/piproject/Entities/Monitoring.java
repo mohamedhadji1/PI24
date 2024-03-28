@@ -1,4 +1,3 @@
-
 package tn.esprit.piproject.Entities;
 
 import lombok.AllArgsConstructor;
@@ -19,12 +18,8 @@ import java.util.List;
 public class Monitoring {
 
     @Id
-    private String id;
-    private String taskId;
-    private String supervisorId;
-    private String studentId;
-    private int notes;
-    private int percentageCompletion;
-    private String status;
+    private int id;
+    @DBRef
+    private Task task;
+    private List<MonitoringNote> notes;
 }
-

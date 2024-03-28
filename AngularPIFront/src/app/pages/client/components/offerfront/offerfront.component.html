@@ -1,0 +1,21 @@
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Internship type</th>
+            <th>Start date</th>
+            <th>End date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let offer of offers">
+            <td>{{ offer.typeInternship }}</td>
+            <td>{{ offer.dateStart | date:"MMM dd, yyyy 'at' hh:mm a" }}</td>
+            <td>{{ offer.dateEnd | date:"MMM dd, yyyy 'at' hh:mm a"  }}</td>
+            <div class="btn">
+              <button type="button" class="btn btn-primary btn-block" >Submit</button>
+            </div>
+          </tr>
+        </tbody>
+      </table>
+    </div>

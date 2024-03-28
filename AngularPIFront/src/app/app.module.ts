@@ -38,6 +38,7 @@ import { FooterComponent } from './pages/client/footer/footer.component';
     
   ],
   imports: [
+
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,

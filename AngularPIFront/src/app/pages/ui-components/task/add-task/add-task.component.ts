@@ -18,7 +18,7 @@ export class AddTaskComponent {
   duration: string = '';
   supervisorId: number = 2;
   studentId: number = 1;
-  selectedFile: File;
+  selectedFile: File | null = null;
   taskForm: FormGroup;
   constructor(
     private router: Router,
@@ -76,5 +76,4 @@ export class AddTaskComponent {
   }
 
 }
-
 

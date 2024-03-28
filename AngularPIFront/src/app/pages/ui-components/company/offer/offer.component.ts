@@ -1,8 +1,11 @@
+
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { OfferService } from 'src/app/services/offer.service';
 import { Offer } from 'src/app/core/Offer';
+import { AddOfferComponent } from '../add-offer/add-offer.component';
+import { OfferService } from 'src/app/services/offer.service';
+import { UpdateOfferComponent } from '../update-offer/update-offer.component';
 
 @Component({
   selector: 'app-offer',
@@ -11,9 +14,11 @@ import { Offer } from 'src/app/core/Offer';
 })
 export class OfferComponent implements OnInit {
   offers: Offer[];
+  companyId: number
+ 
 
   constructor(
-    private offerService: OfferService,
+    private offerService : OfferService,
     private router: Router,
     public dialog: MatDialog,
     private route: ActivatedRoute
@@ -22,9 +27,55 @@ export class OfferComponent implements OnInit {
   ngOnInit(): void {
     console.log("fetching offers of company");
     const companyId = this.route.snapshot.params["id"];
+    this.companyId=companyId;
     console.log(companyId);
     this.offerService.getOffersByCompany(companyId).subscribe(offers => {
       this.offers = offers;
     });
   }
+  fetchOffers(): void {
+    this.offerService.getAllOffers().subscribe(
+        offers => {
+        this.offers = offers;
+      },
+      error => {
+        console.error('Error fetching offers:', error);
+      }
+    );
+  }
+  
+  show_add(): void {
+    const dialogRef = this.dialog.open(AddOfferComponent, {
+      data: {
+        companyId: this.companyId
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      //this.fetchCompanies();
+    });
+  }
+  deleteOffer(id: number): void {
+    if (confirm('Are you sure you want to delete this offer ?')) {
+      this.offerService.deleteOffer(id).subscribe(
+        () => {
+          this.offers = this.offers.filter(Offer => Offer.id !== id);
+        },
+        ( error: any) => {
+          console.error('Error deleting task:', error);
+        }
+      );
+    }
+  }
+  openUpdateDialog(id: number): void {
+    const dialogRef = this.dialog.open(UpdateOfferComponent, {
+      data: { id: id, ...this.offers.find(Offer => Offer.id === id) }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.fetchOffers();
+    });
+
+}
 }

@@ -4,6 +4,7 @@ import tn.esprit.piproject.Entities.*;
 import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,7 +29,6 @@ public interface IProjectService {
     Task createTask(Task task);
     Task updateTask(Task task);
     void deleteTask(int id);
-    Monitoring createTaskMonitoring (Monitoring monitoring);
     Resource downloadTaskAttachment(int taskId);
     String getAttachmentFilename(int id);
     /*****************************************/
@@ -52,6 +52,55 @@ public interface IProjectService {
     Company updatecompany(Company company);
 
     void deletecompany(int idComp);
-    /***************************************/
+    /************MonitoringNotes**************/
+
+    List<MonitoringNote> getAllMonitoringNotes();
+
+    Optional<MonitoringNote> getMonitoringNoteById(int id);
+
+    MonitoringNote createMonitoringNote(MonitoringNote note);
+
+    MonitoringNote updateMonitoringNote(MonitoringNote note);
+
+    void deleteMonitoringNoteById(int id);
+    /************Notifications**************/
+
+    void sendAssignmentNotification(Task task);
+    void sendTaskCompletionNotification(Task task);
+    List<Notification> getAllNotifications();
+    int getUnreadNotificationCount();
+    Optional<Notification> getNotificationById(int id);
+
+    Notification createNotification(Notification notification);
+
+    Notification updateNotification(Notification notification);
+
+    void deleteNotificationById(int id);
+    /********ChatMessages********/
+
+    List<ChatMessage> getAllChatMessages();
+
+    Optional<ChatMessage> getChatMessageById(int id);
+
+    ChatMessage createChatMessage(ChatMessage message);
+
+    ChatMessage updateChatMessage(ChatMessage message);
+
+    void deleteChatMessageById(int id);
+
+    /************Monitoring**************/
+
+    List<Monitoring> getAllMonitorings();
+
+    Optional<Monitoring> getMonitoringById(String id);
+
+    Monitoring createMonitoring(Monitoring monitoring);
+
+    Monitoring updateMonitoring(Monitoring monitoring);
+
+    void deleteMonitoringById(String id);
+    /*********Request**********/
+     List<Request> getallrequests();
+     Request createrequest ( Request request);
 }
 

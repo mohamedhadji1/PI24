@@ -107,6 +107,11 @@ export class SidebarComponent implements OnInit {
           route: '/ui-components/company',
         },
         {
+          displayName: 'Offer Requests',
+          iconName: 'file-type-doc',
+          route: '/ui-components/requests',
+        },
+        {
           displayName: 'Defense Management',
           iconName: 'gavel',
           route: '/ui-components/defense',

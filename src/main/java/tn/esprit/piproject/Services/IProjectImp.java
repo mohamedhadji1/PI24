@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 import tn.esprit.piproject.Entities.*;
 import tn.esprit.piproject.Repositories.*;
 
+import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.time.Instant;
 import java.util.Calendar;
@@ -34,13 +35,19 @@ public class IProjectImp implements IProjectService {
     @Autowired
     private DocumentsRepository documentsRepository;
     @Autowired
-    private TaskMonitoringRepository taskMonitoringRepository;
-    @Autowired
     private OffreRepository offerRepository;
     @Autowired
     private CompanyRepository companyRepository;
     @Autowired
     private SequenceGeneratorService sequenceGeneratorService;
+    @Autowired
+    private MonitoringNoteRepository monitoringNoteRepository;
+    @Autowired
+    private NotificationRepository notificationRepository;
+    @Autowired
+    private ChatMessageRepository chatMessageRepository;
+    @Autowired
+    private  RequestRepository requestRepository;
 
     @Override
     public List<User> getAllUsers() {
@@ -66,7 +73,8 @@ public class IProjectImp implements IProjectService {
     public void deleteUser(int id) {
         userRepository.deleteById(id);
     }
-/*********************************************************/
+
+    /*********************************************************/
     @Override
     public List<Internship> getAllinternships() {
         return internshipRepository.findAll();
@@ -119,26 +127,54 @@ public class IProjectImp implements IProjectService {
     }
 
     @Override
-    public List<Task> getAllTasks() {return taskRepository.findAll();}
+    public List<Task> getAllTasks() {
+        return taskRepository.findAll();
+    }
 
     @Override
-    public Optional<Task> getTaskById(int id) {return taskRepository.findById(id);}
+    public Optional<Task> getTaskById(int id) {
+        return taskRepository.findById(id);
+    }
 
     @Override
-    public Task createTask(Task task) {return taskRepository.save(task);}
+    public Task createTask(@NotNull Task task) {
+        Task createdTask = taskRepository.save(task);
+        sendAssignmentNotification(createdTask);
+        return createdTask;
+    }
 
     @Override
-    public Task updateTask(Task task) {
-        return taskRepository.save(task);
+    public void sendAssignmentNotification(@NotNull Task task) {
+        Notification notification = new Notification();
+        System.out.println(task.getStudent());
+        //notification.setMessage("You have been assigned a new task: ");
+        //notification.setStatus(NotificationStatus.UNREAD);
+        System.out.println(NotificationStatus.UNREAD);
+        notificationRepository.save(notification);
+
+    }
+
+    @Override
+    public void sendTaskCompletionNotification(@NotNull Task task) {
+        Notification notification = new Notification();
+        //notification.setRecipient(task.getSupervisor());
+        notification.setMessage("The task assigned to you has been completed by the student: " + task.getTaskDescription());
+        notification.setStatus(NotificationStatus.UNREAD);
+        notificationRepository.save(notification);
+    }
+
+    @Override
+    public Task updateTask(@NotNull Task task) {
+        Task updatedTask = taskRepository.save(task);
+        if (task.getProgress().equals("Completed")) {
+            sendTaskCompletionNotification(task);
+        }
+        return updatedTask;
     }
 
     @Override
     public void deleteTask(int id) {
         taskRepository.deleteById(id);
-    }
-    @Override
-    public Monitoring createTaskMonitoring(Monitoring monitoring) {
-        return taskMonitoringRepository.save(monitoring);
     }
 
     @Override
@@ -165,6 +201,7 @@ public class IProjectImp implements IProjectService {
         }
         return null;
     }
+
     @Override
     public List<Offer> getAllOffer() {
         return offerRepository.findAll();
@@ -192,8 +229,8 @@ public class IProjectImp implements IProjectService {
         Date date_after_3_days = (Date) c.getTime();
         offer.setDateStart(currentDate);
         offer.setDateEnd(date_after_3_days);
-        Company company_from_db=companyRepository.findById(offer.getCompany().getId()).orElseGet(null);
-        if(company_from_db == null) return Offer.Empty();
+        Company company_from_db = companyRepository.findById(offer.getCompany().getId()).orElseGet(null);
+        if (company_from_db == null) return Offer.Empty();
         company_from_db.getOffers().add(offer);
         companyRepository.save(company_from_db);
         return offerRepository.save(offer);
@@ -201,8 +238,8 @@ public class IProjectImp implements IProjectService {
 
     @Override
     public Offer updateoffer(Offer offer) {
-        Company company_from_db=companyRepository.findById(offer.getCompany().getId()).orElseGet(null);
-        if(company_from_db == null) return Offer.Empty();
+        Company company_from_db = companyRepository.findById(offer.getCompany().getId()).orElseGet(null);
+        if (company_from_db == null) return Offer.Empty();
         company_from_db.getOffers().add(offer);
         companyRepository.save(company_from_db);
         return offerRepository.save(offer);
@@ -237,13 +274,131 @@ public class IProjectImp implements IProjectService {
 
 
     @Override
-    public Company updatecompany(Company company) {return companyRepository.save(company);
+    public Company updatecompany(Company company) {
+        return companyRepository.save(company);
     }
 
     @Override
     public void deletecompany(int idComp) {
         companyRepository.deleteById(idComp);
     }
+
+    @Override
+    public List<MonitoringNote> getAllMonitoringNotes() {
+        return null;
+    }
+
+    @Override
+    public Optional<MonitoringNote> getMonitoringNoteById(int id) {
+        return Optional.empty();
+    }
+
+    @Override
+    public MonitoringNote createMonitoringNote(MonitoringNote note) {
+        return null;
+    }
+
+    @Override
+    public MonitoringNote updateMonitoringNote(MonitoringNote note) {
+        return null;
+    }
+
+    @Override
+    public void deleteMonitoringNoteById(int id) {
+
+    }
+
+    @Override
+    public List<Notification> getAllNotifications() {
+        return null;
+    }
+
+    @Override
+    public int getUnreadNotificationCount() {
+        return notificationRepository.countByStatus(NotificationStatus.UNREAD);
+    }
+
+    @Override
+    public Optional<Notification> getNotificationById(int id) {
+        return Optional.empty();
+    }
+
+    @Override
+    public Notification createNotification(Notification notification) {
+        return null;
+    }
+
+    @Override
+    public Notification updateNotification(Notification notification) {
+        return null;
+    }
+
+    @Override
+    public void deleteNotificationById(int id) {
+
+    }
+
+    @Override
+    public List<ChatMessage> getAllChatMessages() {
+        return null;
+    }
+
+    @Override
+    public Optional<ChatMessage> getChatMessageById(int id) {
+        return Optional.empty();
+    }
+
+    @Override
+    public ChatMessage createChatMessage(ChatMessage message) {
+        return null;
+    }
+
+    @Override
+    public ChatMessage updateChatMessage(ChatMessage message) {
+        return null;
+    }
+
+    @Override
+    public void deleteChatMessageById(int id) {
+
+    }
+
+    @Override
+    public List<Monitoring> getAllMonitorings() {
+        return null;
+    }
+
+    @Override
+    public Optional<Monitoring> getMonitoringById(String id) {
+        return Optional.empty();
+    }
+
+    @Override
+    public Monitoring createMonitoring(Monitoring monitoring) {
+        return null;
+    }
+
+    @Override
+    public Monitoring updateMonitoring(Monitoring monitoring) {
+        return null;
+    }
+
+    @Override
+    public void deleteMonitoringById(String id) {
+
+    }
+
+    @Override
+    public List<Request> getallrequests() {
+        return requestRepository.findAll();
+    }
+
+    @Override
+    public Request createrequest(Request request) {
+        request.setId(sequenceGeneratorService.generateSequence("documents_sequence"));
+        return requestRepository.save(request);
+    }
+
 
 }
 

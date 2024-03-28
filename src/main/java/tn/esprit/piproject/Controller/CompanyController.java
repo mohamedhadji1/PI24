@@ -1,16 +1,26 @@
+
 package tn.esprit.piproject.Controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import org.bson.BsonBinarySubType;
+import org.bson.BsonUndefined;
+import org.bson.types.Binary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import tn.esprit.piproject.Entities.Company;
 import tn.esprit.piproject.Entities.Task;
 import tn.esprit.piproject.Repositories.CompanyRepository;
 import tn.esprit.piproject.Services.IProjectService;
 
+import java.io.IOException;
+import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,35 +41,44 @@ public class CompanyController {
     }
     // Get documents by id
     @GetMapping("/{idComp}")
-    public ResponseEntity<Company> getCompanyById(@PathVariable int idComp) {
+    public ResponseEntity<Company> getCompanyById(@PathVariable int idComp, Model model) {
         Optional<Company> company = companyRepository.findById(idComp);
         if (company.isPresent()) {
+            model.addAttribute("title", company.get().getAttachmentFileName());
+            model.addAttribute("image", Base64.getEncoder().encodeToString(company.get().getAttachmentData().getData()));
             return new ResponseEntity<>(company.get(), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-    // Create documents
     @PostMapping
-    public ResponseEntity<Company> createCompany(@RequestBody Company company) {
+    public ResponseEntity<Company> createCompany(@RequestParam("file") MultipartFile file, @RequestParam("company") String companyJson) {
         try {
-            Company newCompany = iProjectService.createcompany(company);
-            return new ResponseEntity<>(newCompany, HttpStatus.CREATED);
-        } catch (Exception e) {
+            ObjectMapper objectMapper = new ObjectMapper();
+            Company company = objectMapper.readValue(companyJson, Company.class);
+            if (!file.isEmpty()) {
+                company.setAttachmentFileName(file.getOriginalFilename());
+                company.setAttachmentData(new Binary(BsonBinarySubType.BINARY, file.getBytes())
+                );
+
+            }
+            Company createdCompany = iProjectService.createcompany(company);
+            return new ResponseEntity<>(createdCompany, HttpStatus.CREATED);
+        } catch (IOException e) {
+            e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    // Update documents
+
+
     @PutMapping("/{idComp}")
-    public ResponseEntity<Company> updateCompany(@PathVariable int idComp, @RequestBody Company company) {
-        Optional<Company> oldCompany = companyRepository.findById(idComp);
-        if (oldCompany.isPresent()) {
-            company.setId(idComp);
-            Company updatedCompany = iProjectService.updatecompany(company);
-            return new ResponseEntity<>(updatedCompany, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+    public ResponseEntity<Company> updateCompany(  @PathVariable int idComp, @RequestBody Company company) {
+        Company oldCompany = companyRepository.findById(idComp).get();
+        company.setId(oldCompany.getId());
+        company.setAttachmentData(oldCompany.getAttachmentData());
+        Company updatedCompany = iProjectService.updatecompany(company);
+        return new ResponseEntity<>(updatedCompany, HttpStatus.OK);
+
 
     }
     // Delete documents
@@ -75,3 +94,4 @@ public class CompanyController {
         }
     }
 }
+

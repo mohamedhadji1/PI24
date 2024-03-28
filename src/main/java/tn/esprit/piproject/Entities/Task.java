@@ -1,5 +1,6 @@
 package tn.esprit.piproject.Entities;
 
+import com.mongodb.lang.Nullable;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -19,10 +20,13 @@ public class Task {
     private String taskDescription;
     private String progress;
     private String duration;
+    @Nullable
     private String attachmentFileName;
+    @Nullable
     private byte[] attachmentData;
     @DBRef
     private User supervisor;
     @DBRef
     private User student;
 }
+

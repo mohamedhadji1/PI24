@@ -27,6 +27,8 @@ import { AddCompanyComponent } from './company/add-company/add-company.component
 import { AddOfferComponent } from './company/add-offer/add-offer.component';
 import { OfferComponent } from './company/offer/offer.component';
 import { UpdateCompanyComponent } from './company/update-company/update-company.component';
+import { UpdateOfferComponent } from './company/update-offer/update-offer.component';
+import { RequestComponent } from './request/request.component';
 
 @NgModule({
   imports: [
@@ -54,6 +56,8 @@ import { UpdateCompanyComponent } from './company/update-company/update-company.
     AddOfferComponent,
     OfferComponent,
     UpdateCompanyComponent,
+    UpdateOfferComponent,
+    RequestComponent,
   ],
 })
 export class UicomponentsModule {}

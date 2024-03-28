@@ -65,6 +65,20 @@
                       </div>
                     </div>
                   </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="file">Attach File</label>
+                        <input type="file" class="form-control-file" id="file" (change)="onFileSelected($event)" accept=".PNG .JPEG .JPG" required>
+                        <div *ngIf="companyForm.get('file')?.invalid && (companyForm.get('file')?.dirty || companyForm.get('file')?.touched)" class="invalid-feedback">
+                          <div *ngIf="companyForm.get('file')?.errors?.['required']">File attachment is required.</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div *ngIf="imageUrl">
+                    <img [src]="imageUrl" alt="Uploaded Image">
+                  </div>
                 <div class="row">
                   <div class="col-md-12">
                     <button type="submit" class="btn btn-primary btn-block" [disabled]="!companyForm.valid">Add Company</button>

@@ -1,3 +1,4 @@
+import { Notification } from './../core/Notification';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Task } from '../core/Task';
@@ -37,6 +38,10 @@ export class TaskService {
   downloadTaskFile(taskId: number, fileName: string): Observable<Blob> {
     return this.http.get(`${this.baseUrl}/${taskId}/attachment/download`, { responseType: 'blob' });
   }
-
-
+  getAllNotifications(): Observable<Notification[]> {
+    return this.http.get<Notification[]>(`${this.baseUrl}/notifications`);
+  }
+  getUnreadNotificationCount(): Observable<number> {
+    return this.http.get<number>(`${this.baseUrl}/notifications/count`);
+  }
 }

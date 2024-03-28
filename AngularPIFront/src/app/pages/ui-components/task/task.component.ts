@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { AddTaskComponent } from './add-task/add-task.component';
 import { UpdateTaskComponent } from './update-task/update-task.component';
+import { Notification } from 'src/app/core/Notification';
 
 @Component({
   selector: 'app-task',
@@ -14,7 +15,7 @@ import { UpdateTaskComponent } from './update-task/update-task.component';
 })
 export class TaskComponent {
   tasks: Task[];
-
+  notifications: Notification[];
   constructor(private taskService: TaskService, private router: Router, public dialog: MatDialog) { }
 
   openAddDialog(): void {
@@ -39,8 +40,14 @@ export class TaskComponent {
 
   ngOnInit(): void {
     this.fetchTasks();
+    setInterval(() => {
+      this.fetchNotifications();
+    }, 5000);
   }
-
+  fetchData(): void {
+    this.fetchTasks();
+    this.fetchNotifications();
+  }
   fetchTasks(): void {
     this.taskService.getAllTasks().subscribe(
       tasks => {
@@ -85,5 +92,14 @@ export class TaskComponent {
       console.error('Attachment file name is undefined');
     }
   }
-
+  fetchNotifications(): void {
+    this.taskService.getAllNotifications().subscribe(
+      notifications => {
+        this.notifications = notifications;
+      },
+      error => {
+        console.error('Error fetching notifications:', error);
+      }
+    );
+  }
 }
