@@ -20,7 +20,10 @@ export class TaskService {
   getAllTasks(): Observable<Task[]> {
     return this.http.get<Task[]>(this.baseUrl);
   }
-
+  searchTasks(keyword: string, searchBy: string): Observable<Task[]> {
+    const url = `${this.baseUrl}/search`;
+    return this.http.get<Task[]>(url, { params: { keyword: keyword, searchBy: searchBy } });
+  }
   deleteTask(taskId: number): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/${taskId}`);
   }

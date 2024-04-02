@@ -14,7 +14,8 @@ import { UpdateTaskComponent } from './update-task/update-task.component';
 })
 export class TaskComponent {
   tasks: Task[];
-
+  filteredTasks: Task[];
+  searchQuery: string = '';
   constructor(private taskService: TaskService, private router: Router, public dialog: MatDialog) { }
 
   openAddDialog(): void {
@@ -45,13 +46,22 @@ export class TaskComponent {
     this.taskService.getAllTasks().subscribe(
       tasks => {
         this.tasks = tasks;
+        this.filteredTasks = tasks;
+        this.applyFilter();
       },
       error => {
         console.error('Error fetching tasks:', error);
       }
     );
   }
-
+  applyFilter(): void {
+    this.filteredTasks = this.tasks.filter(task =>
+      task.taskDescription.toLowerCase().includes(this.searchQuery.toLowerCase())
+    );
+  }
+  onSearchChange(): void {
+    this.applyFilter(); // Apply filter when search query changes
+  }
   deleteTask(taskId: number): void {
     if (confirm('Are you sure you want to delete this task?')) {
       this.taskService.deleteTask(taskId).subscribe(

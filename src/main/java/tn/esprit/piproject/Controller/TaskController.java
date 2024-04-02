@@ -66,9 +66,34 @@ public class TaskController {
 
 
     @GetMapping
-    public ResponseEntity<List<Task>> getAllTasks() {
-        List<Task> tasks = taskRepository.findAll();
-        return new ResponseEntity<>(tasks, HttpStatus.OK);
+    public ResponseEntity<List<Task>> getAllTasks(
+            @RequestParam(required = false) String description,
+            @RequestParam(required = false) String progress,
+            @RequestParam(required = false) String duration,
+            @RequestParam(required = false) String supervisorName,
+            @RequestParam(required = false) String studentName) {
+
+        List<Task> tasks;
+
+        if (description != null && !description.isEmpty()) {
+            tasks = taskRepository.findByTaskDescriptionContainingIgnoreCase(description);
+        } else if (progress != null && !progress.isEmpty()) {
+            tasks = taskRepository.findByProgressContainingIgnoreCase(progress);
+        } else if (duration != null && !duration.isEmpty()) {
+            tasks = taskRepository.findByDurationContainingIgnoreCase(duration);
+        } else if (supervisorName != null && !supervisorName.isEmpty()) {
+            tasks = taskRepository.findBySupervisorNameContainingIgnoreCase(supervisorName);
+        } else if (studentName != null && !studentName.isEmpty()) {
+            tasks = taskRepository.findByStudentNameContainingIgnoreCase(studentName);
+        } else {
+            tasks = taskRepository.findAll();
+        }
+
+        if (!tasks.isEmpty()) {
+            return new ResponseEntity<>(tasks, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @GetMapping("/{taskId}")

@@ -169,6 +169,31 @@ public class IProjectImp implements IProjectService {
     }
 
     @Override
+    public List<Task> searchTasksByDescription(String keyword) {
+        return taskRepository.findByTaskDescriptionContainingIgnoreCase(keyword);
+    }
+
+    @Override
+    public List<Task> searchTasksByProgress(String keyword) {
+        return taskRepository.findByProgressContainingIgnoreCase(keyword);
+    }
+
+    @Override
+    public List<Task> searchTasksByDuration(String keyword) {
+        return taskRepository.findByDurationContainingIgnoreCase(keyword);
+    }
+
+    @Override
+    public List<Task> searchTasksBySupervisorName(String keyword) {
+        return taskRepository.findBySupervisorNameContainingIgnoreCase(keyword);
+    }
+
+    @Override
+    public List<Task> searchTasksByStudentName(String keyword) {
+        return taskRepository.findByStudentNameContainingIgnoreCase(keyword);
+    }
+
+    @Override
     public List<Company> getAllcompany() {
         return companyRepository.findAll();
     }

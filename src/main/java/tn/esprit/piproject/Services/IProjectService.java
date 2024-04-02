@@ -15,6 +15,12 @@ public interface IProjectService {
     void deleteTask(int id);
     String getAttachmentFilename(int id);
     Resource downloadTaskAttachment(int taskId);
+    List<Task> searchTasksByDescription(String keyword);
+    List<Task> searchTasksByProgress(String keyword);
+    List<Task> searchTasksByDuration(String keyword);
+    List<Task> searchTasksBySupervisorName(String keyword);
+    List<Task> searchTasksByStudentName(String keyword);
+
     /*******USER*********/
     List<User> getAllUsers();
     Optional<User> getUserById(int id);
