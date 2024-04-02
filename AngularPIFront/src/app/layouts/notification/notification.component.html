@@ -9,7 +9,7 @@
   </div>
   <mat-divider></mat-divider>
   <ng-container *ngFor="let notification of notifications">
-     <button mat-menu-item *ngIf="notification.receiver.id == currentUserId">
+     <button mat-menu-item *ngIf="notification.receiver.id == currentUserId" (click)="redirectToTask()">
       <div class="discription" style="display: flex;">
       You have a new task <p style="color: rgb(255, 154, 154);">&nbsp;&nbsp;&nbsp;{{ notification.description }}&nbsp;&nbsp;&nbsp;</p>&nbsp;&nbsp;to do
       </div>
