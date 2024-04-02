@@ -57,10 +57,15 @@ export class TaskComponent {
   applyFilter(): void {
     this.filteredTasks = this.tasks.filter(task =>
       task.taskDescription.toLowerCase().includes(this.searchQuery.toLowerCase())
-    );
+      || task.duration.toLowerCase().includes(this.searchQuery.toLowerCase())
+      || task.progress.toLowerCase().includes(this.searchQuery.toLowerCase())
+      || (task.supervisor? task.supervisor.name.toLowerCase().includes(this.searchQuery.toLowerCase()): false)
+      || (task.supervisor? task.supervisor.name.toLowerCase().includes(this.searchQuery.toLowerCase()): false)
+      || task.attachmentFileName?.toLowerCase().includes(this.searchQuery.toLowerCase())
+      );
   }
   onSearchChange(): void {
-    this.applyFilter(); // Apply filter when search query changes
+    this.applyFilter();
   }
   deleteTask(taskId: number): void {
     if (confirm('Are you sure you want to delete this task?')) {

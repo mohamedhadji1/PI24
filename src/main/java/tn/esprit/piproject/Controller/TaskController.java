@@ -87,9 +87,7 @@ public class TaskController {
             tasks = taskRepository.findByStudentNameContainingIgnoreCase(studentName);
         } else {
             tasks = taskRepository.findAll();
-        }
-
-        if (!tasks.isEmpty()) {
+        } if (!tasks.isEmpty()) {
             return new ResponseEntity<>(tasks, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
