@@ -12,10 +12,15 @@
 
     <button class="btn btn-primary btn-block"  (click)="openCreateDialog()">Create</button>
     <!--<button class="btn btn-primary btn-block"  (click)="openCreateDialogMaps()">Maps</button>-->
+    <button class="btn btn-primary btn-block"  (click)="openCreateDialogCalendar()">calendar</button>
 
     <br>
     <!-- search box-->
     <div class="form-outline mt-3">
+     <!--  <full-calendar [plugins]="calendarPlugins" [events]="calendarEvents"></full-calendar>-->
+     <full-calendar [options]="calendarOptions"></full-calendar>
+
+
       <input type="search" [(ngModel)]="searchtext" class="form-control" placeholder="Search" aria-label="search" (input)="applyFilters()">
     </div>
     <br>

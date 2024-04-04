@@ -7,15 +7,19 @@
     <mat-card-content class="b-t-1">
     </mat-card-content>
   
-    <mat-card-content class="b-t-1">
+    <mat-card-content class="b-t-1">    
+
         <button class="btn btn-primary btn-block"  (click)="openCreateDialogEval()">Create</button>
     <br>
     <br>
     
     <mat-card class="cardWithShadow theme-card">
-      <div>
-        <input type="text" [(ngModel)]="query" placeholder="Enter your search query" (keyup.enter)="search()">
+      <div class="form-outline mt-3">
+        <mat-card-title class="m-b-">Defense Historique Search :  </mat-card-title>
+        <br>
+        <input type="text" [(ngModel)]="query" class="form-control" placeholder="Enter your search query" (keyup.enter)="search()">
       </div>
+     
     
       <ul *ngIf="historiqueDefenseArray && historiqueDefenseArray.length">
         <li *ngFor="let historique of historiqueDefenseArray">

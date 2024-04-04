@@ -12,6 +12,7 @@ export interface defense {
   nomDeEncadrent: string;
   remarque: string;
   ERole: ERole;
+  duration?: number;
 }
 
   

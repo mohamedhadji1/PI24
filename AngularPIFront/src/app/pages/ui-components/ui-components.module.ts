@@ -3,14 +3,9 @@ import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../../material.module';
-
-// icons
 import { TablerIconsModule } from 'angular-tabler-icons';
 import * as TablerIcons from 'angular-tabler-icons/icons';
-
 import { UiComponentsRoutes } from './ui-components.routing';
-
-// ui components
 import { MatNativeDateModule } from '@angular/material/core';
 import { UserComponent } from './user/user.component';
 import { CompanyComponent } from './company/company.component';
@@ -31,6 +26,7 @@ import { FilterPipe } from './defense/filter.pipe';
 import { MapsComponent } from './defense/maps/maps.component';
 import { NgApexchartsModule } from 'ng-apexcharts';
 //import { FullCalendarModule } from '@fullcalendar/angular';
+import { FullCalendarModule } from '@fullcalendar/angular'; 
 
 @NgModule({
   imports: [
@@ -40,7 +36,7 @@ import { NgApexchartsModule } from 'ng-apexcharts';
     FormsModule,
     ReactiveFormsModule,
     TablerIconsModule.pick(TablerIcons),
-    MatNativeDateModule,CommonModule ,NgApexchartsModule,
+    MatNativeDateModule,CommonModule ,NgApexchartsModule, FullCalendarModule,
   ],
   declarations: [
     UserComponent,

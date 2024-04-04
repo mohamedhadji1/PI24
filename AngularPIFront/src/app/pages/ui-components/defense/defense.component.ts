@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, OnInit, Output, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, EventEmitter, OnInit, Output, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
@@ -17,6 +17,11 @@ import * as L from 'leaflet';
 import 'leaflet-routing-machine';
 import { Chart } from 'chart.js';
 import { forkJoin } from 'rxjs';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import timeGridPlugin from '@fullcalendar/timegrid'; // Assurez-vous que cela est importé
+import interactionPlugin from '@fullcalendar/interaction'; // Assurez-vous que cela est importé
+// Ou, selon la version et le système de module, cela peut différer:
+// import { dayGridPlugin } from '@fullcalendar/daygrid';
 
 //import { ChartOptions } from 'chart.js';
 import {
@@ -48,6 +53,7 @@ import {
   ApexMarkers,
   ApexResponsive,
 } from 'ng-apexcharts';
+import { CalendarrComponent } from './calendarr/calendarr.component';
 
 
 
@@ -79,7 +85,7 @@ export interface monthlyChart {
   responsive: ApexResponsive;
 }
 
-
+ 
 
 // ecommerce card
 
@@ -96,10 +102,10 @@ export class DefenseComponent implements OnInit,AfterViewInit {
   @Output() calculateRouteEvent: EventEmitter<string> = new EventEmitter<string>();
   @ViewChild(MapsComponent) mapsComponent: MapsComponent;
  // @ViewChildren('chart') chartElements: QueryList<ElementRef<HTMLCanvasElement>>;
-
+ // Stocker les événements du calendrier
  @ViewChild('chart') chart: ChartComponent = Object.create(null);
  public monthlyChart!: Partial<monthlyChart> | any;
- 
+
   defences: defense[];
   searchtext: any;
   filterDate: string = '';
@@ -117,8 +123,12 @@ export class DefenseComponent implements OnInit,AfterViewInit {
   chartData: number[]; 
   public chartOptions: Partial<ChartOptions>;
   historiqueDefenses: HistoriqueDefense[] = []; // Déclarer la propriété historiqueDefenses
-
+  //calendarPlugins = [dayGridPlugin];
+ // calendarEvents = []; // Vos événements ici
  // private map: L.Map;
+ calendarPlugins = [dayGridPlugin]; 
+
+calendarEvents: any[] = []; 
   private centroidH: L.LatLngExpression = [36.8981970128221, 10.189970708975915];
   private centroidE: L.LatLngExpression = [36.89966874789553, 10.18982196413415];
   private centroidM: L.LatLngExpression = [36.90225021696681, 10.189360434924096];
@@ -129,7 +139,16 @@ export class DefenseComponent implements OnInit,AfterViewInit {
   private centroidB: L.LatLngExpression = [ 36.89913305034116, 10.189278376812915];
   private centroidC: L.LatLngExpression = [ 36.89913305034116, 10.189278376812915];
   private centroidD: L.LatLngExpression = [ 36.89913305034116, 10.189278376812915];
-
+ calendarOptions: any = {
+    plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin], // Ajoutez timeGridPlugin pour les vues horaires
+    initialView: 'timeGridWeek', // Vous pouvez changer cette vue pour 'dayGridMonth', 'timeGridDay', etc.
+    headerToolbar: {
+      left: 'prev,next today',
+      center: 'title',
+      right: 'dayGridMonth,timeGridWeek,timeGridDay'
+    },
+    events: this.calendarEvents
+  };
 
 
    
@@ -139,23 +158,90 @@ export class DefenseComponent implements OnInit,AfterViewInit {
   selectedUserBloc: defense | null | undefined = null;
   //const map = this.mapsComponent.getMap(); // Obtenir l'instance de la carte
 
-constructor(private http: HttpClient, private defenceService: DefenceService, private dialog: MatDialog) {
-  
-  
+constructor(private http: HttpClient, private defenceService: DefenceService, private dialog: MatDialog,private cdr: ChangeDetectorRef) {
+
 
 }
 ngOnInit(): void {
   console.log('OnInit....');
+
   this.fetchDefence();
+ 
+   // this.transformDataToEvents();
+    //this.initializeCalendarOptions();
+ 
   this.loadBloc();
-  //this.initCharts() ; 
-  // Écouter l'événement pour calculer l'itinéraire
-  //if (this.selectedUserBloc) {
-    //this.initMap(); // Initialisez d'abord la carte
-    //this.calculateRoute();
-  //}
-  
+
+
 }
+
+transformDataToEvents(): void {
+  this.calendarEvents = this.defences.map((def) => {
+    const startDate = new Date(def.dateDefense);
+    const endDate = new Date(startDate.getTime()); // Créez une nouvelle instance de date pour l'heure de fin
+    // Supposons que chaque défense dure 1 heure pour cet exemple
+    endDate.setHours(startDate.getHours() + 1);
+    
+    return {
+      title: `Défense ${def.idDef} ${def.timeDefense} nomDeEncadrent: ${def.nomDeEncadrent} `,
+      start: startDate.toISOString(),
+      end: endDate.toISOString()
+    };
+  });
+}
+
+private initializeCalendarOptions(): void {
+  this.calendarOptions = {
+    // Vos options de calendrier, y compris les événements: this.calendarEvents
+    plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
+    initialView: 'timeGridWeek',
+    headerToolbar: {
+      left: 'prev,next today',
+      center: 'title',
+      right: 'dayGridMonth,timeGridWeek,timeGridDay'
+    },
+    events: this.calendarEvents
+  };
+}
+/*private combineDateTime(date: Date, time: string): string {
+  // Notez l'usage de `this.formatDate(date)` ici pour appeler la méthode de la classe
+  const dateStr = this.formatDate(date);
+  const timeParts = time.split(':');
+  const dateObj = new Date(`${dateStr}T${time}`);
+  return dateObj.toISOString();
+}
+
+private formatDate(date: Date): string {
+  return date.toISOString().split('T')[0];
+}
+*/
+/*private calculateEndTime(date: Date, time: string, duration: number): string {
+  const start = this.combineDateTime(date, time);
+  const end = new Date(start);
+  end.setMinutes(end.getMinutes() + duration);
+  return end.toISOString();
+}*/
+
+// Utilisez cette fonction pour formater la date
+
+
+/*private combineDateAndTime(date: Date | string, time: string): string {
+  let dateStr: string;
+  
+  // Vérifiez si 'date' est une instance de Date et la convertir en chaîne de caractères
+  if (date instanceof Date) {
+    // Convertir en chaîne ISO juste pour la date, sans tenir compte de l'heure
+    dateStr = date.toISOString().split('T')[0];
+  } else {
+    // Supposons que 'date' est déjà une chaîne de caractères dans le bon format
+    dateStr = date;
+  }
+  
+  // Assurez-vous que le format de l'heure est compatible
+  // Cette partie dépend de la façon dont 'time' est formaté
+  // Si 'time' est déjà au bon format, vous pouvez le concaténer directement
+  return `${dateStr}T${time}`;
+} */
 
 ngAfterViewInit(): void {
   console.log('ngAfterViewInit called');
@@ -291,6 +377,18 @@ console.log("location user",L.latLng(this.userLocation)) ;
   }
   openCreateDialog(): void {
     const dialogRef = this.dialog.open(CreateComponent, {
+      width: '400px',
+      data: {}
+    });
+  
+  
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.fetchDefence(); // Rafraîchir les données après la création
+    });
+  }
+  openCreateDialogCalendar(): void {
+    const dialogRef = this.dialog.open(CalendarrComponent, {
       width: '400px',
       data: {}
     });
@@ -662,17 +760,21 @@ calculateRoute(): void {
           next: (defences: defense[]) => {
             console.log('Défenses récupérées avec succès:', defences);
             this.defences = defences;
+            this.transformDataToEvents();
+           this.initializeCalendarOptions();
+                        console.log(this.calendarEvents);
+            console.log(this.calendarOptions);
+
             const observables: Observable<HistoriqueDefense>[] = [];   
         for (let index = 0; index < defences.length; index++) {
           this.totalItems[index] = defences.length;
           this.currentPage[index] = [1];
           this.totalPagess[index] = [Math.ceil(defences.length / this.itemsPerPage)];
           this.paginateDefenses(defences, index);
-          
+        
           // Créer un observable pour chaque appel à la fonction
           //observables.push(this.defenceService.gethistoriqueDefenceByIdById(defences[index].idDef));
         }
-        
         
    /* forkJoin(observables).subscribe({
       next: (historiqueDefenses: HistoriqueDefense[]) => {
@@ -760,6 +862,8 @@ calculateRoute(): void {
     const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
     return Math.ceil((((d.getTime() - yearStart.getTime()) / 86400000) + 1) / 7);
   }
+
+  
   
 
 }

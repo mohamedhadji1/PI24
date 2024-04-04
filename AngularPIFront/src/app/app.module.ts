@@ -1,4 +1,6 @@
-import { NgModule } from '@angular/core';
+//import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
@@ -28,6 +30,7 @@ import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { UpdateComponent } from './pages/ui-components/defense/updateDefence/update/update.component';
 import { NgApexchartsModule } from 'ng-apexcharts';
+import { FullCalendarModule } from '@fullcalendar/angular';
 
 @NgModule({
   declarations: [
@@ -50,11 +53,12 @@ import { NgApexchartsModule } from 'ng-apexcharts';
     FormsModule,
     ReactiveFormsModule,
     MaterialModule,
-    TablerIconsModule.pick(TablerIcons),
+    TablerIconsModule.pick(TablerIcons),FullCalendarModule,
     
 
  
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA] ,
   exports: [TablerIconsModule],
   bootstrap: [AppComponent],
 })

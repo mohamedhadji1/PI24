@@ -265,7 +265,7 @@ private fetchChartData(): void {
 
           // Update chart options with the fetched data
           this.chartOptions.series = [{
-              name: "Defenses",
+              name: 'DefensesDate${weekNumber}',
               data: seriesData
           }];
           this.chartOptions.xaxis = {
