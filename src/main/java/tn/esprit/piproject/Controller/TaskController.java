@@ -63,8 +63,7 @@ public class TaskController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
-
+    
     @GetMapping
     public ResponseEntity<List<Task>> getAllTasks(
             @RequestParam(required = false) String description,
