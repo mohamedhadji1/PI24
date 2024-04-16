@@ -5,4 +5,4 @@ import org.springframework.stereotype.Repository;
 import tn.esprit.piproject.Entities.Offer;
 
 @Repository
-public interface OffreRepository extends MongoRepository<Offer, Integer> {}
+public interface OfferRepository extends MongoRepository<Offer, Integer> {}

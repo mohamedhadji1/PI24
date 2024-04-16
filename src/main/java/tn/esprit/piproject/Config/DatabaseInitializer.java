@@ -14,7 +14,7 @@ public class DatabaseInitializer implements CommandLineRunner {
     private final DefenceRepository defenceRepository;
     private final DocumentsRepository documentsRepository;
     private final EvaluationRepository evaluationRepository;
-    private final OffreRepository offreRepository;
+    private final OfferRepository offerRepository;
     private final ResponseRepository responseRepository;
     private final TaskRepository taskRepository;
     private final ChatMessageRepository chatMessageRepository;
@@ -29,7 +29,7 @@ public class DatabaseInitializer implements CommandLineRunner {
                                DocumentsRepository documentsRepository,
                                EvaluationRepository evaluationRepository,
                                InternshipRepository internshipRepository,
-                               OffreRepository offreRepository,
+                               OfferRepository offerRepository,
                                ResponseRepository responseRepository,
                                TaskRepository taskRepository,
                                ChatMessageRepository chatMessageRepository,
@@ -44,7 +44,7 @@ public class DatabaseInitializer implements CommandLineRunner {
         this.documentsRepository=documentsRepository;
         this.evaluationRepository=evaluationRepository;
         this.internshipRepository=internshipRepository;
-        this.offreRepository=offreRepository;
+        this.offerRepository = offerRepository;
         this.responseRepository=responseRepository;
         this.taskRepository=taskRepository;
         this.chatMessageRepository=chatMessageRepository;
@@ -90,9 +90,9 @@ public class DatabaseInitializer implements CommandLineRunner {
             internshipRepository.save(internship);
         }
 
-        if (offreRepository.count() == 0) {
-            Offre offre = new Offre();
-            offreRepository.save(offre);
+        if (offerRepository.count() == 0) {
+            Offer offre = new Offer();
+            offerRepository.save(offre);
         }
 
         if (responseRepository.count() == 0) {

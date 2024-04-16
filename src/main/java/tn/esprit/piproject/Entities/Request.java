@@ -15,11 +15,12 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Request {
     @Id
     private int id ;
+    private String message;
     @DBRef
     private Offer offer ;
-    @DBRef
-    private Company company;
     private  boolean submit ;
     @DBRef
     private  User Student ;
+    @DBRef
+    private  User supervisor ;
 }
