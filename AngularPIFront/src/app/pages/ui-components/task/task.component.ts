@@ -6,7 +6,6 @@ import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { AddTaskComponent } from './add-task/add-task.component';
 import { UpdateTaskComponent } from './update-task/update-task.component';
-import { Notification } from 'src/app/core/Notification';
 
 @Component({
   selector: 'app-task',
@@ -15,7 +14,8 @@ import { Notification } from 'src/app/core/Notification';
 })
 export class TaskComponent {
   tasks: Task[];
-  notifications: Notification[];
+  filteredTasks: Task[];
+  searchQuery: string = '';
   constructor(private taskService: TaskService, private router: Router, public dialog: MatDialog) { }
 
   openAddDialog(): void {
@@ -40,25 +40,33 @@ export class TaskComponent {
 
   ngOnInit(): void {
     this.fetchTasks();
-    setInterval(() => {
-      this.fetchNotifications();
-    }, 5000);
   }
-  fetchData(): void {
-    this.fetchTasks();
-    this.fetchNotifications();
-  }
+
   fetchTasks(): void {
     this.taskService.getAllTasks().subscribe(
       tasks => {
         this.tasks = tasks;
+        this.filteredTasks = tasks;
+        this.applyFilter();
       },
       error => {
         console.error('Error fetching tasks:', error);
       }
     );
   }
-
+  applyFilter(): void {
+    this.filteredTasks = this.tasks.filter(task =>
+      task.taskDescription.toLowerCase().includes(this.searchQuery.toLowerCase())
+      || task.duration.toLowerCase().includes(this.searchQuery.toLowerCase())
+      || task.progress.toLowerCase().includes(this.searchQuery.toLowerCase())
+      || (task.supervisor? task.supervisor.name.toLowerCase().includes(this.searchQuery.toLowerCase()): false)
+      || (task.supervisor? task.supervisor.name.toLowerCase().includes(this.searchQuery.toLowerCase()): false)
+      || task.attachmentFileName?.toLowerCase().includes(this.searchQuery.toLowerCase())
+      );
+  }
+  onSearchChange(): void {
+    this.applyFilter();
+  }
   deleteTask(taskId: number): void {
     if (confirm('Are you sure you want to delete this task?')) {
       this.taskService.deleteTask(taskId).subscribe(
@@ -92,14 +100,5 @@ export class TaskComponent {
       console.error('Attachment file name is undefined');
     }
   }
-  fetchNotifications(): void {
-    this.taskService.getAllNotifications().subscribe(
-      notifications => {
-        this.notifications = notifications;
-      },
-      error => {
-        console.error('Error fetching notifications:', error);
-      }
-    );
-  }
+
 }

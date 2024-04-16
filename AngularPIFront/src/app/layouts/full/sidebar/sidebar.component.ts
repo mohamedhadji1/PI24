@@ -40,6 +40,19 @@ export class SidebarComponent implements OnInit {
           route: '/ui-components/task',
         },
         {
+          displayName: 'Student tasks',
+          iconName: 'checklist',
+          route: '/ui-components/turnins',
+        },
+        {
+          navCap: 'Chat',
+        },
+        {
+          displayName: 'chat coaching',
+          iconName: 'checklist',
+          route: '/ui-components/chat',
+        },
+        {
           navCap: 'Auth',
         },
         {
@@ -68,9 +81,22 @@ export class SidebarComponent implements OnInit {
           route: '/ui-components/documents',
         },
         {
-          displayName: 'Task Management',
+          displayName: 'Turn in tasks',
           iconName: 'checklist',
-          route: '/ui-components/task',
+          route: '/ui-components/taskstudent',
+        },
+        {
+          navCap: 'Chat',
+        },
+        {
+          displayName: 'chat coaching',
+          iconName: 'checklist',
+          route: '/ui-components/chat',
+        },
+        {
+          displayName: 'Task Monitoring Chart',
+          iconName: 'checklist',
+          route: '/ui-components/monitoringnotes',
         },
         {
           navCap: 'Auth',
@@ -105,11 +131,6 @@ export class SidebarComponent implements OnInit {
           displayName: 'Company Management',
           iconName: 'briefcase',
           route: '/ui-components/company',
-        },
-        {
-          displayName: 'Offer Requests',
-          iconName: 'file-type-doc',
-          route: '/ui-components/requests',
         },
         {
           displayName: 'Defense Management',

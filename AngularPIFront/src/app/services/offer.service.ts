@@ -17,15 +17,7 @@ export class OfferService {
   getOffersByCompany(id: number): Observable<Offer[]> {
     return this.http.get<Offer[]>(`${this.baseUrl}/company/${id}`);
   }
-  deleteOffer(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.baseUrl}/${id}`);
-  }
-  updateOffer(id: number, updatedOffer: Offer): Observable<Offer> {
-    const url = `${this.baseUrl}/${id}`;
-    return this.http.put<Offer>(url, updatedOffer);
-  }
-  addOffer(formData: any, company_id: number): Observable<Offer> {
-    console.log(`${this.baseUrl}/post/${company_id}`);
-    return this.http.post<Offer>(`${this.baseUrl}/post/${company_id}`, formData);
+  deleteOffer(id: number): void {
+    this.http.delete(this.baseUrl);
   }
 }

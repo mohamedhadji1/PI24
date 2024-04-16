@@ -6,7 +6,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.piproject.Config.AutoIncrementUtil;
 import tn.esprit.piproject.Entities.Notification;
@@ -14,6 +13,7 @@ import tn.esprit.piproject.Entities.Task;
 import tn.esprit.piproject.Entities.User;
 import tn.esprit.piproject.Repositories.*;
 import org.springframework.web.multipart.MultipartFile;
+import tn.esprit.piproject.Services.IProjectImp;
 import tn.esprit.piproject.Services.IProjectService;
 
 import javax.annotation.Resource;
@@ -36,12 +36,14 @@ public class TaskController {
     private UserRepository userRepository;
     @Autowired
     private IProjectService iProjectService;
-
+    @Autowired
+    private IProjectImp iProjectImp;
     @PostMapping
     public ResponseEntity<Task> createTask(@RequestParam("file") MultipartFile file, @RequestParam("task") String taskJson) {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             Task task = objectMapper.readValue(taskJson, Task.class);
+
             if (!file.isEmpty()) {
                 task.setAttachmentFileName(file.getOriginalFilename());
                 task.setAttachmentData(file.getBytes());
@@ -56,17 +58,39 @@ public class TaskController {
             int id = autoIncrementUtil.getNextSequence("votre_sequence");
             task.setId(id);
             Task createdTask = taskRepository.save(task);
-            //iProjectService.sendAssignmentNotification(createdTask);
             return new ResponseEntity<>(createdTask, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
+    
     @GetMapping
-    public ResponseEntity<List<Task>> getAllTasks() {
-        List<Task> tasks = taskRepository.findAll();
-        return new ResponseEntity<>(tasks, HttpStatus.OK);
+    public ResponseEntity<List<Task>> getAllTasks(
+            @RequestParam(required = false) String description,
+            @RequestParam(required = false) String progress,
+            @RequestParam(required = false) String duration,
+            @RequestParam(required = false) String supervisorName,
+            @RequestParam(required = false) String studentName) {
+
+        List<Task> tasks;
+
+        if (description != null && !description.isEmpty()) {
+            tasks = taskRepository.findByTaskDescriptionContainingIgnoreCase(description);
+        } else if (progress != null && !progress.isEmpty()) {
+            tasks = taskRepository.findByProgressContainingIgnoreCase(progress);
+        } else if (duration != null && !duration.isEmpty()) {
+            tasks = taskRepository.findByDurationContainingIgnoreCase(duration);
+        } else if (supervisorName != null && !supervisorName.isEmpty()) {
+            tasks = taskRepository.findBySupervisorNameContainingIgnoreCase(supervisorName);
+        } else if (studentName != null && !studentName.isEmpty()) {
+            tasks = taskRepository.findByStudentNameContainingIgnoreCase(studentName);
+        } else {
+            tasks = taskRepository.findAll();
+        } if (!tasks.isEmpty()) {
+            return new ResponseEntity<>(tasks, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @GetMapping("/{taskId}")
@@ -85,9 +109,6 @@ public class TaskController {
         if (existingTask != null) {
             updatedTask.setId(taskId);
             Task savedTask = taskRepository.save(updatedTask);
-            if (savedTask.getProgress().equals("completed")) {
-                iProjectService.sendTaskCompletionNotification(savedTask);
-            }
             return new ResponseEntity<>(savedTask, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -117,9 +138,6 @@ public class TaskController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
     }
-    @GetMapping("/notifications/count")
-    public ResponseEntity<Integer> getUnreadNotificationCount() {
-        int unreadCount = iProjectService.getUnreadNotificationCount();
-        return ResponseEntity.ok(unreadCount);
-    }
+
+
 }

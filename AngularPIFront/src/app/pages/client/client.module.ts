@@ -10,7 +10,6 @@ import { CompanyfrontComponent } from './components/companyfront/companyfront.co
 import { ComplaintfrontComponent } from './components/complaintfront/complaintfront.component';
 import { EventfrontComponent } from './components/eventfront/eventfront.component';
 import { FooterComponent } from './footer/footer.component';
-import { OfferfrontComponent } from './components/offerfront/offerfront.component';
 
 @NgModule({
   declarations: [
@@ -20,8 +19,7 @@ import { OfferfrontComponent } from './components/offerfront/offerfront.componen
     CompanyfrontComponent,
     ComplaintfrontComponent,
     EventfrontComponent,
-    FooterComponent,
-    OfferfrontComponent
+    FooterComponent
   ],
   imports: [CommonModule, ClientRoutingModule],
 })

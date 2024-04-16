@@ -1,3 +1,4 @@
+import { MonitoringNote } from './../../core/MonitoringNote';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -27,8 +28,12 @@ import { AddCompanyComponent } from './company/add-company/add-company.component
 import { AddOfferComponent } from './company/add-offer/add-offer.component';
 import { OfferComponent } from './company/offer/offer.component';
 import { UpdateCompanyComponent } from './company/update-company/update-company.component';
-import { UpdateOfferComponent } from './company/update-offer/update-offer.component';
-import { RequestComponent } from './request/request.component';
+import { ChatComponent } from './Chat/Chat.component';
+import { TaskstudentComponent } from './taskstudent/taskstudent.component';
+import { AddturninComponent } from './taskstudent/addturnin/addturnin.component';
+import { TurnInsComponent } from './taskstudent/addturnin/turnIns/turnIns.component';
+import { AddmonitoringComponent } from './taskstudent/addturnin/turnIns/Addmonitoring/Addmonitoring.component';
+import { MonitoringChartsComponent } from './taskstudent/addturnin/turnIns/MonitoringCharts/MonitoringCharts.component';
 
 @NgModule({
   imports: [
@@ -56,8 +61,12 @@ import { RequestComponent } from './request/request.component';
     AddOfferComponent,
     OfferComponent,
     UpdateCompanyComponent,
-    UpdateOfferComponent,
-    RequestComponent,
+    ChatComponent,
+    TaskstudentComponent,
+    AddturninComponent,
+    TurnInsComponent,
+    AddmonitoringComponent,
+    MonitoringChartsComponent
   ],
 })
 export class UicomponentsModule {}

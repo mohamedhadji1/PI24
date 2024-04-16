@@ -25,6 +25,8 @@ import { BrandingComponent } from './layouts/full/sidebar/branding.component';
 import { AppNavItemComponent } from './layouts/full/sidebar/nav-item/nav-item.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FooterComponent } from './pages/client/footer/footer.component';
+import { CommonModule } from '@angular/common';
+import { NotificationComponent } from './layouts/notification/notification.component';
 
 @NgModule({
   declarations: [
@@ -35,10 +37,9 @@ import { FooterComponent } from './pages/client/footer/footer.component';
     HeaderComponent,
     BrandingComponent,
     AppNavItemComponent,
-    
+    NotificationComponent
   ],
   imports: [
-
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
@@ -48,6 +49,7 @@ import { FooterComponent } from './pages/client/footer/footer.component';
     MaterialModule,
     TablerIconsModule.pick(TablerIcons),
     NgbModule,
+    CommonModule
   ],
   exports: [TablerIconsModule],
   bootstrap: [AppComponent],

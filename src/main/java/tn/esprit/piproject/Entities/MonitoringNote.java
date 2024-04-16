@@ -1,9 +1,11 @@
 package tn.esprit.piproject.Entities;
-import jakarta.persistence.Id;
+
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import lombok.*;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
-import lombok.*;
-
 import java.util.Date;
 
 @Document(collection = "monitoring_notes")
@@ -13,29 +15,13 @@ import java.util.Date;
 @NoArgsConstructor
 @ToString
 public class MonitoringNote {
-
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
-    private String note;
-    private double percentageComplete;
-    private MonitoringStatus status;
-
+    private Date submissionDate = new Date();
+    private String comment;
+    private double grade;
+    private Status status;
     @DBRef
-    private User updater;
-
-    private Date updatedAt;
-
-    public enum MonitoringStatus {
-        TODO,
-        IN_PROGRESS,
-        COMPLETE
-    }
-
-    public MonitoringNote(String note, double percentage, MonitoringStatus status, User updater) {
-        this.note = note;
-        this.percentageComplete = percentage;
-        this.status = status;
-        this.updater = updater;
-    }
+    private TurnIn turnIn;
 }

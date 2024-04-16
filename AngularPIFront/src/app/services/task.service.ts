@@ -1,4 +1,3 @@
-import { Notification } from './../core/Notification';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Task } from '../core/Task';
@@ -21,7 +20,10 @@ export class TaskService {
   getAllTasks(): Observable<Task[]> {
     return this.http.get<Task[]>(this.baseUrl);
   }
-
+  searchTasks(keyword: string, searchBy: string): Observable<Task[]> {
+    const url = `${this.baseUrl}/search`;
+    return this.http.get<Task[]>(url, { params: { keyword: keyword, searchBy: searchBy } });
+  }
   deleteTask(taskId: number): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/${taskId}`);
   }
@@ -37,11 +39,5 @@ export class TaskService {
   }
   downloadTaskFile(taskId: number, fileName: string): Observable<Blob> {
     return this.http.get(`${this.baseUrl}/${taskId}/attachment/download`, { responseType: 'blob' });
-  }
-  getAllNotifications(): Observable<Notification[]> {
-    return this.http.get<Notification[]>(`${this.baseUrl}/notifications`);
-  }
-  getUnreadNotificationCount(): Observable<number> {
-    return this.http.get<number>(`${this.baseUrl}/notifications/count`);
   }
 }

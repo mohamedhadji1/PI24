@@ -33,6 +33,16 @@ export const navItems: NavItem[] = [
     route: '/ui-components/task',
   },
   {
+    displayName: 'Turn in tasks',
+    iconName: 'checklist',
+    route: '/ui-components/taskstudent',
+  },
+  {
+    displayName: 'Student tasks',
+    iconName: 'checklist',
+    route: '/ui-components/turnins',
+  },
+  {
     displayName: 'Complaint Management',
     iconName: 'tooltip',
     route: '/ui-components/complaint',
@@ -58,9 +68,14 @@ export const navItems: NavItem[] = [
     route: '/ui-components/documents',
   },
   {
-    displayName: 'Offer Requests',
+    displayName: 'Chat Coaching',
     iconName: 'file-type-doc',
-    route: '/ui-components/requests',
+    route: '/ui-components/chat',
+  },
+  {
+    displayName: 'charts notes',
+    iconName: 'checklist',
+    route: '/ui-components/monitoringnotes',
   },
   {
     displayName: 'Login',

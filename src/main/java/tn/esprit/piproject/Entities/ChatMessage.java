@@ -1,27 +1,29 @@
 package tn.esprit.piproject.Entities;
 
-import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Document(collection = "chat_messages")
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class ChatMessage {
-
     @Id
     private int id;
-
-    @DBRef
-    private Task task;
-
+    private String text;
+    private LocalDateTime timestamp;
     @DBRef
     private User sender;
-
     @DBRef
     private User recipient;
-
-    private String message;
-    private Date timestamp;
-
 }

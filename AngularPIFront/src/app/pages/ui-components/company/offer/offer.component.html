@@ -22,14 +22,13 @@
             <td>{{ offer.typeInternship }}</td>
             <td>{{ offer.dateStart | date:"MMM dd, yyyy 'at' hh:mm a" }}</td>
             <td>{{ offer.dateEnd | date:"MMM dd, yyyy 'at' hh:mm a"  }}</td>
-            <td><button class="btn btn-danger" (click)="deleteOffer(offer.id)">Delete</button></td>
-            <td><button class="btn btn-primary" (click)="openUpdateDialog(offer.id)">updateOffer</button></td>
-            <td><button class="btn btn-primary">View Requests</button></td>
+            <td><button class="btn btn-danger">Delete</button></td>
+            <td><button class="btn btn-primary">update Offer</button></td>
           </tr>
         </tbody>
       </table>
     </div>
-    <button class="btn btn-primary" (click)="show_add()">Add Offer</button>
+    <button class="btn btn-primary">Add Offer</button>
   
 
     </mat-card-content>

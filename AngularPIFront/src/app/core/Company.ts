@@ -1,4 +1,3 @@
-import { Binary } from "@angular/compiler";
 import { Offer } from "./Offer";
 
 export class Company {
@@ -9,6 +8,4 @@ export class Company {
     description: string;
     pnumber: Number;
     offers: Offer[];
-    attachmentFileName?: string;
-    attachmentData?: Binary;
 };

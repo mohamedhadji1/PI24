@@ -21,5 +21,30 @@ public class Monitoring {
     private int id;
     @DBRef
     private Task task;
-    private List<MonitoringNote> notes;
+    private boolean reviewedBySupervisor;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Task getTask() {
+        return task;
+    }
+
+    public void setTask(Task task) {
+        this.task = task;
+    }
+
+    public boolean isReviewedBySupervisor() {
+        return reviewedBySupervisor;
+    }
+
+    public void setReviewedBySupervisor(boolean reviewedBySupervisor) {
+        this.reviewedBySupervisor = reviewedBySupervisor;
+    }private List<MonitoringNote> notes;
 }
+

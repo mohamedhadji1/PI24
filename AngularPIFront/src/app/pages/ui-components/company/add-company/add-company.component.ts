@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Company } from 'src/app/core/Company';
 import { CompanyService } from 'src/app/services/company.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
@@ -16,8 +17,7 @@ export class AddCompanyComponent {
     email: string = '';
     description: string = '';
     pnumber: number = 0;
-    selectedFile: File;
-    imageUrl: string | ArrayBuffer | null = null;
+    
   companyForm: FormGroup;
   constructor(
     private router: Router,
@@ -31,8 +31,8 @@ export class AddCompanyComponent {
       address: ['', [Validators.required, Validators.minLength(3)]],
       email: ['', [Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,}$')]],
       description: ['', [Validators.required, Validators.minLength(3)]],
-      pnumber: [null, [Validators.required, Validators.minLength(8)]],
-      attachment: [null]
+      pnumber: ['', [Validators.required, Validators.minLength(8)]]
+      
     });
   }
 
@@ -40,39 +40,30 @@ export class AddCompanyComponent {
     this.dialogRef.close();
   }
 
-  onFileSelected(event: any): void {
-    this.selectedFile = event.target.files[0];
-    };
   addCompany(): void {
-    if (this.companyForm.valid && this.selectedFile) {
-      const formData = new FormData();
-      formData.append('file', this.selectedFile);
-      formData.append('company', JSON.stringify({
-        id:this.id,
+    if (this.companyForm.valid) {
+      const newCompany: Company = {
+        id: this.id, // Assuming you handle ID generation elsewhere
         name: this.companyForm.value.name,
         address: this.companyForm.value.address,
         email: this.companyForm.value.email,
         description: this.companyForm.value.description,
         pnumber: this.companyForm.value.pnumber,
         offers: []
-      }));
-  
-      this.companyservice.addCompany(formData).subscribe(
+      };
+
+      this.companyservice.addCompany(newCompany).subscribe(
         (response) => {
-          console.log('Company added successfully:', response);
+          console.log('Company added successfully:', response), 
           this.router.navigate(['/ui-components/company']);
           this.dialogRef.close();
-          this.snackbar.open('Company added successfully', 'Close', {
-            duration: 3000,
-            panelClass: ['success-snackbar'],
+          this.snackbar.open('Company added successfully','Close',{
+            duration:7000,
+            panelClass:['success-snackbar'],
           });
         },
         (error) => {
           console.error('Error adding company:', error);
-          this.snackbar.open('Failed to add company', 'Close', {
-            duration: 3000,
-            panelClass: ['error-snackbar'],
-          });
         }
       );
     }
