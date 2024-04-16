@@ -6,6 +6,7 @@ import { VideoComponent } from './video/video.component';
 import { ComplaintfrontComponent } from './components/complaintfront/complaintfront.component';
 import { CompanyfrontComponent } from './components/companyfront/companyfront.component';
 import { EventfrontComponent } from './components/eventfront/eventfront.component';
+import { OfferfrontComponent } from './components/offerfront/offerfront.component';
 
 const routes: Routes = [
   {
@@ -14,6 +15,7 @@ const routes: Routes = [
     children: [
       { path: '', component: VideoComponent },
       { path: 'complaint', component: ComplaintfrontComponent },
+      { path: 'components/offerfront/:id' ,component: OfferfrontComponent },
       { path: 'company', component: CompanyfrontComponent },
       { path: 'events', component: EventfrontComponent },
       { path: '**', component: VideoComponent },

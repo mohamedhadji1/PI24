@@ -5,7 +5,8 @@ import { User } from "./User";
 export class Request {
     id? : Number;
     submit : boolean;
+    message : String;
     offer : Offer;
-    company : Company;
     student : User;
+    supervisor : User;
 }

@@ -21,6 +21,7 @@ public class DatabaseInitializer implements CommandLineRunner {
     private final NotificationRepository notificationRepository;
     private final TurnInRepository turnInRepository;
     private final MonitoringNoteRepository monitoringNoteRepository;
+    private final RequestRepository requestRepository;
     public DatabaseInitializer(
                                UserRepository userRepository,
                                CompanyRepository companyRepository,
@@ -35,8 +36,8 @@ public class DatabaseInitializer implements CommandLineRunner {
                                ChatMessageRepository chatMessageRepository,
                                NotificationRepository notificationRepository,
                                TurnInRepository turnInRepository,
-                               MonitoringNoteRepository monitoringNoteRepository
-    ) {
+                               MonitoringNoteRepository monitoringNoteRepository,
+                               RequestRepository requestRepository) {
         this.userRepository = userRepository;
         this.companyRepository = companyRepository;
         this.complaintRepository=  complaintRepository;
@@ -51,6 +52,7 @@ public class DatabaseInitializer implements CommandLineRunner {
         this.notificationRepository=notificationRepository;
         this.turnInRepository=turnInRepository;
         this.monitoringNoteRepository=monitoringNoteRepository;
+        this.requestRepository = requestRepository;
     }
 
     @Override
@@ -116,6 +118,10 @@ public class DatabaseInitializer implements CommandLineRunner {
         if (monitoringNoteRepository.count() == 0) {
             MonitoringNote notes = new MonitoringNote();
             monitoringNoteRepository.save(notes);
+        }
+        if (requestRepository.count() == 0) {
+            Request request = new Request();
+            requestRepository.save(request);
         }
     }
 }

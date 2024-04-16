@@ -4,11 +4,11 @@ import { User } from 'src/app/core/User';
 import { WebSocketService } from 'src/app/services/WebSocket.service';
 
 @Component({
-  selector: 'notification',
-  templateUrl: './notification.component.html',
-  styleUrls: ['./notification.component.css']
+  selector: 'app-notificationRequest',
+  templateUrl: './notificationRequest.component.html',
+  styleUrls: ['./notificationRequest.component.css']
 })
-export class NotificationComponent implements OnInit{
+export class NotificationRequestComponent implements OnInit {
 
   public currentUserId : number = 0
   notifications: any[] = [];
@@ -26,10 +26,6 @@ export class NotificationComponent implements OnInit{
     });
   }
   redirectToTask() {
-    if (this.currentUserId === 1) {
-      this.router.navigate(['/ui-components/taskstudent']);
-    } else if (this.currentUserId === 2) {
-      this.router.navigate(['/ui-components/requests']);
-    }
-}
+    //this.router.navigate(['/ui-components/taskstudent']);
+  }
 }

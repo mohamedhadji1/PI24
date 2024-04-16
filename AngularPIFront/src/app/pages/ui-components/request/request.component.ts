@@ -11,7 +11,7 @@ import { Offer } from 'src/app/core/Offer';
   templateUrl: './request.component.html',
   styleUrls: ['./request.component.scss']
 })
-export class RequestComponent implements OnInit { 
+export class RequestComponent implements OnInit {
   req: Request[];
   offers : Offer[];
   constructor(private requestService: RequestService, private router: Router, public dialog: MatDialog) { }
@@ -23,12 +23,11 @@ export class RequestComponent implements OnInit {
   fetchRequests(): void {
     this.requestService.getAllrequests().subscribe(
        req => {
-        this.req = req 
+        this.req = req
       },
       error => {
         console.error('Error fetching requests:', error);
       }
     );
   }
-
 }

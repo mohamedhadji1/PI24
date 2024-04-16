@@ -11,8 +11,8 @@ export class CompanyService {
 
   constructor(private http: HttpClient) { }
 
-  addCompany(company: Company): Observable<Company> {
-    return this.http.post<Company>(this.baseUrl, company);
+  addCompany(formData: FormData): Observable<Company> {
+    return this.http.post<Company>(this.baseUrl, formData);
   }
   getAllCompanies(): Observable<Company[]> {
     return this.http.get<Company[]>(this.baseUrl);

@@ -10,6 +10,10 @@ import { CompanyfrontComponent } from './components/companyfront/companyfront.co
 import { ComplaintfrontComponent } from './components/complaintfront/complaintfront.component';
 import { EventfrontComponent } from './components/eventfront/eventfront.component';
 import { FooterComponent } from './footer/footer.component';
+import { OfferfrontComponent } from './components/offerfront/offerfront.component';
+import { RequestfrontComponent } from './components/offerfront/requestfront/requestfront.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NotificationRequestComponent } from 'src/app/layouts/notification/notificationRequest/notificationRequest.component';
 
 @NgModule({
   declarations: [
@@ -19,8 +23,10 @@ import { FooterComponent } from './footer/footer.component';
     CompanyfrontComponent,
     ComplaintfrontComponent,
     EventfrontComponent,
-    FooterComponent
+    FooterComponent,
+    OfferfrontComponent,
+    RequestfrontComponent
   ],
-  imports: [CommonModule, ClientRoutingModule],
+  imports: [CommonModule, ClientRoutingModule,FormsModule, ReactiveFormsModule],
 })
 export class ClientModule {}

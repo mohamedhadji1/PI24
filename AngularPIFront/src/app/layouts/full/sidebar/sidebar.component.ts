@@ -30,6 +30,11 @@ export class SidebarComponent implements OnInit {
           route: '/ui-components/company',
         },
         {
+          displayName: 'Offer Requests',
+          iconName: 'file-type-doc',
+          route: '/ui-components/requests',
+        },
+        {
           displayName: 'Interview Management',
           iconName: 'video',
           route: '/ui-components/interview',

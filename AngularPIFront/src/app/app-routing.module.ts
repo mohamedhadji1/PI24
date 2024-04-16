@@ -8,6 +8,8 @@ import { OfferComponent } from './pages/ui-components/company/offer/offer.compon
 import { AddturninComponent } from './pages/ui-components/taskstudent/addturnin/addturnin.component';
 import { AddmonitoringComponent } from './pages/ui-components/taskstudent/addturnin/turnIns/Addmonitoring/Addmonitoring.component';
 import { MonitoringChartsComponent } from './pages/ui-components/taskstudent/addturnin/turnIns/MonitoringCharts/MonitoringCharts.component';
+import { OfferfrontComponent } from './pages/client/components/offerfront/offerfront.component';
+import { RequestfrontComponent } from './pages/client/components/offerfront/requestfront/requestfront.component';
 const routes: Routes = [
   {path:"",pathMatch:"full",redirectTo:"home"},
   {
@@ -38,6 +40,7 @@ const routes: Routes = [
       },
     ],
   },
+  { path: 'components/offerfront/:id' ,component: OfferfrontComponent },
   {
     path: '',
     component: BlankComponent,
@@ -54,6 +57,10 @@ const routes: Routes = [
   {
     path: 'ui-components/offer/:id'
     ,component: OfferComponent
+  },
+  {
+    path: 'components/requestfront/:id'
+    ,component: RequestfrontComponent
   },
   {path: 'add-task',component: AddTaskComponent},
   {path: 'monitoring',component: AddmonitoringComponent},

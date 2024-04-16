@@ -16,6 +16,7 @@ import { AddturninComponent } from './taskstudent/addturnin/addturnin.component'
 import { TurnInsComponent } from './taskstudent/addturnin/turnIns/turnIns.component';
 import { AddmonitoringComponent } from './taskstudent/addturnin/turnIns/Addmonitoring/Addmonitoring.component';
 import { MonitoringChartsComponent } from './taskstudent/addturnin/turnIns/MonitoringCharts/MonitoringCharts.component';
+import { RequestComponent } from './request/request.component';
 
 export const UiComponentsRoutes: Routes = [
   {
@@ -28,6 +29,10 @@ export const UiComponentsRoutes: Routes = [
       {
         path: 'company',
         component: CompanyComponent,
+      },
+      {
+        path: 'requests',
+        component: RequestComponent,
       },
       {
         path: 'task',

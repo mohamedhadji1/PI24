@@ -27,6 +27,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FooterComponent } from './pages/client/footer/footer.component';
 import { CommonModule } from '@angular/common';
 import { NotificationComponent } from './layouts/notification/notification.component';
+import { NotificationRequestComponent } from './layouts/notification/notificationRequest/notificationRequest.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { NotificationComponent } from './layouts/notification/notification.compo
     HeaderComponent,
     BrandingComponent,
     AppNavItemComponent,
-    NotificationComponent
+    NotificationComponent,
+    NotificationRequestComponent
   ],
   imports: [
     BrowserModule,

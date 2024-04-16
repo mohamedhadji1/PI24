@@ -34,6 +34,9 @@ import { AddturninComponent } from './taskstudent/addturnin/addturnin.component'
 import { TurnInsComponent } from './taskstudent/addturnin/turnIns/turnIns.component';
 import { AddmonitoringComponent } from './taskstudent/addturnin/turnIns/Addmonitoring/Addmonitoring.component';
 import { MonitoringChartsComponent } from './taskstudent/addturnin/turnIns/MonitoringCharts/MonitoringCharts.component';
+import { UpdateOfferComponent } from './company/update-offer/update-offer.component';
+import { RequestComponent } from './request/request.component';
+import { CompanyChartComponent } from './company/CompanyChart/CompanyChart.component';
 
 @NgModule({
   imports: [
@@ -66,7 +69,10 @@ import { MonitoringChartsComponent } from './taskstudent/addturnin/turnIns/Monit
     AddturninComponent,
     TurnInsComponent,
     AddmonitoringComponent,
-    MonitoringChartsComponent
+    MonitoringChartsComponent,
+    UpdateOfferComponent,
+    RequestComponent,
+    CompanyChartComponent,
   ],
 })
 export class UicomponentsModule {}

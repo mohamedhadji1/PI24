@@ -8,8 +8,8 @@ import { Observable } from 'rxjs';
 })
 export class OfferService {
   private baseUrl = 'http://localhost:8081/api/offers';
-  constructor(private http: HttpClient) { 
-    
+  constructor(private http: HttpClient) {
+
   }
   getAllOffers(): Observable<Offer[]> {
     return this.http.get<Offer[]>(this.baseUrl);
@@ -17,7 +17,19 @@ export class OfferService {
   getOffersByCompany(id: number): Observable<Offer[]> {
     return this.http.get<Offer[]>(`${this.baseUrl}/company/${id}`);
   }
-  deleteOffer(id: number): void {
-    this.http.delete(this.baseUrl);
+  deleteOffer(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/${id}`);
+  }
+  updateOffer(id: number, updatedOffer: Offer): Observable<Offer> {
+    const url = `${this.baseUrl}/${id}`;
+    return this.http.put<Offer>(url, updatedOffer);
+  }
+  addOffer(formData: any, company_id: number): Observable<Offer> {
+    console.log(`${this.baseUrl}/post/${company_id}`);
+    return this.http.post<Offer>(`${this.baseUrl}/post/${company_id}`, formData);
+  }
+  getOfferById(offerId: number): Observable<Offer> {
+    const url = `${this.baseUrl}/${offerId}`; // Adjust the URL endpoint according to your API route
+    return this.http.get<Offer>(url);
   }
 }

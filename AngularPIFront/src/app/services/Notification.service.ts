@@ -1,21 +1,44 @@
-import { Injectable } from '@angular/core';
-import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
+import { CompatClient, Stomp, StompSubscription } from '@stomp/stompjs';
+import { Injectable, OnDestroy } from '@angular/core';
+import { WebSocketSubject, webSocket } from 'rxjs/webSocket';
+import { iNotifications } from '../core/Notifications';
+
+
+
+export type ListenerCallBack = (message: iNotifications) => void;
+
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
-export class NotificationService {
-  private socket$: WebSocketSubject<any>;
+export class WebSocketService implements OnDestroy{
+
+  private connection: CompatClient | undefined = undefined;
+
+  private subscription: StompSubscription | undefined;
 
   constructor() {
-    this.socket$ = webSocket('ws://localhost:8081/ws/notification');
+    this.connection = Stomp.client('ws://localhost:8081/websocket');
+    this.connection.connect({}, () => {});
   }
-
-  sendNotification(notification: any): void {
-    this.socket$.next(notification);
+  sendNotification(notif: any) {
+    if (this.connection && this.connection.connected) {
+      this.connection.send('/app/notification', {}, JSON.stringify(notif));
+      console.log(JSON.stringify(notif))
+    } else {
+      console.error('WebSocket connection is not established.');
+    }
   }
-
-  receiveNotifications(): WebSocketSubject<any> {
-    return this.socket$;
+  public listen(fun: ListenerCallBack): void {
+    if (this.connection) {
+      this.connection.connect({}, () => {
+        this.subscription = this.connection!.subscribe('/topic/notification', message => fun(JSON.parse(message.body)));
+      });
+    }
+  }
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 }

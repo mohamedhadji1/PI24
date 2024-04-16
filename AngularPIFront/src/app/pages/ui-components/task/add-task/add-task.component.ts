@@ -55,7 +55,6 @@ export class AddTaskComponent {
         duration: this.taskForm.value.duration,
         supervisor: { id: this.taskForm.value.supervisorId } as User,
         student: { id: this.taskForm.value.studentId } as User,
-
       }));
 
       this.taskService.createTask(formData).subscribe(
@@ -73,13 +72,16 @@ export class AddTaskComponent {
         }
       );
       const notifys= {
-        description:this.taskForm.value.taskDescription,
-        senderId: this.taskForm.value.supervisorId,
-        receiverId:this.taskForm.value.studentId
-      };
-          this.notificationservice.sendNotification(notifys)
+        description: 'You have a new task to do',
+          senderId: this.taskForm.value.supervisorId,
+          receiverId: this.taskForm.value.studentId
+        };
+        this.notificationservice.sendNotification(notifys);
     }
+
+
   }
+
 
   onFileSelected(event: any): void {
     this.selectedFile = event.target.files[0];

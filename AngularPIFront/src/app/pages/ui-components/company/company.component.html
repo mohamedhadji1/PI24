@@ -3,6 +3,10 @@
     <mat-card-title class="m-b-0">Company Management</mat-card-title>
   </mat-card-header>
   <mat-card-content class="b-t-1">
+    <div class="form-group">
+      <label for="searchInput" class="font-weight-bold">Search Companies:</label>
+      <input type="text" id="searchInput" [(ngModel)]="searchTerm" class="form-control" placeholder="Enter company name..." (keyup)="filterCompanies()">
+    </div>
     <div class="table-responsive">
       <table class="table table-striped">
         <thead>
@@ -16,19 +20,22 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let company of companies">
+          <tr *ngFor="let company of filteredCompanies">
             <td>{{ company.name }}</td>
             <td>{{ company.address }}</td>
             <td>{{ company.email }}</td>
             <td>{{ company.description }}</td>
             <td>{{ company.pnumber }}</td>
-            <td><button class="btn btn-danger" (click)="deleteCompany(company.id)">Delete</button></td>
-            <td><button class="btn btn-primary"(click)="openUpdateDialog(company.id)">update company</button></td>
-            <td><button class="btn btn-primary"(click)="Offer(company.id)">Offers</button></td>
+            <td style="display: flex;justify-content: space-around;">
+              <button class="btn btn-danger" (click)="deleteCompany(company.id)">Delete</button>
+              <button class="btn btn-primary" (click)="openUpdateDialog(company.id)">Update company</button>
+              <button class="btn btn-primary" (click)="Offer(company.id)">Offers</button>
+            </td>
           </tr>
         </tbody>
       </table>
     </div>
     <button class="btn btn-primary" (click)="openAddDialog()">Add Company</button>
+    <button class="btn btn-primary" (click)="showChart()">Show Chart</button>
   </mat-card-content>
 </mat-card>
