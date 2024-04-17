@@ -1,0 +1,111 @@
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script src="path/to/chartjs/dist/chart.umd.js"></script>
+<script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<mat-card class="cardWithShadow theme-card">
+  <mat-card-header>
+    <mat-card-title class="m-b-0">Defense Management</mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content class="b-t-1">
+    <i class="material-icons" style="font-size:66px;position: relative;"  (click)="openCreateDialog()">add_circle</i>
+
+   <!-- <button class="btn btn-primary btn-block"  (click)="openCreateDialog()">Create</button>
+    <button class="btn btn-primary btn-block"  (click)="openCreateDialogMaps()">Maps</button>-->
+    
+    <i  class="fa fa-calendar"   style="font-size:48px;color:rgb(20, 12, 12);left: 1000px;  bottom:20px ; position: relative;"  (click)="openCalenderDialog()"></i>
+   
+
+    <br>
+    <!-- search box-->
+    <div class="form-outline mt-3">
+     <!--  <full-calendar [plugins]="calendarPlugins" [events]="calendarEvents"></full-calendar>
+     <full-calendar [options]="calendarOptions"></full-calendar>-->
+
+      <input type="search" [(ngModel)]="searchtext" class="form-control" placeholder="Search" aria-label="search" (input)="applyFilters()">
+    </div>
+    <br>
+    <input type="date" [(ngModel)]="filterDate" (change)="applyFilters()">
+    <br>
+    <br>
+    <select class="form-select custom-select-blue" [(ngModel)]="filterStudent" (change)="applyFilters()">
+      <option value="">-- Sélectionnez un étudiant --</option>
+      <option *ngFor="let student of defences" [value]="student.UserStudent?.id">{{ student.UserStudent?.id }}</option>
+    </select>
+    <br>
+    
+
+    <div class="table-responsive">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th> numeroDeBloc </th>
+            <th>NumeroDeClasse</th>
+            <th>NomDeJuret</th>
+            <th>nomdeStudent</th>
+            <th>NomDeEncadrent</th>
+            <th>Remarque</th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngFor="let def of paginatedDefenses[currentIndex]">
+            <tr>
+              <td>{{ def.idDef }}</td>
+              <td>{{ def.dateDefense| date: 'shortDate' }}</td>            
+              <td>{{ def.timeDefense }}</td>
+              <td>{{ def.numeroDeBloc }}</td>
+              <td>{{ def.numeroDeClasse }}</td>
+              <td>ID:{{ def.nomDeJuret?.id }}<br>Nom:{{ def.nomDeJuret?.name }}</td>
+              <td>ID:{{ def.UserStudent?.id }}<br>Nom:{{ def.UserStudent?.name }}</td>
+              <td>{{ def.nomDeEncadrent }}</td>
+              <td>{{ def.remarque }}</td>
+               <!--<td><button class="btn btn-danger" (click)="deleteDefence(def.idDef)">Delete</button></td> -->
+              <i class="material-icons" style="font-size:48px;color:red"(click)="deleteDefence(def.idDef)">delete</i>
+
+              <td> <!--<button class="btn btn-primary" (click)="openUpdateDialog(def.idDef)">update </button> -->
+              <i class="material-icons" (click)="openUpdateDialog(def.idDef)"style="font-size:48px;color:green">create</i>
+            </td>
+             <!--  <button class="btn btn-primary" (click)="transferDefenses()">Transférer </button>
+
+              defense.component.html -->
+
+             <td>
+  {{ def.numeroDeBloc }}
+ <button   class="btn btn-primary" (click)="openCreateDialogMapslocation(def.numeroDeBloc)">Voir le trajet</button>
+</td>
+
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+    </div>
+    <div class="pagination">
+      <button class="btn btn-primary" (click)="previousPage(currentIndex)" [disabled]="currentPage[currentIndex][0] === 1">Previous</button>
+      <span>{{ currentPage[currentIndex][0] }} / {{ totalPagess[currentIndex][0] }}</span>
+      <button class="btn btn-primary" (click)="nextPage(currentIndex)" [disabled]="currentPage[currentIndex][0] === totalPagess[currentIndex][0]">Next</button>
+    </div>
+    
+  </mat-card-content>
+
+</mat-card>
+<mat-card class="cardWithShadow theme-card">
+
+<div id="map" ></div>
+</mat-card>
+<mat-card class="cardWithShadow theme-card">
+
+<!--<div style="text-align:center">
+  <apx-chart
+    [series]="chartOptions.series!"
+    [chart]="chartOptions.chart!"
+    [xaxis]="chartOptions.xaxis!"
+    [title]="chartOptions.title!"
+  > </apx-chart>
+</div> -->  
+</mat-card>

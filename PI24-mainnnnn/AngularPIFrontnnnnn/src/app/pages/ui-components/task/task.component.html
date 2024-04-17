@@ -1,0 +1,50 @@
+<mat-card class="cardWithShadow theme-card">
+  <mat-card-header>
+    <mat-card-title class="m-b-0">Task Management</mat-card-title>
+  </mat-card-header>
+  <mat-card-content class="b-t-1">
+      <div class="search-bar" style="display: flex; align-items: center;">
+        <div class="titlesearch">Search Tasks: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+      <mat-form-field appearance="outline">
+        <mat-label>Search</mat-label>
+        <input matInput [(ngModel)]="searchQuery" (input)="onSearchChange()">
+      </mat-form-field>
+      </div>
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Description</th>
+            <th>Progress</th>
+            <th>Duration</th>
+            <th>Supervisor</th>
+            <th>Student</th>
+            <th>File Name</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let task of filteredTasks">
+            <td>{{ task.taskDescription }}</td>
+            <td>{{ task.progress }}</td>
+            <td>{{ task.duration }}</td>
+            <td>{{ task.supervisor ? task.supervisor.name : 'n/a' }}</td>
+            <td>{{ task.student ? task.student.name : 'n/a' }}</td>
+            <td>{{ task.attachmentFileName }}</td>
+            <td>
+              <i class="fa-solid fa-download" (click)="downloadAttachment(task.id, task.attachmentFileName)" style="color: #37bdff;"></i>
+            </td>
+            <td>
+              <i class="fa-solid fa-trash" (click)="deleteTask(task.id)" style="color: red"></i>
+            </td>
+            <td>
+                <i class="fa-solid fa-pen-to-square" (click)="openUpdateDialog(task.id)" style="color: #06ff27;"></i>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <button class="btn btn-primary" (click)="openAddDialog()">Add Task</button>
+  </mat-card-content>
+</mat-card>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-..." crossorigin="anonymous">
