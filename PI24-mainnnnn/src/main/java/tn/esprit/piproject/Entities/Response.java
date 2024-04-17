@@ -1,30 +1,47 @@
 package tn.esprit.piproject.Entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import java.time.LocalDateTime;
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+@Getter
+@Setter
+@ToString
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Document(collection = "responses")
 public class Response {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idRep;
-    private String description;
+    private String message;
+    private LocalDateTime responseDate;
+    private int complaintId;
+    private int userId ;
 
-    public int getIdRep() {
-        return idRep;
+    private SatisfactionLevel note;
+
+    public void setComplaint(Complaint complaint) {
+        this.complaintId = complaint.getIdComp();
     }
 
-    public void setIdRep(int idRep) {
-        this.idRep = idRep;
+    public Response(String msg, int cmId){
+        this.complaintId=cmId;
+        this.message=msg;
+        this.userId=2;
+        this.responseDate=LocalDateTime.now();
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
 }

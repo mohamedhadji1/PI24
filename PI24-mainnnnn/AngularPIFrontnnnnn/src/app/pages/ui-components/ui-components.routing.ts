@@ -18,6 +18,7 @@ import { AddmonitoringComponent } from './taskstudent/addturnin/turnIns/Addmonit
 import { MonitoringChartsComponent } from './taskstudent/addturnin/turnIns/MonitoringCharts/MonitoringCharts.component';
 import { RequestComponent } from './request/request.component';
 import { EvaluationComponent } from './evaluation/evaluation.component';
+import { DefenseStudentComponent } from './defensestudent/defense-student.component';
 
 export const UiComponentsRoutes: Routes = [
   {
@@ -93,6 +94,10 @@ export const UiComponentsRoutes: Routes = [
       {
         path: 'monitoringnotes',
         component: MonitoringChartsComponent,
+      },
+      {
+        path: 'defensestudent',
+        component: DefenseStudentComponent,
       },
     ],
   },

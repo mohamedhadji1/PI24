@@ -2,6 +2,7 @@ package tn.esprit.piproject.Services;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tn.esprit.piproject.Entities.*;
 import tn.esprit.piproject.Repositories.*;
+import tn.esprit.piproject.helpers.JavaMailSenderHelper;
 
 import javax.annotation.PostConstruct;
 import java.time.Instant;
@@ -26,6 +28,7 @@ import java.util.stream.Collectors;
 @Service
 @NoArgsConstructor
 @AllArgsConstructor
+@Log4j2
 public class IProjectImp implements IProjectService {
 
 
@@ -64,6 +67,13 @@ public class IProjectImp implements IProjectService {
     @Autowired
     private MongoTemplate mongoTemplate;
     private Set<String> stopWords = new HashSet<>();
+    @Autowired
+    private  ComplaintRepository complaintRepository;
+    @Autowired
+    private ResponseRepository responseRepository;
+    @Autowired
+    private JavaMailSenderHelper mailSenderHelper;
+
     public IProjectImp (SimpMessagingTemplate messagingTemplate) {
         this.messagingTemplate = messagingTemplate;
     }
@@ -537,9 +547,117 @@ public List<Defence> getAllDefence() {
         return userRepository.findAll();
     }
 
+    /****************complaint***********/
+    @Override
+    public List<Complaint> getAllComplaint() {
+        return complaintRepository.findAll();
+    }
+    @Override
+    public List<Complaint> getAllComplaintByUserId(int userId) {
+        User user = userRepository.findById(userId).orElse(null);
+        if (user != null) {
+            return complaintRepository.getComplaintByEmail(user.getEmail());
+        }
+        return null;
+    }
 
+    @Override
+    public Optional<Complaint> getComplaintById(int idComp) {
+        return complaintRepository.findById(idComp);
+    }
 
+    @Override
+    public Complaint createComplaint(Complaint complaint) throws Exception {
+        complaint.setIdComp(sequenceGeneratorService.generateSequence("documents_sequence"));
+        String Subject = "Réclamation réçu";
+        String msg = "Nous vous confirmons la réception de votre réclamation.\nNous mettons tout en œuvre pour la traiter dans les meilleurs délais.\n\nMerci pour votre compréhension et votre patience.";
 
+        Complaint c = complaintRepository.save(complaint);
+        mailSenderHelper.sendEmail(Subject, msg, complaint.getEmail());
+        return c;
+    }
+
+    @Override
+    public Complaint updateComplaint(Complaint complaint) {
+        return complaintRepository.save(complaint);
+    }
+
+    @Override
+    public void deleteComplaint(int id) {
+        complaintRepository.deleteById(id);
+    }
+
+    /***************Response************/
+
+    @Override
+    public List<Response> getAllResponse() {
+        return responseRepository.findAll();
+    }
+
+    @Override
+    public Optional<Response> getResponseById(int id) {
+        return responseRepository.findById(id);
+    }
+
+    @Override
+    public List<Response> getResponseByUserId(int userId) {
+        return responseRepository.findByUserId(userId);
+    }
+
+    @Override
+    public List<Complaint> getComplaintsByComplaintIdAndUserId(int idComp, int userId) {
+        return null;
+    }
+
+    @Override
+    public List<Complaint> getComplaintsByUserId(int userId) {
+        return complaintRepository.findByUserId(userId);
+    }
+
+    @Override
+    public Optional<Response> getResponsesByComplaint(Complaint complaint) {
+        return Optional.ofNullable(responseRepository.getResponsesByComplaint(complaint));
+    }
+
+    @Override
+    public Response createResponse(Response response) {
+        response.setIdRep(sequenceGeneratorService.generateSequence("documents_sequence"));
+        try {
+            // Récupérer l'objet Complaint à partir de son ID
+            Complaint complaint = complaintRepository.findById(response.getComplaintId()).orElse(null);
+            if (complaint == null) {
+                // Gérer le cas où la réclamation n'existe pas
+                // Peut-être lancer une exception ou retourner null, selon vos besoins
+                return null;
+            }
+            // Enregistrer la réponse en associant l'objet Complaint
+            response.setComplaint(complaint);
+            responseRepository.save(response);
+
+            // Envoyer un e-mail de confirmation
+            String subject = "Réclamation Résolu";
+            String msg = "Votre réclamation a été résolue. Voici le message de réponse : " + response.getMessage();
+            mailSenderHelper.sendEmail(subject, msg, complaint.getEmail());
+        } catch (Exception e) {
+            log.info("Exception lors de la création de la réponse : {}", e.getMessage());
+            return null;
+        }
+        return response;
+    }
+    @Override
+    public Optional<Response> getResponseByComplaintId(int complaintId) {
+        return responseRepository.findByComplaintId(complaintId);
+    }
+
+    @Override
+    public Response updateResponse(Response response) {
+        return responseRepository.save(response);
+    }
+
+    @Override
+    public void deleteResponse(int id) {
+        responseRepository.deleteById(id);
+    }
 
 
 

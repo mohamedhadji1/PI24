@@ -13,18 +13,18 @@ export class AppSideLoginComponent {
   constructor(private router: Router) {}
   login(email: string, password: string): boolean {
     // Simulating authentication logic
-    if (email === 'student@esprit.tn' && password === 'aaa') {
+    if (email === 'yassinekalboussi26@gmail.com' && password === 'azerty') {
       localStorage.setItem('currentUser', JSON.stringify({ id: 1, email: email, role: Role.STUDENT }));
       this.router.navigate(['/dashboard']);
       return true;
     }
        console.log('Attempting login with email:', email);
-      if (email === 'supervisor@supervisor.com' && password === 'aaa') {
+      if (email === 'mohamedhadji603@gmail.com' && password === 'azerty') {
       localStorage.setItem('currentUser', JSON.stringify({ id: 2, email: email, role: Role.SUPERVISOR }));
       console.log('Logged in as supervisor');
       this.router.navigate(['/dashboard']);
       return true;
-    } else if (email === 'admin@esprit.tn' && password === 'aaa') {
+    } else if (email === 'admin@esprit.tn' && password === 'azerty') {
       localStorage.setItem('currentUser', JSON.stringify({ id: 3, email: email, role: Role.ADMIN }));
       this.router.navigate(['/dashboard']);
       return true;

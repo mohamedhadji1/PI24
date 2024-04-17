@@ -84,8 +84,8 @@ export class RequestfrontComponent implements OnInit, OnDestroy {
     }
     const notifys= {
       description: `U have new offer submmited`,
-      senderId: this.requestForm.value.supervisor,
-      receiverId:this.requestForm.value.student
+      senderId: 1,
+      receiverId:2
     };
         this.notificationservice.sendNotification(notifys)
   }

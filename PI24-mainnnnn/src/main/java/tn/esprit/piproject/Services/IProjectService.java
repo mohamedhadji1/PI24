@@ -114,6 +114,38 @@ public interface IProjectService {
     public List<HistoriqueDefense> searchHistoriques(String query)  ;
 
     public List<User> getUsersByRole(Role role)  ;
+    /*********************reclamation***********************/
+    List<Complaint> getAllComplaint();
 
+    List<Complaint> getAllComplaintByUserId(int userId);
+
+    Optional<Complaint> getComplaintById(int id);
+
+    Complaint createComplaint(Complaint complaint) throws Exception;
+
+    Complaint updateComplaint(Complaint complaint);
+
+    void deleteComplaint(int id);
+    /*****************************/
+    List<Response> getAllResponse();
+
+    Optional<Response> getResponseById(int id);
+
+    List<Response> getResponseByUserId(int userId);
+
+    List<Complaint> getComplaintsByComplaintIdAndUserId(int idComp, int userId);
+
+    List<Complaint> getComplaintsByUserId(int userId);
+
+    Optional<Response> getResponsesByComplaint(Complaint complaint);
+
+    Response createResponse(Response response);
+
+
+    Optional<Response> getResponseByComplaintId(int complaintId);
+
+    Response updateResponse(Response response);
+
+    void deleteResponse(int idRep);
 }
 

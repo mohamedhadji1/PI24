@@ -38,7 +38,8 @@ public class DatabaseInitializer implements CommandLineRunner {
                                NotificationRepository notificationRepository,
                                TurnInRepository turnInRepository,
                                MonitoringNoteRepository monitoringNoteRepository,
-                               RequestRepository requestRepository ,HistoriqueDefenseRepository historiqueDefenseRepository) {
+                               RequestRepository requestRepository ,HistoriqueDefenseRepository historiqueDefenseRepository
+    ) {
         this.userRepository = userRepository;
         this.companyRepository = companyRepository;
         this.complaintRepository=  complaintRepository;

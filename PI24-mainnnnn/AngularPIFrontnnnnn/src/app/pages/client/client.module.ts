@@ -14,6 +14,9 @@ import { OfferfrontComponent } from './components/offerfront/offerfront.componen
 import { RequestfrontComponent } from './components/offerfront/requestfront/requestfront.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NotificationRequestComponent } from 'src/app/layouts/notification/notificationRequest/notificationRequest.component';
+import { MatLabel } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -21,12 +24,12 @@ import { NotificationRequestComponent } from 'src/app/layouts/notification/notif
     MainComponent,
     VideoComponent,
     CompanyfrontComponent,
-    ComplaintfrontComponent,
     EventfrontComponent,
     FooterComponent,
     OfferfrontComponent,
-    RequestfrontComponent
+    RequestfrontComponent,
+    ComplaintfrontComponent
   ],
-  imports: [CommonModule, ClientRoutingModule,FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, ClientRoutingModule,FormsModule, ReactiveFormsModule,MatInputModule,MatSelectModule],
 })
 export class ClientModule {}
