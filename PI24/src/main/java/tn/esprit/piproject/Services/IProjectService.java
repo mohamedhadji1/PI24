@@ -1,10 +1,16 @@
 package tn.esprit.piproject.Services;
 
-import org.bson.types.ObjectId;
-import tn.esprit.piproject.Entities.*;
-
 import java.util.List;
 import java.util.Optional;
+
+import tn.esprit.piproject.Entities.Company;
+import tn.esprit.piproject.Entities.Complaint;
+import tn.esprit.piproject.Entities.Documents;
+import tn.esprit.piproject.Entities.Internship;
+import tn.esprit.piproject.Entities.Offer;
+import tn.esprit.piproject.Entities.Response;
+import tn.esprit.piproject.Entities.Task;
+import tn.esprit.piproject.Entities.User;
 
 public interface IProjectService {
     List<User> getAllUsers();
@@ -62,6 +68,8 @@ public interface IProjectService {
 
     List<Complaint> getAllComplaint();
 
+    List<Complaint> getAllComplaintByUserId(int userId);
+
     Optional<Complaint> getComplaintById(int id);
 
     Complaint createComplaint(Complaint complaint) throws Exception;
@@ -73,9 +81,20 @@ public interface IProjectService {
 
     List<Response> getAllResponse();
 
-    Optional<Response> getResponseById(int idRep);
+    Optional<Response> getResponseById(int id);
+
+    List<Response> getResponseByUserId(int userId);
+
+    List<Complaint> getComplaintsByComplaintIdAndUserId(int idComp, int userId);
+
+    List<Complaint> getComplaintsByUserId(int userId);
+
+    Optional<Response> getResponsesByComplaint(Complaint complaint);
 
     Response createResponse(Response response);
+
+
+    Optional<Response> getResponseByComplaintId(int complaintId);
 
     Response updateResponse(Response response);
 

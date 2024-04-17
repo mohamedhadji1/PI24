@@ -1,17 +1,17 @@
 package tn.esprit.piproject.Controller;
 
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import org.springframework.data.repository.query.Param;
+import java.util.Arrays;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import tn.esprit.piproject.Entities.Complaint;
-import tn.esprit.piproject.helpers.JavaMailSenderHelper;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Arrays;
-import java.util.List;
+import tn.esprit.piproject.helpers.JavaMailSenderHelper;
 
 
 @RestController

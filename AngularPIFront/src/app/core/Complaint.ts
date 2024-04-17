@@ -7,8 +7,7 @@ export class Complaint {
     lastname: string;
     email: string;
     status: string;
-    image : string;
-  
+    message :String;
   }
   
   export enum TypeRec {

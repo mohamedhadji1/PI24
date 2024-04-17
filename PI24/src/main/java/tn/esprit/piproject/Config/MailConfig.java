@@ -13,11 +13,12 @@ public class MailConfig {
     @Bean
     public JavaMailSender javaMailSender() {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-        mailSender.setHost("smtp.office365.com");
+        mailSender.setHost("smtp.gmail.com");
         mailSender.setPort(587);
-        mailSender.setProtocol("smtp");
-        mailSender.setUsername("kalboussi.yassine@esprit.tn");
-        mailSender.setPassword("ADEMadem2005");
+
+        // Use OAuth2
+        mailSender.setUsername("yassinekalboussi26@gmail.com");
+        mailSender.setPassword("mjiq nman bcai juja");
 
         Properties props = mailSender.getJavaMailProperties();
         props.put("mail.transport.protocol", "smtp");

@@ -23,8 +23,13 @@ public class Complaint {
     private String name;
     private String lastname;
     private String email;
+    private String message;
+    private int userId=2 ;
 
-    private ComplaintStatus status;
+
+
+
+    private ComplaintStatus status = getStatus();
 
     private SatisfactionLevel note;
 

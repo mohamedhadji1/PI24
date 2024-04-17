@@ -6,6 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 // icons
 import { TablerIconsModule } from 'angular-tabler-icons';
 import * as TablerIcons from 'angular-tabler-icons/icons';
@@ -36,6 +37,7 @@ import { FooterComponent } from './pages/client/footer/footer.component';
     BrandingComponent,
     AppNavItemComponent,
     
+    
   ],
   imports: [
     BrowserModule,
@@ -47,6 +49,7 @@ import { FooterComponent } from './pages/client/footer/footer.component';
     MaterialModule,
     TablerIconsModule.pick(TablerIcons),
     NgbModule,
+    MatSnackBarModule
   ],
   exports: [TablerIconsModule],
   bootstrap: [AppComponent],

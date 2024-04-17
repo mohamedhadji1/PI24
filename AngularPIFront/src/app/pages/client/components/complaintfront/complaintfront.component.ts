@@ -4,6 +4,7 @@ import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Complaint, TypeRec } from 'src/app/core/Complaint';
 
+
 @Component({
   selector: 'app-complaintfront',
   templateUrl: './complaintfront.component.html',
@@ -18,6 +19,8 @@ export class ComplaintfrontComponent implements OnInit {
     private snackBar: MatSnackBar,
     private router: Router
   ) {}
+  
+
 
   ngOnInit(): void {}
 
@@ -25,7 +28,7 @@ export class ComplaintfrontComponent implements OnInit {
     this.complaint.dateComplaint = new Date();
     this._service.createComplaint(this.complaint).subscribe(() => {
       const config = new MatSnackBarConfig();
-      config.duration = 2000;
+      config.duration = 20;
       this.snackBar.open('La complaint a été ajoutée avec succès', 'Fermer', config);
       this.router.navigate(['/home/complaint']);
     });
