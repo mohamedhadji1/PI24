@@ -43,6 +43,7 @@ import {  FullCalendarModule } from '@fullcalendar/angular';
 import { CalendarrComponent } from './defense/calendarr/calendarr.component';
 import { DefenseStudentComponent } from './defensestudent/defense-student.component';
 import { ResponseComponent } from './complaint/response/response.component';
+import { ComplaintChartsComponent } from './complaint/complaint-charts/complaint-charts.component';
 
 @NgModule({
   imports: [
@@ -83,7 +84,8 @@ import { ResponseComponent } from './complaint/response/response.component';
     UpdateDefenceComponent,
      CalendarrComponent, 
      DefenseStudentComponent,
-    ResponseComponent
+    ResponseComponent,
+    ComplaintChartsComponent
   ],
 })
 export class UicomponentsModule {}

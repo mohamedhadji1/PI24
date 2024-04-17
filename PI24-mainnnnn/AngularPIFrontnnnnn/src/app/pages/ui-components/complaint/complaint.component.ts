@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Complaint, TypeRec } from 'src/app/core/Complaint';
 import { Response } from 'src/app/core/Response';
 import { Router } from '@angular/router';
@@ -9,6 +9,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { timeout } from 'rxjs';
+import { ComplaintChartsComponent } from './complaint-charts/complaint-charts.component';
 
 
 
@@ -20,19 +21,36 @@ import { timeout } from 'rxjs';
 })
 export class ComplaintComponent implements OnInit{
   complaints: Complaint[]=[];
-  complaintForm:any
+  complaintForm: FormGroup;
   status='b'
   filterShearch=''
 @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-
+@ViewChild('barChartCanvas') barChartCanvas: ElementRef;
+  @ViewChild('pieChartCanvas') pieChartCanvas: ElementRef;
   constructor(private complaintService: ComplaintService,private responseService: ResponseService, private router: Router, public dialog: MatDialog,private fb: FormBuilder) { }
 
   ngOnInit() {
+    this.complaintForm = this.fb.group({
+      idComp: [''],
+      typeRec: [''],
+      description: ['', Validators.required],
+      dateComplaint: [new Date(), Validators.required],
+      name: ['', Validators.required],
+      lastname: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      status: ['IN_PROGRESS', Validators.required],
+      message: ['']
+    });
+  
     this.fetchComplaints();
     this.dataSource.paginator = this.paginator;
-
-    };
-
+  }
+    showChart(): void {
+      this.dialog.open(ComplaintChartsComponent, {
+        width: '400px', // Adjust width as needed
+        height: '400px', // Adjust height as needed
+      });
+    }
 /*    openADDDialog(idComp: number): void {
       const dialogRef = this.dialog.open(ResponseComponent, {
         data: { idComp: idComp }
@@ -44,23 +62,23 @@ export class ComplaintComponent implements OnInit{
       });
     }
 */
-    initForm(comp:Complaint): void {
-      console.log(comp);
-      this.status=comp.status;
-      this.complaintForm = this.fb.group({
-        idComp: comp.idComp,
-        typeRec: comp.typeRec,
-        description: [comp.description, Validators.required],
-        dateComplaint: [new Date(), Validators.required],
-        name: [comp.name, Validators.required],
-        lastname: [comp.lastname, Validators.required],
-        email: [comp.email, [Validators.required, Validators.email]],
-        status: [comp.status, Validators.required],
-        message: [comp.message, Validators.required]
+      initForm(comp: Complaint): void {
+        console.log(comp);
+        this.status = comp.status;
+        this.complaintForm = this.fb.group({
+          idComp: [comp.idComp],
+          typeRec: [comp.typeRec],
+          description: [comp.description, Validators.required],
+          dateComplaint: [comp.dateComplaint, Validators.required],
+          name: [comp.name, Validators.required],
+          lastname: [comp.lastname, Validators.required],
+          email: [comp.email, [Validators.required, Validators.email]],
+          status: [comp.status, Validators.required],
+          message: [comp.message]
+        });
+      }
 
-      });
-    }
-  
+
 
  getComplaints() {
     this.complaintService.getAllComplaints().subscribe((src: Complaint[]) => {

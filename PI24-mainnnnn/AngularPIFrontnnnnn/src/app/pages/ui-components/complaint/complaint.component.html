@@ -72,7 +72,7 @@
       <button class="btn btn-danger" (click)="deleteComplaint(element.idComp)">Delete</button>
               
       <!-- Button trigger modal -->
-        <button (click)=" initForm(element)" type="button" class="btn btn-primary" data-bs-toggle="modal"  [attr.data-bs-target]="'#Modal'+element.idComp" >
+        <button (click)=" initForm(element)" type="button" class="btn btn-primary" data-bs-toggle="modal"  [attr.data-bs-target]="'#Modal'+element.idComp">
           Update
         </button>
 
@@ -109,11 +109,10 @@
                   </div>
                   <div class="form-group">
                     <label for="status">Status</label>
-                    <select id="status"  [(ngModel)]="status" class="form-control" formControlName="status">
+                    <select id="status" class="form-control" formControlName="status">
                       <option value="IN_PROGRESS" selected>IN PROGRESS</option>
                       <option value="DROPPED">DROPPED</option>
                       <option value="TREATED">TREATED</option>
-                      <!-- Add other status options if needed -->
                     </select>
                   </div>
                   <div *ngIf="status=='TREATED'">
