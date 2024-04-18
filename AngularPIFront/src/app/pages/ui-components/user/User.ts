@@ -7,12 +7,12 @@ export interface User {
     email: string;
     role: Role;
     address: string;
+    roles:Role[]
   }
-  
+
   export enum Role {
     ADMIN = 'ADMIN',
     STUDENT = 'STUDENT',
     SUPERVISOR = 'SUPERVISOR',
     TUTOR = 'TUTOR'
   }
-  

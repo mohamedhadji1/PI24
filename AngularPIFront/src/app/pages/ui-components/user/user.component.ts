@@ -44,13 +44,14 @@ export class UserComponent implements OnInit {
   fetchUsers(): void {
     this.userService.getUsers().subscribe(
       (users) => {
-        this.users = users; 
+        this.users = users;
+        console.warn(users)
       },
       (error) => {
         console.error('Error fetching users:', error);
       }
     );
-    
+
   }
 
   deleteUser(id: number): void {

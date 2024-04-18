@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { Role } from '../User';
-import { User } from 'src/app/core/User';
+import { Role, User } from '../User';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
@@ -11,22 +10,23 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./add-user.component.scss']
 })
 export class AddUserComponent {
-  
+
   newUser: User = {
-    id: 0, 
+    id: 0,
     name: '',
     lastName: '',
     email: '',
     role: Role.STUDENT,
-    address: ''
+    address: '',
+    roles:[]
   };
-  roles: string[] = Object.values(Role); 
-  
+  roles: string[] = Object.values(Role);
+
     constructor(
       private router: Router,
       private userservice: UserService,
       public dialogRef: MatDialogRef<AddUserComponent>
-  
+
     ) {}
     onNoClick(): void {
       this.dialogRef.close();
@@ -42,10 +42,10 @@ export class AddUserComponent {
         (error) => {
           console.error('Error adding user:', error);
         }
-        
+
       );
-      this.router.navigate(['/user-list']);   
+      this.router.navigate(['/user-list']);
     }
-    
+
 }
 

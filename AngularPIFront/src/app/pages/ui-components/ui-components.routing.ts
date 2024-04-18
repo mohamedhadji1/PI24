@@ -12,6 +12,7 @@ import { DocumetsComponent } from './documets/documets.component';
 import { AddTaskComponent } from './task/add-task/add-task.component';
 import { AddUserComponent } from './user/add-user/add-user.component';
 import { UpdateUserComponent } from './user/update-user/update-user.component';
+import { AuthguardService } from 'src/app/services/authguard.service';
 
 export const UiComponentsRoutes: Routes = [
   {
@@ -44,6 +45,7 @@ export const UiComponentsRoutes: Routes = [
       {
         path: 'user',
         component: UserComponent,
+        canActivate:[AuthguardService], data:{roles:['ADMIN']}
       },
       {
         path: 'interview',
@@ -56,16 +58,19 @@ export const UiComponentsRoutes: Routes = [
       {
       path: 'add-task',
       component: AddTaskComponent,
+
       },
       {
       path: 'add-user',
       component: AddUserComponent,
+      canActivate:[AuthguardService], data:{roles:['ADMIN']}
       },
       {
       path: 'Update-user',
       component: UpdateUserComponent,
+      canActivate:[AuthguardService], data:{roles:['ADMIN']}
       },
-  
+
 
     ],
   },

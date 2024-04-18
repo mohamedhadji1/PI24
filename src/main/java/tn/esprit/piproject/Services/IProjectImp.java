@@ -12,6 +12,7 @@ import tn.esprit.piproject.Repositories.DocumentsRepository;
 import tn.esprit.piproject.Repositories.InternshipRepository;
 import tn.esprit.piproject.Repositories.TaskRepository;
 import tn.esprit.piproject.Repositories.UserRepository;
+import tn.esprit.piproject.Repositories.response.UserRep;
 
 import java.util.List;
 import java.util.Optional;
@@ -31,6 +32,8 @@ public class IProjectImp implements IProjectService {
     @Autowired
     private DocumentsRepository documentsRepository;
 
+    @Autowired
+    private UserRep userRep;
     @Override
     public List<User> getAllUsers() {
         return userRepository.findAll();
@@ -43,7 +46,8 @@ public class IProjectImp implements IProjectService {
 
     @Override
     public User createUser(User user) {
-        return userRepository.save(user);
+
+        return userRep.save(user);
     }
 
     @Override
@@ -54,6 +58,11 @@ public class IProjectImp implements IProjectService {
     @Override
     public void deleteUser(int id) {
         userRepository.deleteById(id);
+    }
+
+    @Override
+    public void deleteUseri(String id) {
+        userRepository.deleteByid(id);
     }
 /*********************************************************/
     @Override
@@ -153,4 +162,7 @@ public class IProjectImp implements IProjectService {
     public void deleteDocuments(int id) {
         documentsRepository.deleteById(id);
     }*/
+    /***************************************************/
+    
+
 }

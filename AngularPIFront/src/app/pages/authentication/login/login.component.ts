@@ -1,7 +1,10 @@
+import { HttpResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { UserService } from 'src/app/services/user.service';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -13,31 +16,50 @@ export class AppSideLoginComponent {
   hidePassword = true;
 
   constructor(
+    private router: Router,
     private formBuilder: FormBuilder,
-    private snackBar : MatSnackBar,
-    private router : Router
+    private userService :UserService ,
+
   ) {}
   ngOnInit():void {
     this.loginForm= this.formBuilder.group({
-      email : [null, [Validators.required]],
+      username : [null, [Validators.required]],
       password :[null, [Validators.required]],
     })
   }
   tooglePasswordVisibility(){
     this.hidePassword = !this.hidePassword;
   }
- /* onSubmit():void{
-    const username =this.loginForm.get('email')!.value;
-    const password =this.loginForm.get('password')!.value;
-    this.authService.login(username ,password).subscribe(
-      (res :any) => {
-        this.snackBar.open('login Success', 'ok', {duration: 5000});
-      },
-      (error :any) =>{
-        this.snackBar.open('Bad credentiels', 'ERROR', {duration: 5000});
 
-      }
-    )
+  login(loginForm: FormGroup) {
+    if (loginForm.value.email !== "" && loginForm.value.password !== "") {
+      this.userService.login(loginForm).subscribe(
+        (response: HttpResponse<any>) => {
+            this.userService.setRoles(response);
+            // Navigate to dashboard or any other route
+            //this.router.navigate(['/dashboard']);
+            this.router.navigate(['verif']);
+        },
+        (error) => {
+            // Handle error
+            console.log(error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Wrong email or password!'
+            });
+        }
+    );
 
-  }*/
+    } else {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'You should type your email and password'
+      });
+    }
+  }
+  onSubmit(loginForm: FormGroup){
+    this.login(loginForm)
+  }
 }

@@ -24,4 +24,41 @@ public class Task {
     private String duration;
     private User supervisor;
     private User student;
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public String getTaskDescription() {
+		return taskDescription;
+	}
+	public void setTaskDescription(String taskDescription) {
+		this.taskDescription = taskDescription;
+	}
+	public String getProgress() {
+		return progress;
+	}
+	public void setProgress(String progress) {
+		this.progress = progress;
+	}
+	public String getDuration() {
+		return duration;
+	}
+	public void setDuration(String duration) {
+		this.duration = duration;
+	}
+	public User getSupervisor() {
+		return supervisor;
+	}
+	public void setSupervisor(User supervisor) {
+		this.supervisor = supervisor;
+	}
+	public User getStudent() {
+		return student;
+	}
+	public void setStudent(User student) {
+		this.student = student;
+	}
+    
 }

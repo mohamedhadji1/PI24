@@ -14,6 +14,7 @@ public class DatabaseInitializer implements CommandLineRunner {
     private final DefenceRepository defenceRepository;
     private final DocumentsRepository documentsRepository;
     private final EvaluationRepository evaluationRepository;
+    private final RoleRepository roleRepository; // Add RoleRepository
 
     private final OffreRepository offreRepository;
     private final ResponseRepository responseRepository;
@@ -22,6 +23,7 @@ public class DatabaseInitializer implements CommandLineRunner {
     public DatabaseInitializer(UserRepository userRepository,
                                CompanyRepository companyRepository, ComplaintRepository complaintRepository,
                                DefenceRepository defenceRepository,
+                               RoleRepository roleRepository,
                                DocumentsRepository documentsRepository,EvaluationRepository evaluationRepository
             , InternshipRepository internshipRepository,OffreRepository offreRepository,ResponseRepository responseRepository,TaskRepository taskRepository) {
         this.userRepository = userRepository;
@@ -34,6 +36,8 @@ public class DatabaseInitializer implements CommandLineRunner {
         this.offreRepository=offreRepository;
         this.responseRepository=responseRepository;
         this.taskRepository=taskRepository;
+        this.roleRepository = roleRepository; // Initialize RoleRepository
+
     }
 
     @Override
@@ -87,5 +91,16 @@ public class DatabaseInitializer implements CommandLineRunner {
             Task task = new Task();
             taskRepository.save(task);
         }
+        
+     // Add Role creation logic
+        if (roleRepository.count() == 0) {
+            Role role = new Role(ERole.ADMIN); // Initialize Role with some default values
+            Role studentRole = new Role(ERole.STUDENT);
+            Role supervisorRole = new Role(ERole.SUPERVISOR);
+            Role tutorRole = new Role(ERole.TUTOR);
+
+            roleRepository.save(role);
+        }
+        
     }
 }

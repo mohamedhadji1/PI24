@@ -14,7 +14,9 @@ public interface IProjectService {
     User createUser(User user);
     User updateUser(User user);
     void deleteUser(int id);
-    List<Internship> getAllinternships();
+    public void deleteUseri(String id);
+
+        List<Internship> getAllinternships();
     Optional<Internship> getinternshipById(int id);
     Internship createInternship(Internship internship);
     Internship updateinternship(Internship internship);

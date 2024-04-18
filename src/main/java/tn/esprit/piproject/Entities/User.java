@@ -1,9 +1,18 @@
 package tn.esprit.piproject.Entities;
 
 
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 /*import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;*/
@@ -12,8 +21,9 @@ import javax.validation.constraints.Size;*/
 
 @Document(collection = "users")
 public class User {
-
-    private int id;
+    @Id
+    @Field(name = "_id")
+    private String id;
 
    /* @NotBlank*/
     private String name;
@@ -26,7 +36,6 @@ public class User {
     private String email;
 
     private ERole ERole;
-    private Role roles;
 
     private String address;
 
@@ -34,13 +43,50 @@ public class User {
     @Size(min = 6, max = 255)*/
     private String password;
 
+    @DBRef
+    private Set<Role> roles = new HashSet<>();
 
 
-    public int getId() {
+  
+    public User() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+    public User(String name, String lastName,
+                String address, String email, Set<Role> roles) {
+        super();
+        this.name = name;
+        this.lastName = lastName;
+        this.email = email;
+        this.address = address;
+        this.roles = roles;
+    }
+
+	public User(String id, String name, String lastName, String email, tn.esprit.piproject.Entities.ERole eRole,
+			String address, String password, Set<Role> roles) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.lastName = lastName;
+		this.email = email;
+		ERole = eRole;
+		this.address = address;
+		this.password = password;
+		this.roles = roles;
+	}
+
+	public User(String username, String email, String password) {
+        this.name = username;
+        this.email = email;
+        this.password = password;
+      }
+
+	public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -78,12 +124,13 @@ public class User {
         this.email = email;
     }
 
-    public ERole getRole() {
-        return ERole;
+
+    public Set<Role> getRoles() {
+      return roles;
     }
 
-    public void setRole(ERole ERole) {
-        this.ERole = ERole;
+    public void setRoles(Set<Role> roles) {
+      this.roles = roles;
     }
 
     public String getAddress() {
