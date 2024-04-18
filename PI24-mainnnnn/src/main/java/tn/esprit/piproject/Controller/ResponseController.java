@@ -99,16 +99,17 @@ public class ResponseController {
     }
 
     @PutMapping("/note/{id}")
-    public ResponseEntity<?> giveNote(@PathVariable("id") int id, @RequestBody SatisfactionLevel note) {
+    public ResponseEntity<String> giveNote(@PathVariable("id") int id, @RequestBody String note) {
+        SatisfactionLevel noteO = SatisfactionLevel.valueOf(note);
         Response response = iProjectService.getResponseById(id).orElse(null);
         if (response == null) {
             return new ResponseEntity<>("Response NOT FOUND", HttpStatus.NOT_FOUND);
         }
 
         try {
-            response.setNote(note);
-            Response updatedResponse = iProjectService.updateResponse(response);
-            return new ResponseEntity<>(updatedResponse, HttpStatus.OK);
+            response.setNote(noteO);
+            iProjectService.updateResponse(response);
+            return new ResponseEntity<>("Done", HttpStatus.OK);
         } catch (IllegalArgumentException e) {
             return new ResponseEntity<>("Invalid SatisfactionLevel provided", HttpStatus.BAD_REQUEST);
         }

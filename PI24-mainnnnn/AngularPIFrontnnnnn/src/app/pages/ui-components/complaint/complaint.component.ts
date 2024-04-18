@@ -24,6 +24,7 @@ export class ComplaintComponent implements OnInit{
   complaintForm: FormGroup;
   status='b'
   filterShearch=''
+  dataSource :any
 @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 @ViewChild('barChartCanvas') barChartCanvas: ElementRef;
   @ViewChild('pieChartCanvas') pieChartCanvas: ElementRef;
@@ -43,7 +44,6 @@ export class ComplaintComponent implements OnInit{
     });
   
     this.fetchComplaints();
-    this.dataSource.paginator = this.paginator;
   }
     showChart(): void {
       this.dialog.open(ComplaintChartsComponent, {
@@ -89,7 +89,7 @@ export class ComplaintComponent implements OnInit{
   displayedColumns: string[] = [
     'description',	'type','dateComplaint' ,'name',	'lastname','email',	'status', 'rating',	'idComp'
   ];
-  dataSource :any
+
 
   applyFilter() {
     

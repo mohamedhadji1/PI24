@@ -21,21 +21,11 @@ export class ResponseService {
 
   giveNote(id: number, note: string): Observable<any> {
     if (id && note) {
-        const url = `${this.baseUrl}/note`;
-        const body = { idRep: id, note: note }; // Utilisez un objet avec les propriétés idRep et note
-        const options = {
-            headers: new HttpHeaders().set('Content-Type', 'application/json')
-        };
-
-        return this.http.put(url, body, options).pipe(
-            catchError(error => {
-                console.error('Error giving note:', error);
-                return throwError('Something went wrong; please try again later.');
-            })
-        );
+        const url = `${this.baseUrl}/note/${id}`;
+        return this.http.put(url, note);
     } else {
         console.error('ID or note is undefined');
-        return throwError('ID or note is undefined');
+        return Observable.create();
     }
 }
 

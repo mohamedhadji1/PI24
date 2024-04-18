@@ -30,15 +30,14 @@ export class ResponseComponent {
   description: string;
   dataSource :any;
   displayedColumns: string[] = [
-    'description',	'type','message' ,'name',	'lastname','email',	'status', 'rating'];
+    'message','note','responseDate','noteAction'];
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
   constructor(    private snackBar: MatSnackBar  // Injecter MatSnackBar ici
   ,private complaintService: ComplaintService,private responseService: ResponseService, private router: Router, public dialog: MatDialog,private fb: FormBuilder,private route: ActivatedRoute) { }
   ngOnInit() {
     this.getResponse();
-    this.getComplaint();
-    this.dataSource.paginator = this.paginator;
+    //this.getComplaint();
     };
 
 getComplaint(){
@@ -59,7 +58,6 @@ getComplaint(){
 getResponse(){
   this.responseService.getResponseByUserId(2).subscribe(
     responses => {
-      console.log(responses)
       this.responses = responses;
       this.dataSource = new MatTableDataSource(responses);
       this.dataSource.paginator = this.paginator;
@@ -74,27 +72,14 @@ getResponse(){
 
 
 giveNote(idRep: number, note: string) {
-  if (note && note.toUpperCase() === 'SATISFIED') {
     this.responseService.giveNote(idRep, note).subscribe(
-      updatedResponse => {
-        console.log('Note updated successfully:', updatedResponse);
-        const config = new MatSnackBarConfig();
-        config.duration = 2000;
-        this.snackBar.open('Note updated successfully', 'Close', config);
+      next => {
+        console.log(next);
       },
       error => {
-        console.error('Error updating note:', error);
-        // Optionally, you can show an error message
-        const config = new MatSnackBarConfig();
-        config.duration = 2000;
-        this.snackBar.open('Error updating note', 'Close', config);
+        console.log(error);
       }
     );
-  } else {
-    const config = new MatSnackBarConfig();
-    config.duration = 2000;
-    this.snackBar.open('Note can only be set to TREATED', 'Close', config);
-  }
 }
   applyFilter() {
     
