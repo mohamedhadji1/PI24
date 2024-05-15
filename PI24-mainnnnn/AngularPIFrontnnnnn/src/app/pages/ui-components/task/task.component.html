@@ -32,13 +32,13 @@
             <td>{{ task.student ? task.student.name : 'n/a' }}</td>
             <td>{{ task.attachmentFileName }}</td>
             <td>
-              <i class="fa-solid fa-download" (click)="downloadAttachment(task.id, task.attachmentFileName)" style="color: #37bdff;"></i>
+              <mat-icon (click)="downloadAttachment(task.id, task.attachmentFileName)" style="color: #37bdff;">file_download</mat-icon>
             </td>
             <td>
-              <i class="fa-solid fa-trash" (click)="deleteTask(task.id)" style="color: red"></i>
+              <mat-icon (click)="deleteTask(task.id)" style="color: red">delete</mat-icon>
             </td>
             <td>
-                <i class="fa-solid fa-pen-to-square" (click)="openUpdateDialog(task.id)" style="color: #06ff27;"></i>
+                <mat-icon (click)="openUpdateDialog(task.id)" style="color: #06ff27;">edit</mat-icon>
             </td>
           </tr>
         </tbody>
@@ -47,4 +47,3 @@
     <button class="btn btn-primary" (click)="openAddDialog()">Add Task</button>
   </mat-card-content>
 </mat-card>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-..." crossorigin="anonymous">

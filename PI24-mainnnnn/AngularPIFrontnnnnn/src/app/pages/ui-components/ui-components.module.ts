@@ -44,6 +44,7 @@ import { CalendarrComponent } from './defense/calendarr/calendarr.component';
 import { DefenseStudentComponent } from './defensestudent/defense-student.component';
 import { ResponseComponent } from './complaint/response/response.component';
 import { ComplaintChartsComponent } from './complaint/complaint-charts/complaint-charts.component';
+import { ComplaintDialogComponent } from './complaint/complaint-dialog/complaint-dialog.component';
 
 @NgModule({
   imports: [
@@ -85,7 +86,8 @@ import { ComplaintChartsComponent } from './complaint/complaint-charts/complaint
      CalendarrComponent, 
      DefenseStudentComponent,
     ResponseComponent,
-    ComplaintChartsComponent
+    ComplaintChartsComponent,
+    ComplaintDialogComponent
   ],
 })
 export class UicomponentsModule {}

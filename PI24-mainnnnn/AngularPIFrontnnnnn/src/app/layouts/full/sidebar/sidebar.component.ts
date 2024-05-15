@@ -163,11 +163,6 @@ export class SidebarComponent implements OnInit {
           route: '/ui-components/evaluation',
         },
         {
-          displayName: 'Defense Management',
-          iconName: 'gavel',
-          route: '/ui-components/defense',
-        },
-        {
           displayName: 'Task Management',
           iconName: 'checklist',
           route: '/ui-components/task',

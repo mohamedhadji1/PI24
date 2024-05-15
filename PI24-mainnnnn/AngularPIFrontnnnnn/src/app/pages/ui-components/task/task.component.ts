@@ -24,6 +24,7 @@ export class TaskComponent {
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
       this.fetchTasks();
+      window.location.reload(); // Reload the page after adding a task
     });
   }
 
@@ -35,6 +36,7 @@ export class TaskComponent {
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
       this.fetchTasks();
+      window.location.reload(); // Reload the page after updating a task
     });
   }
 
@@ -72,6 +74,7 @@ export class TaskComponent {
       this.taskService.deleteTask(taskId).subscribe(
         () => {
           this.tasks = this.tasks.filter(task => task.id !== taskId);
+          window.location.reload(); // Reload the page after deleting a task
         },
         error => {
           console.error('Error deleting task:', error);

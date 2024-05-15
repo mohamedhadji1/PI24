@@ -33,7 +33,7 @@
     <br>
     <select class="form-select custom-select-blue" [(ngModel)]="filterStudent" (change)="applyFilters()">
       <option value="">-- Sélectionnez un étudiant --</option>
-      <option *ngFor="let student of defences" [value]="student.UserStudent?.id">{{ student.UserStudent?.id }}</option>
+      <option *ngFor="let student of defences" [value]="student.UserStudent?.id">{{ student.UserStudent?.name }}</option>
     </select>
     <br>
     
@@ -42,7 +42,6 @@
       <table class="table table-bordered">
         <thead>
           <tr>
-            <th>ID</th>
             <th>Date</th>
             <th>Time</th>
             <th> numeroDeBloc </th>
@@ -56,13 +55,12 @@
         <tbody>
           <ng-container *ngFor="let def of paginatedDefenses[currentIndex]">
             <tr>
-              <td>{{ def.idDef }}</td>
               <td>{{ def.dateDefense| date: 'shortDate' }}</td>            
               <td>{{ def.timeDefense }}</td>
               <td>{{ def.numeroDeBloc }}</td>
               <td>{{ def.numeroDeClasse }}</td>
-              <td>ID:{{ def.nomDeJuret?.id }}<br>Nom:{{ def.nomDeJuret?.name }}</td>
-              <td>ID:{{ def.UserStudent?.id }}<br>Nom:{{ def.UserStudent?.name }}</td>
+              <td>{{ def.nomDeJuret?.name }}</td>
+              <td>{{ def.UserStudent?.name }}</td>
               <td>{{ def.nomDeEncadrent }}</td>
               <td>{{ def.remarque }}</td>
                <!--<td><button class="btn btn-danger" (click)="deleteDefence(def.idDef)">Delete</button></td> -->
@@ -70,13 +68,9 @@
 
               <td> <!--<button class="btn btn-primary" (click)="openUpdateDialog(def.idDef)">update </button> -->
               <i class="material-icons" (click)="openUpdateDialog(def.idDef)"style="font-size:48px;color:green">create</i>
-            </td>
-             <!--  <button class="btn btn-primary" (click)="transferDefenses()">Transférer </button>
-
-              defense.component.html -->
+            </td> 
 
              <td>
-  {{ def.numeroDeBloc }}
  <button   class="btn btn-primary" (click)="openCreateDialogMapslocation(def.numeroDeBloc)">Voir le trajet</button>
 </td>
 
@@ -86,10 +80,9 @@
       </table>
     </div>
     <div class="pagination">
-      <button class="btn btn-primary" (click)="previousPage(currentIndex)" [disabled]="currentPage[currentIndex][0] === 1">Previous</button>
-      <span>{{ currentPage[currentIndex][0] }} / {{ totalPagess[currentIndex][0] }}</span>
-      <button class="btn btn-primary" (click)="nextPage(currentIndex)" [disabled]="currentPage[currentIndex][0] === totalPagess[currentIndex][0]">Next</button>
-    </div>
+      <button class="btn btn-primary" (click)="previousPage(currentIndex)" [disabled]="currentPage[currentIndex] === 1">Previous</button>
+      <span>{{ currentPage[currentIndex] }} / {{ totalPagess[currentIndex] }}</span>
+      <button class="btn btn-primary" (click)="nextPage(currentIndex)" [disabled]="currentPage[currentIndex] === totalPagess[currentIndex]">Next</button>    </div>
     
   </mat-card-content>
 

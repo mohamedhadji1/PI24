@@ -1,0 +1,90 @@
+
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form
+          [formGroup]="complaintForm"
+          *ngIf="complaintForm"
+          (ngSubmit)="saveComplaint()"
+        >
+          <div class="form-group">
+            <label for="description">Description</label>
+            <textarea
+              id="description"
+              class="form-control"
+              formControlName="description"
+            ></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="dateComplaint">Date</label>
+            <input
+              type="date"
+              id="dateComplaint"
+              class="form-control"
+              formControlName="dateComplaint"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input
+              type="text"
+              id="name"
+              class="form-control"
+              formControlName="name"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="lastname">Lastname</label>
+            <input
+              type="text"
+              id="lastname"
+              class="form-control"
+              formControlName="lastname"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input
+              type="email"
+              id="email"
+              class="form-control"
+              formControlName="email"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="status">Status</label>
+            <select id="status" class="form-control" formControlName="status">
+              <option value="IN_PROGRESS" selected>IN PROGRESS</option>
+              <option value="DROPPED">DROPPED</option>
+              <option value="TREATED">TREATED</option>
+            </select>
+          </div>
+
+          <div *ngIf="status == 'TREATED'">
+            <label for="msgRep">Message reponse</label>
+            <textarea
+              id="message"
+              class="form-control"
+              formControlName="message"
+            ></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-primary mt-2">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>

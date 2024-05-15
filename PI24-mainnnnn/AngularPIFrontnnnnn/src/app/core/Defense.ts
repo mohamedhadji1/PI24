@@ -11,7 +11,7 @@ export interface defense {
   UserStudent?: Partial<User>;
   nomDeEncadrent: string;
   remarque: string;
-  ERole: Role;
+  Role: Role;
   duration?: number;
 }
 

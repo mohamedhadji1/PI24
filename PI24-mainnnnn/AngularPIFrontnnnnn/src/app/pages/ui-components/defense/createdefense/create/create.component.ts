@@ -35,7 +35,7 @@ export class CreateComponent implements OnInit{
   //userList: defense[] ;
   usedDefenseIds: User[] ;
   selectedUserId: number;
-ERole :Role ;
+  Role :Role ;
   //filterDate: string = '';
   //filterStudent: string = '';
   //currentPage: number = 1;
@@ -117,8 +117,8 @@ addDefense(): void {
   }
 
   console.log('SelectedUser:', selectedUser);
-  const email: string = selectedUser.email;
-  const emailSuper :string =selectedUserSuper.email;
+  const email: string = "mohamedhadji603@gmail.com";
+  const emailSuper :string ="mohamedhadji603@gmail.com";
   console.log('emailsuper:', emailSuper);
 
   console.log('emailstudent:', email);
@@ -138,7 +138,7 @@ addDefense(): void {
     },
     nomDeEncadrent: this.nomDeEncadrent,
     remarque: this.remarque,
-     ERole : this.ERole
+     Role : this.Role
   };
 
   if (!newDefense.idDef) {
@@ -163,8 +163,6 @@ addDefense(): void {
         (response) => {
           console.log('newDefense:', newDefense);
           console.log('defense added successfully:', response);
-
-          this.selectedUserId = 1;
           this.router.navigate(['/ui-components/defense']);
         },
         (error) => {
@@ -200,7 +198,15 @@ addDefense(): void {
       });
 }
 
+onSupervisorChange(event: any): void {
+  this.selectedUserIdSuper = event.target.value;
+  console.log('Selected Supervisor ID:', this.selectedUserIdSuper);
+}
 
+onStudentChange(event: any): void {
+  this.selectedUserId = event.target.value;
+  console.log('Selected Student ID:', this.selectedUserId);
+}
 
 
 

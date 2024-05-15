@@ -13,7 +13,7 @@ export class AppSideLoginComponent {
   constructor(private router: Router) {}
   login(email: string, password: string): boolean {
     // Simulating authentication logic
-    if (email === 'yassinekalboussi26@gmail.com' && password === 'azerty') {
+    if (email === 'yassine.kalboussi@esprit.tn' && password === 'azerty') {
       localStorage.setItem('currentUser', JSON.stringify({ id: 1, email: email, role: Role.STUDENT }));
       this.router.navigate(['/dashboard']);
       return true;

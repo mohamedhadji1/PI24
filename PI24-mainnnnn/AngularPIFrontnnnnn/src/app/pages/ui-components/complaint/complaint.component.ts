@@ -10,6 +10,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { timeout } from 'rxjs';
 import { ComplaintChartsComponent } from './complaint-charts/complaint-charts.component';
+import { ResponseComponent } from './response/response.component';
+import * as $ from 'jquery';
+import { ComplaintDialogComponent } from './complaint-dialog/complaint-dialog.component';
 
 
 
@@ -24,8 +27,10 @@ export class ComplaintComponent implements OnInit{
   complaintForm: FormGroup;
   status='b'
   filterShearch=''
-  dataSource :any
-@ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild('exampleModal') modalTemplate: any; // Assurez-vous que le ViewChild correspond au bon ID du modal
+  // Utilisez FormGroup pour typage strict
+  
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 @ViewChild('barChartCanvas') barChartCanvas: ElementRef;
   @ViewChild('pieChartCanvas') pieChartCanvas: ElementRef;
   constructor(private complaintService: ComplaintService,private responseService: ResponseService, private router: Router, public dialog: MatDialog,private fb: FormBuilder) { }
@@ -44,6 +49,7 @@ export class ComplaintComponent implements OnInit{
     });
   
     this.fetchComplaints();
+    this.dataSource.paginator = this.paginator;
   }
     showChart(): void {
       this.dialog.open(ComplaintChartsComponent, {
@@ -51,7 +57,7 @@ export class ComplaintComponent implements OnInit{
         height: '400px', // Adjust height as needed
       });
     }
-/*    openADDDialog(idComp: number): void {
+    openADDDialog(idComp: number): void {
       const dialogRef = this.dialog.open(ResponseComponent, {
         data: { idComp: idComp }
       });
@@ -61,22 +67,42 @@ export class ComplaintComponent implements OnInit{
         this.fetchComplaints();
       });
     }
-*/
-      initForm(comp: Complaint): void {
-        console.log(comp);
-        this.status = comp.status;
-        this.complaintForm = this.fb.group({
-          idComp: [comp.idComp],
-          typeRec: [comp.typeRec],
-          description: [comp.description, Validators.required],
-          dateComplaint: [comp.dateComplaint, Validators.required],
-          name: [comp.name, Validators.required],
-          lastname: [comp.lastname, Validators.required],
-          email: [comp.email, [Validators.required, Validators.email]],
-          status: [comp.status, Validators.required],
-          message: [comp.message]
-        });
-      }
+
+    initForm(comp: Complaint): void {
+      console.log(comp);
+      this.status = comp.status;
+      this.complaintForm = this.fb.group({
+        idComp: [comp.idComp],
+        typeRec: [comp.typeRec],
+        description: [comp.description, Validators.required],
+        dateComplaint: [comp.dateComplaint, Validators.required],
+        name: [comp.name, Validators.required],
+        lastname: [comp.lastname, Validators.required],
+        email: [comp.email, [Validators.required, Validators.email]],
+        status: [comp.status, Validators.required],
+        message: [comp.message]
+      });
+    
+      // Open the modal
+      
+    }
+    
+    openUpdateDialog(complaint: Complaint): void {
+      const dialogRef = this.dialog.open(ComplaintDialogComponent, {
+        width: '500px',
+        data: { complaint }
+      });
+    
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          // Handle the result from the dialog if needed
+        }
+      });
+    }
+    
+      // Open the Bootstrap modal
+     
+    
 
 
 
@@ -89,7 +115,7 @@ export class ComplaintComponent implements OnInit{
   displayedColumns: string[] = [
     'description',	'type','dateComplaint' ,'name',	'lastname','email',	'status', 'rating',	'idComp'
   ];
-
+  dataSource :any
 
   applyFilter() {
     
