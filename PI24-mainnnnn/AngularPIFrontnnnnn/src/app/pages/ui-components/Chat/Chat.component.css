@@ -10,12 +10,13 @@ body {
 .chat-container {
   max-width: 100%; /* Ensure it doesn't overflow on smaller screens */
   width: 100%;
+  height: 82vh;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  margin: 20px 0; /* Add margin for better spacing from top and bottom */
+  margin: 20px 0; /* Adjust margin for better spacing from top and bottom */
 }
 
 /* Chat Messages */
